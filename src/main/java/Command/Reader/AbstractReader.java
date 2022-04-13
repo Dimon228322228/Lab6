@@ -23,11 +23,18 @@ public abstract class AbstractReader implements Reader {
         while (isRunning) {
             if (readyInput()) {
                 try{
-                    String[] command = reader.readLine().trim().split("[ ]+");
+                    String input = reader.readLine();
+                    String[] command = new String[0];
+                    if (input == null){
+                        System.err.println("Incorrectness finished executing");
+                        System.exit(0);
+                    }
+                    else command = input.trim().split("[ ]+");
                     if (command.length == 1)
                         commandFactory.executeCommand(command[0], this, null, manager);
-                    else
+                    else if (command.length == 2)
                         commandFactory.executeCommand(command[0], this, command[1], manager);
+                    else System.err.println("No such this command!");
                 } catch (IOException e){
                     e.printStackTrace();
                     exit();
