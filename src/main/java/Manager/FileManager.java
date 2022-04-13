@@ -44,7 +44,7 @@ public class FileManager {
         if (!fileToRetrieve.exists())
             throw new FileNotFoundException("There is not such file!");
         else if (fileToRetrieve.length() == 0)
-            throw new EmptyFileException("File is empty!");
+            throw new EmptyFileException();
         if (!fileToRetrieve.canRead() || !fileToRetrieve.canWrite())
             throw new SecurityException();
         return fileToRetrieve;

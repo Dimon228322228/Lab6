@@ -8,7 +8,7 @@ import Messager.Messenger;
 /**
  * output all element of the collection in ascending order
  */
-public class PrintInAscendingOrder implements MessagingCommand{
+public class PrintInAscendingOrder implements Command{
     /**
      * a single method for output all element of the collection by ascending order
      */

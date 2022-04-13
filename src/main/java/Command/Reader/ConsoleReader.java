@@ -94,23 +94,11 @@ public class ConsoleReader extends AbstractReader {
     private void setField(String input, Consumer<String> setter) throws IOException{
         try{
             setter.accept(input);
-        } catch (Exception e){
-            repeatInput(e);
+        } catch (InvalidProductFieldException | NumberFormatException e){
+            System.err.println(e.getMessage());
+            System.out.println("Please, entered the field again: ");
             setField(reader.readLine(), setter);
         }
     }
 
-    /**
-     * handles exception and forgive input one more time
-     */
-    private void repeatInput(Exception e){
-        if (e instanceof InvalidProductFieldException){
-            System.err.println(e.getMessage());
-        } else if (e instanceof NumberFormatException){
-            System.err.println("Number format error got.");
-        } else {
-            System.err.println("Error.");
-        }
-        System.out.println("Please, entered the field again: ");
-    }
 }

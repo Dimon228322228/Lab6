@@ -1,11 +1,7 @@
 package Content.Caster;
 
 import Content.Validator.ValidatorPerson;
-import Exception.InvalidNamePersonException;
-import Exception.InvalidBirthdayPersonException;
-import Exception.InvalidHeightPersonException;
-import Exception.InvalidWeightPersonException;
-import Exception.InvalidPassportIDPersonException;
+import Exception.InvalidProductFieldException;
 
 import java.time.LocalDateTime;
 /**
@@ -24,7 +20,7 @@ public class CasterPersonFromString {
         if (valPer.namePersonValid(inputStr)){
             return inputStr.trim();
         } else {
-            throw new InvalidNamePersonException();
+            throw new InvalidProductFieldException("Invalid name person has been entered. Name isn't being null or empty!");
         }
     }
 
@@ -43,10 +39,10 @@ public class CasterPersonFromString {
                                         0);
                 return date;
             } else {
-                throw new InvalidBirthdayPersonException();
+                throw new InvalidProductFieldException("Invalid birthday date has been entered. Value isn't being null!");
             }
         } else {
-            throw new InvalidBirthdayPersonException();
+            throw new InvalidProductFieldException("Invalid birthday date has been entered. Value isn't being null!");
         }
     }
 
@@ -58,7 +54,7 @@ public class CasterPersonFromString {
         if (valPer.heightValid(height)){
             return height;
         } else {
-            throw new InvalidHeightPersonException();
+            throw new InvalidProductFieldException("Invalid height has been entered. Value have to grated 0!");
         }
     }
 
@@ -70,7 +66,7 @@ public class CasterPersonFromString {
         if (valPer.weightValid(weight)){
             return weight;
         } else {
-            throw new InvalidWeightPersonException();
+            throw new InvalidProductFieldException("Invalid weight has been entered. Value have to grated 0!");
         }
     }
 
@@ -82,7 +78,7 @@ public class CasterPersonFromString {
         if (valPer.passportidValid(inputStr)){
             return inputStr;
         } else {
-            throw new InvalidPassportIDPersonException();
+            throw new InvalidProductFieldException("Invalid passport id has been entered. Value isn't null, it is lowered 41 and grated 6!");
         }
     }
 }

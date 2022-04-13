@@ -1,6 +1,5 @@
 package Content;
-
-import Exception.InvalidUnitOfMeasureException;
+import Exception.InvalidProductFieldException;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.stream.Stream;
@@ -19,7 +18,7 @@ public class UnitSerializer extends XmlAdapter<String, UnitOfMeasure> {
         } else {
             count++;
             System.err.println("Invalid unit product in file. Check it. "+ count +" fields of unit have been incorrectly set null. Unit should be: " + UnitOfMeasure.getTitleInString().toUpperCase());
-            throw new InvalidUnitOfMeasureException();
+            throw new InvalidProductFieldException("Invalid value has been entered. Choose unit of measurement include list!");
         }
     }
 

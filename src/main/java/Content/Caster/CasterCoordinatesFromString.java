@@ -1,8 +1,7 @@
 package Content.Caster;
 
 import Content.Validator.ValidatorCoordinates;
-import Exception.InvalidXcoordinateException;
-import Exception.InvalidYcoordinateException;
+import Exception.InvalidProductFieldException;
 
 /**
  * A class which creates field of coordinates from different classes
@@ -21,7 +20,7 @@ public class CasterCoordinatesFromString {
         if (valCoord.xCoordinateValid(x)){
             return x;
         } else {
-            throw new InvalidXcoordinateException();
+            throw new InvalidProductFieldException("Invalid X coordinate has been entered. This value should be lowed 938 and not null!");
         }
     }
 
@@ -33,7 +32,7 @@ public class CasterCoordinatesFromString {
         if (valCoord.yCoordinateValid(y)){
             return y;
         } else {
-            throw new InvalidYcoordinateException();
+            throw new InvalidProductFieldException("Invalid Y coordinate has been entered. This value shouldn't be null!");
         }
     }
 }

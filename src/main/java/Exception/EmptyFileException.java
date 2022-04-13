@@ -1,7 +1,7 @@
 package Exception;
 
 public class EmptyFileException extends Exception{
-    public EmptyFileException(String str){
-        super(str);
+    public EmptyFileException(){
+        super("File is empty!");
     }
 }

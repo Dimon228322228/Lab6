@@ -8,7 +8,7 @@ import Messager.Messenger;
 /**
  * count number of element equals by manufacture cost
  */
-public class CountByManufactureCost implements MessagingCommand{
+public class CountByManufactureCost implements Command{
     /**
      * read manufacture cost
      * checked it is corrected

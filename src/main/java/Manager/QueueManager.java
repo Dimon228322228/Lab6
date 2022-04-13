@@ -92,7 +92,7 @@ public class QueueManager implements CollectionManager{
         } catch (JAXBException e) {
             e.printStackTrace();
         } catch (EmptyFileException e) {
-            System.err.println((new EmptyFileException("File is empty!")).getMessage());
+            System.err.println(new EmptyFileException().getMessage());
         }
     }
 

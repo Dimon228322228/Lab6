@@ -8,7 +8,7 @@ import Messager.Messenger;
 /**
  * showing all element of the collection
  */
-public class ShowElements implements MessagingCommand{
+public class ShowElements implements Command{
     /**
      * a single method for showing all elements
      */

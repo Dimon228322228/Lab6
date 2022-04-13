@@ -2,11 +2,8 @@ package Content.Caster;
 
 import Content.UnitOfMeasure;
 import Content.Validator.ValidatorProduct;
-import Exception.InvalidNameProductException;
-import Exception.InvalidPriceException;
-import Exception.InvalidPartNumberException;
-import Exception.InvalidManufactureCostException;
-import Exception.InvalidUnitOfMeasureException;
+import Exception.InvalidProductFieldException;
+
 /**
  * A class which creates field of product from different classes
  */
@@ -22,7 +19,7 @@ public class CasterFieldProductFromString {
      public String castName(String name){
           if (valProd.nameProductValid(name.trim())) {
                return name.trim();
-          } else throw new InvalidNameProductException();
+          } else throw new InvalidProductFieldException("Name don't have to empty or null!");
      }
 
      /**
@@ -33,7 +30,7 @@ public class CasterFieldProductFromString {
           if(valProd.priceValid(price)){
                return price;
           } else {
-               throw new InvalidPriceException();
+               throw new InvalidProductFieldException("Invalid price has been entered. Price should be grated 0 and not null");
           }
      }
 
@@ -45,7 +42,7 @@ public class CasterFieldProductFromString {
           if (valProd.partNumberValid(str.trim())){
                return str.trim();
           } else {
-               throw new InvalidPartNumberException();
+               throw new InvalidProductFieldException("Invalid part number has been entered. Part number is not null and his length is grated 21");
           }
      }
 
@@ -57,7 +54,7 @@ public class CasterFieldProductFromString {
           if(valProd.manufactureCostValid(manufactureCost)){
                return manufactureCost;
           } else {
-               throw new InvalidManufactureCostException();
+               throw new InvalidProductFieldException("Invalid manufacture cost has been entered!");
           }
      }
 
@@ -69,7 +66,7 @@ public class CasterFieldProductFromString {
           if (valProd.unitOfMeasureValid(str)){
                return UnitOfMeasure.fromString(str.trim());
           } else {
-               throw new InvalidUnitOfMeasureException();
+               throw new InvalidProductFieldException("Invalid value has been entered. Choose unit of measurement include list!");
           }
      }
 }

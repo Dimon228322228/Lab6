@@ -1,15 +1,18 @@
 package Command;
 
+import Command.CommandFactory.CommandFactory;
 import Command.Reader.Reader;
 import Content.Product;
 import Manager.CollectionManager;
+import Exception.ProductNotFoundException;
+import Messager.Messenger;
 
 import java.io.IOException;
 
 /**
  * update element of the collection by id
  */
-public class UpdateById implements SimpleCommand{
+public class UpdateById implements Command{
     /**
      * checked exist given id
      * read product from console
@@ -17,21 +20,23 @@ public class UpdateById implements SimpleCommand{
      * old product has deleted
      */
     @Override
-    public void execute(CollectionManager manager, Reader reader, String arg) {
-        RemoveById remove = new RemoveById();
-        remove.execute(manager, reader, arg);
-        if (!remove.flag) return;
-        Product Product;
+    public void execute(CollectionManager manager, Reader reader, String arg, Messenger messenger, CommandFactory commandFactory) throws ProductNotFoundException {
+        long id;
+        Product product = null;
         try{
-            Product = reader.readProduct();
+            id = Long.parseLong(arg);
+            manager.removeById(id);
+            product = reader.readProduct();
+        } catch (NumberFormatException e){
+            System.err.println("Id must be long!");
         } catch (IOException e) {
             System.err.println(e.getMessage());
             return;
         }
-        if (Product == null) return;
+        if (product == null) return;
         manager.autoUpdateId();
-        Product.setId(Long.parseLong(arg));
-        manager.add(Product);
+        product.setId(Long.parseLong(arg));
+        manager.add(product);
         System.out.println("Added success");
     }
 }

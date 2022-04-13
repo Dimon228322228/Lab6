@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * print info about collection
  */
-public class DisplayInfo implements MessagingCommand {
+public class DisplayInfo implements Command {
     /**
      * output information about collection: Class, size and date
      */

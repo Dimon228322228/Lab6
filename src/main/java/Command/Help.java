@@ -8,7 +8,7 @@ import Messager.Messenger;
 /**
  * used to describe the actions of the commands
  */
-public class Help implements MessagingCommand {
+public class Help implements Command {
     /**
      * outputs a description of the commands
      */

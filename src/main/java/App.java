@@ -1,6 +1,6 @@
 import Command.*;
 import Command.CommandFactory.CommandFactory;
-import Command.CommandFactory.RealizedCommandFactory;
+import Command.CommandFactory.CommandFactoryImpl;
 import Command.Reader.ConsoleReader;
 import Command.Reader.Reader;
 import Manager.FileManager;
@@ -30,7 +30,7 @@ public class App {
         }
         QueueManager manager = new QueueManager(fileManager);
         Messenger messenger = new EnglishMessenger();
-        CommandFactory commandFactory = RealizedCommandFactory.getInstance(getCommands(), messenger);
+        CommandFactory commandFactory = CommandFactoryImpl.getInstance(getCommands(), messenger);
         manager.parseDateFromFile();
         Reader reader = new ConsoleReader(commandFactory, manager, messenger);
         reader.readCommand();

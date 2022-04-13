@@ -8,7 +8,7 @@ import Messager.Messenger;
 /**
  * History of commands executed
  */
-public class History implements MessagingCommand{
+public class History implements Command{
     /**
      * print history of commands executed
      */
