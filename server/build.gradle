@@ -1,18 +1,27 @@
 plugins {
     id 'java'
+    id 'application'
 }
-
-group 'org.example'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation project(':shared')
+
+    implementation 'javax.activation:activation:1.1.1'
+    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+    implementation 'javax.activation:javax.activation-api:1.2.0'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
+
+    implementation 'org.jetbrains:annotations:23.0.0'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
+
+//mainClassName = 'app.App'
 
 test {
     useJUnitPlatform()
