@@ -20,10 +20,10 @@ public class CountGreaterThenUnitOfMeasure implements Command{
     public void execute(CollectionManager manager, Reader reader, String arg, Messenger messanger, CommandFactory commandFactory) {
         UnitOfMeasure unitOfMeasure = UnitOfMeasure.fromString(arg);
         if (unitOfMeasure == null) {
-            System.err.println(new InvalidProductFieldException("No such this enum. Unit of measure must be one of: " + UnitOfMeasure.getTitleInString().toLowerCase()).getMessage());
+            System.err.println(new InvalidProductFieldException("No such this enum. Unit of measure must be one of: " +
+                    UnitOfMeasure.getTitleInString().toLowerCase()).getMessage());
             return;
         }
-        long count = manager.countGreaterThenUnitOfMeashure(unitOfMeasure);
-        System.out.println(messanger.getCountElementWithCondition(count));
+        System.out.println(messanger.getCountElementWithCondition(manager.countGreaterThenUnitOfMeashure(unitOfMeasure)));
     }
 }

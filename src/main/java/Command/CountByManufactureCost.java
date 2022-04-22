@@ -24,7 +24,6 @@ public class CountByManufactureCost implements Command{
             System.err.println("Manufacture cost must be convert to double.");
             return;
         }
-        long count = manager.countByManufactureCost(manufactureCost);
-        System.out.println(messanger.getCountElementWithCondition(count));
+        System.out.println(messanger.getCountElementWithCondition(manager.countByManufactureCost(manufactureCost)));
     }
 }

@@ -36,7 +36,7 @@ public class QueueManager implements CollectionManager{
     /**
      * the collection
      */
-    private PriorityQueue<Product> collection;
+    private final PriorityQueue<Product> collection;
     /**
      * inner static class that generates the id
      */
@@ -56,17 +56,14 @@ public class QueueManager implements CollectionManager{
         return generatedID.getID();
     }
 
-
     /**
      * @return {@link List} with information about collection
      */
     @Override
     public List<String> displayInfo() {
-        List<String> infoCollection = new ArrayList<>();
-        infoCollection.add(collection.getClass().toString());
-        infoCollection.add(String.valueOf(collection.size()));
-        infoCollection.add(date.toString());
-        return infoCollection;
+        return new ArrayList<>(List.of(collection.getClass().toString(),
+                                        String.valueOf(collection.size()),
+                                        date.toString()));
     }
 
     /**
@@ -80,14 +77,10 @@ public class QueueManager implements CollectionManager{
                 System.out.println("Download failed");
                 return;
             }
-            for (Product product : products){
-                if(validatorProduct.validProduct(product)){
-                    collection.add(product);
-                    generatedID.setID(product.getId());
-                } else {
-                    System.err.println("Product with " + product + "hasn't been add in the collection");
-                }
-            }
+            products.stream().filter(validatorProduct::validProduct).forEach(x -> {collection.add(x);
+                                                                                    generatedID.setID(x.getId());});
+            products.stream().filter(x -> !validatorProduct.validProduct(x))
+                    .forEach(x -> System.err.println("Product with " + x + " hasn't been add in the collection"));
             System.out.println("Download complete");
         } catch (JAXBException e) {
             e.printStackTrace();
@@ -102,9 +95,7 @@ public class QueueManager implements CollectionManager{
     private void setFilepath(){
         System.out.println("Enter name environment variable that contains the path of the file: ");
         String nameVariable;
-        System.getenv().forEach((k, v) ->
-                System.out.println(k + " : " + v)
-        );
+        System.getenv().forEach((k, v) -> System.out.println(k + " : " + v));
         try {
             Scanner scr = new Scanner(System.in);
             nameVariable = scr.nextLine();
@@ -122,25 +113,7 @@ public class QueueManager implements CollectionManager{
      * @return all elements of the collection as a list in ascending order
      */
     @Override
-    public List<Product> showElements(){
-        return getListProduct();
-    }
-
-    /**
-     * @return all elements of the collection as a list in ascending order
-     */
-    private List<Product> getListProduct(){
-        List<Product> productList = new ArrayList<>();
-        PriorityQueue<Product> instance = new PriorityQueue<>();
-        int size = collection.size();
-        for (int i = 0; i < size; i++ ){
-            Product product = collection.poll();
-            productList.add(product);
-            instance.add(product);
-        }
-        collection = instance;
-        return productList;
-    }
+    public List<Product> showElements(){return collection.stream().sorted().toList();}
 
     /**
      * add product in the collection
@@ -173,7 +146,7 @@ public class QueueManager implements CollectionManager{
      */
     @Override
     public void clear() {
-        collection = new PriorityQueue<>();
+        collection.clear();
         generatedID.clearIdSet();
     }
 
@@ -182,18 +155,11 @@ public class QueueManager implements CollectionManager{
      */
     @Override
     public void save() {
-        if (filepath == null || filepath.equals("")) {
-            setFilepath();
-            try {
-                fileManager.saveCollectionInXML(collection, filepath);
-            } catch (JAXBException | IOException | InvalidPathException | EmptyFileException e){
-                e.printStackTrace();
-            }
-        }else {
-            try {
-                fileManager.saveCollectionInXML(collection, filepath);
-            } catch (JAXBException | IOException | InvalidPathException | EmptyFileException e){
-                e.printStackTrace();            }
+        if (filepath == null || filepath.equals("")) setFilepath();
+        try {
+            fileManager.saveCollectionInXML(collection, filepath);
+        } catch (JAXBException | IOException | InvalidPathException | EmptyFileException e){
+            e.printStackTrace();
         }
     }
 
@@ -278,9 +244,6 @@ public class QueueManager implements CollectionManager{
      * The class that generates an id
      */
     static class GeneratedID {
-        /**
-         * set existing id
-         */
         private Set<Long> idSet = new HashSet<>();
 
         /**
@@ -323,6 +286,6 @@ public class QueueManager implements CollectionManager{
 
         public void setID(long id){idSet.add(id);}
 
-        public void clearIdSet(){idSet = new HashSet<>();}
+        public void clearIdSet(){idSet.clear();}
     }
 }

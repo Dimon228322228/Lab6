@@ -10,6 +10,7 @@ import Exception.InvalidProductFieldException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.DateTimeException;
 import java.util.function.Consumer;
 
 public class ConsoleReader extends AbstractReader {
@@ -94,7 +95,7 @@ public class ConsoleReader extends AbstractReader {
     private void setField(String input, Consumer<String> setter) throws IOException{
         try{
             setter.accept(input);
-        } catch (InvalidProductFieldException | NumberFormatException e){
+        } catch (InvalidProductFieldException | NumberFormatException | DateTimeException e){
             System.err.println(e.getMessage());
             System.out.println("Please, entered the field again: ");
             setField(reader.readLine(), setter);

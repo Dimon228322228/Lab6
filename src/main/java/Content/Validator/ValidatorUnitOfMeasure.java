@@ -1,6 +1,7 @@
 package Content.Validator;
 
 import Content.UnitOfMeasure;
+import java.util.Arrays;
 
 /**
  * a class for check correctness product unit
@@ -20,11 +21,7 @@ public class ValidatorUnitOfMeasure {
      */
     public boolean validUnitOfMeasure(String unitOfMeasure){
         if (unitOfMeasure == null) return false;
-        String[] list = UnitOfMeasure.getTitleInString().trim().split(" ");
-        for (String string: list){
-            if(unitOfMeasure.equals(string)) return true;
-        }
-        return false;
+        return Arrays.asList(UnitOfMeasure.getTitleInString().trim().split(" ")).contains(unitOfMeasure);
     }
 
 }
