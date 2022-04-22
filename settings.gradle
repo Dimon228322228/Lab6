@@ -1,2 +1,3 @@
 rootProject.name = 'Laba5'
+include 'client', 'shared', 'server'
 
