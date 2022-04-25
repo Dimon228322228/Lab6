@@ -53,7 +53,6 @@ public class QueueManager implements CollectionManager{
         if (instance == null) return new QueueManager();
         return instance;
     }
-
     /**
      * Get id which don't exist in set
      * @return id
