@@ -41,10 +41,17 @@ public class QueueManager implements CollectionManager{
      */
     private static final GeneratedID generatedID = new GeneratedID();
 
-    public QueueManager(FileManager fileManager){
-        this.fileManager = fileManager;
+    private static QueueManager instance = null;
+
+    private QueueManager() throws JAXBException {
+        this.fileManager = new FileManager();
         collection = new PriorityQueue<>();
         this.date = ZonedDateTime.now();
+    }
+
+    public static QueueManager getInstance() throws JAXBException {
+        if (instance == null) return new QueueManager();
+        return instance;
     }
 
     /**
