@@ -6,10 +6,15 @@ import Content.UnitOfMeasure;
  * this class stores messages
  */
 public class EnglishMessenger extends AbstractMessenger {
-
-    public EnglishMessenger(){
+    private static EnglishMessenger instance = null;
+    private EnglishMessenger(){
         setCommandsExplanation();
         setProductFieldExplanation();
+    }
+
+    public static EnglishMessenger getInstance(){
+        if (instance == null) return new EnglishMessenger();
+        return instance;
     }
 
     /**
