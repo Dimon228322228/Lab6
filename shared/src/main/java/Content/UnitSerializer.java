@@ -1,5 +1,5 @@
 package Content;
-import Exception.InvalidProductFieldException;
+import Exceptions.InvalidProductFieldException;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.stream.Stream;

@@ -1,7 +1,7 @@
 package Content.Caster;
 
 import Content.Validator.ValidatorCoordinates;
-import Exception.InvalidProductFieldException;
+import Exceptions.InvalidProductFieldException;
 
 /**
  * A class which creates field of coordinates from different classes

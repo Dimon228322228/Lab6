@@ -1,8 +1,10 @@
 package ServerAction.Commands;
 
+import Action.Command;
+import Action.TypeCommand;
 import ServerAction.CommandFactory.CommandFactory;
 import ServerAction.FileReader;
-import Manager.CollectionManager;
+import lombok.Getter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,8 +14,15 @@ import java.util.Set;
 /**
  * runs the script from file
  */
-public class ExecuteScript {
+public class ExecuteScript implements Command {
+    @Getter final Set<TypeCommand> type = new HashSet<>();
+    @Getter final String name = "executeScript";
     private final static Set<File> files = new HashSet<>();
+    public ExecuteScript(){
+        type.add(TypeCommand.USER);
+        type.add(TypeCommand.EXECUTED);
+        type.add(TypeCommand.ARG);
+    }
     /**
      * executes a script if file correctness
      */

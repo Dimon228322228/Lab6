@@ -1,7 +1,7 @@
 package Content.Caster;
 
 import Content.Validator.ValidatorPerson;
-import Exception.InvalidProductFieldException;
+import Exceptions.InvalidProductFieldException;
 
 import java.time.LocalDateTime;
 /**

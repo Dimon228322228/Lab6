@@ -4,7 +4,7 @@ import ServerAction.CommandFactory.CommandFactory;
 import Content.Coordinates;
 import Content.Person;
 import Content.Product;
-import Exception.InvalidProductFieldException;
+import Exceptions.InvalidProductFieldException;
 
 import java.io.BufferedReader;
 import java.io.File;
