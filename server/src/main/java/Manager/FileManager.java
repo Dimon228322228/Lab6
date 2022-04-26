@@ -3,7 +3,7 @@ package Manager;
 import Content.Coordinates;
 import Content.Person;
 import Content.Product;
-import Exception.EmptyFileException;
+import Exceptions.EmptyFileException;
 import lombok.Getter;
 import lombok.Setter;
 

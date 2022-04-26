@@ -1,15 +1,12 @@
 package ServerAction.CommandFactory;
 
-import Manager.CollectionManager;
-import Manager.QueueManager;
+import Action.Command;
+import Action.TypeCommand;
 import ServerAction.Commands.*;
 import ServerAction.FileReader;
-import Exception.UnknownCommandException;
-import Messager.Messenger;
 
-import javax.xml.bind.JAXBException;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Collectors;
@@ -20,14 +17,10 @@ import java.util.stream.Collectors;
 public class CommandFactoryImpl implements CommandFactory {
     private static CommandFactoryImpl instance = null;
     private final ArrayBlockingQueue<String> historyCommand = new ArrayBlockingQueue<>(13);
-    private final Map<String, Object> commands = new HashMap<>();
-    private final Messenger messenger;
-    private final CollectionManager collectionManager;
+    private final Map<String, Command> commands = new HashMap<>();
 
-    private CommandFactoryImpl(Messenger messenger) throws JAXBException, FileNotFoundException {
-        this.messenger = messenger;
+    private CommandFactoryImpl() {
         setCommands();
-        collectionManager = QueueManager.getInstance();
     }
 
     private void setCommands(){
@@ -49,18 +42,27 @@ public class CommandFactoryImpl implements CommandFactory {
         commands.put("updateById", new UpdateById());
     }
 
+    public List<Command> getCommands(){
+        return commands.keySet()
+                .stream()
+                .sorted()
+                .map(commands::get)
+                .filter(x -> x.getType().contains(TypeCommand.USER))
+                .collect(Collectors.toList());
+    }
+
     /**
      * @return single object this class (there must be one instance)
      */
-    public static CommandFactory getInstance(Messenger messenger) throws JAXBException, FileNotFoundException {
-        if (instance == null) instance = new CommandFactoryImpl(messenger);
+    public static CommandFactory getInstance(){
+        if (instance == null) instance = new CommandFactoryImpl();
         return instance;
     }
 
     /**
      * @return command from string
      */
-    private Object getCommand(String commandName) {
+    public Command getCommand(String commandName) {
         return commands.get(commandName);
     }
 

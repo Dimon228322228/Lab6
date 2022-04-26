@@ -1,4 +1,4 @@
-package Exception;
+package Exceptions;
 
 public class UnknownCommandException extends IllegalArgumentException{
     public UnknownCommandException(){

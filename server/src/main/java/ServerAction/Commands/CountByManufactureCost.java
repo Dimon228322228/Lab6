@@ -1,12 +1,24 @@
 package ServerAction.Commands;
 
+import Action.Command;
+import Action.TypeCommand;
 import Manager.CollectionManager;
 import Messager.Messenger;
+import lombok.Getter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * count number of element equals by manufacture cost
  */
-public class CountByManufactureCost{
+public class CountByManufactureCost implements Command {
+    @Getter final Set<TypeCommand> type = new HashSet<>();
+    @Getter final String name = "countByManufactureCost";
+    public CountByManufactureCost(){
+        type.add(TypeCommand.USER);
+        type.add(TypeCommand.ARG);
+    }
     /**
      * read manufacture cost
      * checked it is corrected

@@ -3,8 +3,8 @@ package Manager;
 import Content.Product;
 import Content.UnitOfMeasure;
 import Content.Validator.RealizedValidatorProduct;
-import Exception.EmptyFileException;
-import Exception.ProductNotFoundException;
+import Exceptions.EmptyFileException;
+import Exceptions.ProductNotFoundException;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;

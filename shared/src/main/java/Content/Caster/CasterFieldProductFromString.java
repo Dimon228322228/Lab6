@@ -2,7 +2,7 @@ package Content.Caster;
 
 import Content.UnitOfMeasure;
 import Content.Validator.ValidatorProduct;
-import Exception.InvalidProductFieldException;
+import Exceptions.InvalidProductFieldException;
 
 /**
  * A class which creates field of product from different classes

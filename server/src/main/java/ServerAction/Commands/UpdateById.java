@@ -1,16 +1,30 @@
 package ServerAction.Commands;
 
+import Action.Command;
+import Action.TypeCommand;
 import ServerAction.FileReader;
 import Content.Product;
-import Exception.ProductNotFoundException;
+import Exceptions.ProductNotFoundException;
 import Manager.CollectionManager;
+import lombok.Getter;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * update element of the collection by id
  */
-public class UpdateById{
+public class UpdateById implements Command {
+    @Getter final Set<TypeCommand> type = new HashSet<>();
+    @Getter final String name = "updateById";
+
+    public UpdateById(){
+        type.add(TypeCommand.USER);
+        type.add(TypeCommand.PRODUCT);
+        type.add(TypeCommand.ARG);
+    }
+
     /**
      * checked exist given id
      * read product from console

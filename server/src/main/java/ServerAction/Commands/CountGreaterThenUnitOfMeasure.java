@@ -1,15 +1,27 @@
 package ServerAction.Commands;
 
+import Action.Command;
+import Action.TypeCommand;
 import Content.UnitOfMeasure;
-import Exception.InvalidProductFieldException;
+import Exceptions.InvalidProductFieldException;
 import Manager.CollectionManager;
 import Messager.Messenger;
+import lombok.Getter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
  * counts the number of elements large in units
  */
-public class CountGreaterThenUnitOfMeasure{
+public class CountGreaterThenUnitOfMeasure implements Command {
+    @Getter final Set<TypeCommand> type = new HashSet<>();
+    @Getter final String name = "CountGreaterThenUnitOfMeasure";
+    public CountGreaterThenUnitOfMeasure(){
+        type.add(TypeCommand.USER);
+        type.add(TypeCommand.ARG);
+    }
     /**
      * read unit product
      * then counts and print number
