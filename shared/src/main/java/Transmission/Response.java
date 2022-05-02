@@ -4,7 +4,7 @@ import Action.Command;
 import Content.Product;
 import lombok.Getter;
 
-public class Response implements Message{
+public class Response {
     @Getter private final Product product;
     @Getter private final String arg = "";
     @Getter private final Command command;
