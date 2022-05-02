@@ -1,13 +1,11 @@
 package Content;
 
-import Content.Caster.CasterFieldProductFromString;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Date;
@@ -31,52 +29,11 @@ public class Product implements Serializable, Comparable<Product> {
     @Getter @Setter private Person owner ; // maybe null
 
     /**
-     * creates fields of different classes and checks their correctness
-     */
-    @XmlTransient
-    private final CasterFieldProductFromString casterFieldProductFromString = new CasterFieldProductFromString();
-
-    /**
      * set creation date and set unique id
      */
     public void setAutomaticGenerateField(){
         setCreationDate(new Date());
         setId(GeneratedID.getID());
-    }
-
-    /**
-     * set name product from string, used in ConsoleReader
-     */
-    public void setNameStr(String inputStr){
-        setName(casterFieldProductFromString.castName(inputStr));
-    }
-
-    /**
-     * set price product from string, used in ConsoleReader
-     */
-    public void setPriceStr(String inputStr){
-        setPrice(casterFieldProductFromString.castPrice(inputStr));
-    }
-
-    /**
-     * set part number product from string, used in ConsoleReader
-     */
-    public void setPartNumberStr(String inputStr){
-        setPartNumber(casterFieldProductFromString.castPartNumber(inputStr));
-    }
-
-    /**
-     * set manufacture cost product from string, used in ConsoleReader
-     */
-    public void setManufactureCostStr(String inputStr){
-        setManufactureCost(casterFieldProductFromString.castManufactureCost(inputStr));
-    }
-
-    /**
-     * set unit product from string, used in ConsoleReader
-     */
-    public void setUnitOfMeasureStr(String inputStr){
-        setUnitOfMeasure(casterFieldProductFromString.castUnitOfMeasure(inputStr));
     }
 
     @Override

@@ -3,7 +3,6 @@ package Connection;
 import Action.CommandManager;
 import Exceptions.InvalidRecievedException;
 import Manager.CollectionManager;
-import Transmission.Message;
 import Transmission.Request;
 
 import java.io.BufferedReader;
@@ -95,8 +94,7 @@ public class Server {
         readableChannel = (SocketChannel) key.channel();
         Request request = null;
         try {
-            Message message = handleMessage.readMessage(readableChannel);
-            request = (Request) message;
+            request = handleMessage.readMessage(readableChannel);
         } catch (IOException | InvalidRecievedException | ClassCastException e) {
             System.err.println(e.getMessage());
             closeChannel(readableChannel);
@@ -121,8 +119,13 @@ public class Server {
         }
     }
 
-    private void writeByKey(SelectionKey key){
-        //write on channel and register it as readable
+    private void writeByKey(SelectionKey key) throws ClosedChannelException {
+        SocketChannel writeableChannel = (SocketChannel) key.channel();
+        Request clientRequest = registrationRequest.get(writeableChannel);
+
+        // doing command and create response
+//        handleMessage.sendMessage(writeableChannel, response);
+        writeableChannel.register(selector, SelectionKey.OP_READ);
     }
 
     private void sendCommandManager(SocketChannel channel) throws IOException {
