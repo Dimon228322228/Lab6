@@ -32,10 +32,6 @@ public class ReaderFromFile implements Reader{
     public List<Request> run() throws UnknownCommandException, IOException {
         return  null;
     }
-//    @Override
-//    public void exit() {
-//
-//    }
 
     public Product readProduct() throws IOException, InvalidProductFieldException {
         BuilderProduct builderProduct = new BuilderProduct();

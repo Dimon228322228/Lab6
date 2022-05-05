@@ -50,8 +50,26 @@ public class Product implements Serializable, Comparable<Product> {
 
     @Override
     public String toString(){
-        return String.format("ID = %d, Name = %s, %s, Creation Date = %s, Price = %f, PartNumber = %s, Manufacture cost = %f, Unit of Measurement = %s,Owner: %s",
-                id, name, coordinates, creationDate, price, partNumber, manufactureCost, unitOfMeasure, owner);
+        StringBuilder builder = new StringBuilder();
+        builder.append("ID : ").append(getId()).append("\n")
+                .append("Product name : ").append(getName()).append("\n")
+                .append("X coordinate : ").append(getCoordinates().getX()).append("\n")
+                .append("Y coordinate : ").append(getCoordinates().getY()).append("\n")
+                .append("Creation date : ").append(getCreationDate()).append("\n")
+                .append("Price : ").append(getPrice()).append("\n")
+                .append("Part number : ").append(getPartNumber()).append("\n")
+                .append("Manufacture cost : ").append(getManufactureCost()).append("\n")
+                .append("Unit of measurement : ").append(getUnitOfMeasure()).append("\n");
+            if (getOwner() != null) {
+                builder.append("Owner name : ").append(getOwner().getName()).append("\n")
+                        .append("Owner birthday : ").append(getOwner().getBirthday().toString()).append("\n")
+                        .append("Owner height : ").append(getOwner().getHeight()).append("\n")
+                        .append("Owner weight : ").append(getOwner().getWeight()).append("\n")
+                        .append("Owner passport id : ").append(getOwner().getPassportID()).append("\n");
+            }else{
+                builder.append("Owner: ").append(getOwner()).append("\n");
+            }
+            return builder.append("\n").toString();
     }
 
     public int compareTo(Product o) {

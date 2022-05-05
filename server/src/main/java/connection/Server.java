@@ -1,8 +1,7 @@
 package connection;
 
 import exceptions.InvalidRecievedException;
-import manager.CollectionManager;
-import serverAction.commandHandler.CommandHandler;
+import serverAction.CommandHandler;
 import transmission.HandlerMessage;
 import transmission.Request;
 
@@ -22,8 +21,7 @@ public class Server {
     volatile boolean runningFlag;
 
     private final int port;
-    private final CollectionManager collectionManager;
-    private CommandHandler commandHandler;
+    private final CommandHandler commandHandler;
     private final BufferedReader bufferedReader;
     private final Selector selector;
     private ServerSocketChannel serChannel;
@@ -32,8 +30,7 @@ public class Server {
     private final Map<SocketChannel, Request> registrationRequest = new ConcurrentHashMap<>();
 
 
-    public Server(int port, CollectionManager collectionManager, CommandHandler commandHandler) throws IOException {
-        this.collectionManager = collectionManager;
+    public Server(int port, CommandHandler commandHandler) throws IOException {
         this.commandHandler = commandHandler;
         this.port = port;
         bufferedReader = new BufferedReader(System.console().reader());
