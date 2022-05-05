@@ -138,7 +138,6 @@ public class QueueManager implements CollectionManager{
     public void removeById(long id) {
         int size = collection.size();
         collection.stream()
-                .sorted()
                 .filter(x -> x.getId() == id)
                 .forEach(collection::remove);
         if(size == collection.size())
@@ -159,13 +158,9 @@ public class QueueManager implements CollectionManager{
      * Saves the collection to a file
      */
     @Override
-    public void save() {
+    public void save() throws JAXBException, IOException, InvalidPathException, EmptyFileException{
         if (filepath == null || filepath.equals("")) setFilepath();
-        try {
-            fileManager.saveCollectionInXML(collection, filepath);
-        } catch (JAXBException | IOException | InvalidPathException | EmptyFileException e){
-            e.printStackTrace();
-        }
+        fileManager.saveCollectionInXML(collection, filepath);
     }
 
     /**
@@ -181,18 +176,18 @@ public class QueueManager implements CollectionManager{
      * @param product is hair of class {@link Product}
      */
     @Override
-    public void addIfMax(Product product) {
+    public boolean addIfMax(Product product) {
         if (maxProduct() != null) {
             if (product.compareTo(maxProduct()) > 0) {
                 add(product);
-                System.out.println("Added success");
+                return true;
             } else {
-                System.out.println("Added failed");
                 generatedID.removeID(product.getId());
+                return false;
             }
         } else {
             add(product);
-            System.out.println("Added success");
+            return true;
         }
     }
 
@@ -201,7 +196,7 @@ public class QueueManager implements CollectionManager{
      * @param product is hair of class {@link Product}
      */
     @Override
-    public void removeLower(Product product) {
+    public int removeLower(Product product) {
         int size = collection.size();
         if (size != 0) {
             collection.stream()
@@ -211,8 +206,8 @@ public class QueueManager implements CollectionManager{
                         collection.remove(x);
                         generatedID.removeID(x.getId());
                     });
-            System.out.println("Removing " + (size - collection.size()) + " elements");
-        } else System.err.println("Nothing to remove! Collection is empty!");
+            return size - collection.size();
+        } else return 0;
     }
 
     /**

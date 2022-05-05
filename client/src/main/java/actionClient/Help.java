@@ -1,6 +1,5 @@
-package serverAction.commands;
+package actionClient;
 
-import action.AbstractCommand;
 import action.TypeCommand;
 
 import java.util.Set;
@@ -8,7 +7,7 @@ import java.util.Set;
 /**
  * used to describe the actions of the commands
  */
-public class Help  extends AbstractCommand {
+public class Help  extends AbstractCommandClient {
     public Help(){
         super("help",
                 Set.of(TypeCommand.USER),

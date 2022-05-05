@@ -1,6 +1,5 @@
-package serverAction.commands;
+package actionClient;
 
-import action.AbstractCommand;
 import action.TypeCommand;
 
 import java.util.Set;
@@ -8,7 +7,7 @@ import java.util.Set;
 /**
  * History of commands executed
  */
-public class History extends AbstractCommand {
+public class History extends AbstractCommandClient {
     public History(){
         super("history",
                 Set.of(TypeCommand.USER),

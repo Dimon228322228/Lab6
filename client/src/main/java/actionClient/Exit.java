@@ -1,6 +1,5 @@
-package serverAction.commands;
+package actionClient;
 
-import action.AbstractCommand;
 import action.TypeCommand;
 
 import java.util.Set;
@@ -8,7 +7,7 @@ import java.util.Set;
 /**
  * terminates commands
  */
-public class Exit extends AbstractCommand {
+public class Exit extends AbstractCommandClient {
     public Exit(){
         super("exit",
                 Set.of(TypeCommand.USER),

@@ -1,6 +1,5 @@
-package serverAction.commands;
+package actionClient;
 
-import action.AbstractCommand;
 import action.TypeCommand;
 
 import java.io.File;
@@ -10,7 +9,7 @@ import java.util.Set;
 /**
  * runs the script from file
  */
-public class ExecuteScript extends AbstractCommand {
+public class ExecuteScript extends AbstractCommandClient {
     private final static Set<File> files = new HashSet<>();
     public ExecuteScript(){
         super("executeScript",

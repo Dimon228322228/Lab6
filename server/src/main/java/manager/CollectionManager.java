@@ -2,7 +2,10 @@ package manager;
 
 import content.Product;
 import content.UnitOfMeasure;
+import exceptions.EmptyFileException;
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.util.List;
 
 public interface CollectionManager {
@@ -34,17 +37,17 @@ public interface CollectionManager {
     /**
      * Upload collection in file
      */
-    void save();
+    void save() throws JAXBException, IOException, EmptyFileException;
 
     /**
      * Add element in collection if he is great then all
      */
-    void addIfMax(Product product);
+    boolean addIfMax(Product product);
 
     /**
      * Remove all element lower then given
      */
-    void removeLower(Product product);
+    int removeLower(Product product);
 
     /**
      * Count all element then manufactureCost equals given

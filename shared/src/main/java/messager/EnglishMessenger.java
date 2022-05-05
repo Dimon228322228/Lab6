@@ -71,13 +71,6 @@ public class EnglishMessenger extends AbstractMessenger {
         explanations.put("passportId", "Owner passport id");
     }
 
-    /**
-     * @return collection information
-     */
-    @Override
-    public String getCollectionMessage(String type, String size, String creationDate) {
-        return "Collection type: " + type + "\nCollection size: " + size + "\nInitialization time: " + creationDate;
-    }
 
     /**
      * @return an invitation to enter simple fields
