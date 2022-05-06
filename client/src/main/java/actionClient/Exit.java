@@ -8,15 +8,16 @@ import java.util.Set;
  * terminates commands
  */
 public class Exit extends AbstractCommandClient {
-    public Exit(){
+    public Exit(CommandHandlerClient comHandl){
         super("exit",
                 Set.of(TypeCommand.USER),
                 "terminate program (without saving to file)");
+        this.comHandl = comHandl;
     }
     /**
      * stops executing commands
      */
-    public void execute() {
-
+    public String execute() {
+        return "exit";
     }
 }

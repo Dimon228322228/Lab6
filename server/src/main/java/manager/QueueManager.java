@@ -7,6 +7,7 @@ import exceptions.EmptyFileException;
 import exceptions.ProductNotFoundException;
 
 import javax.xml.bind.JAXBException;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
 import java.time.ZonedDateTime;
@@ -41,7 +42,7 @@ public class QueueManager implements CollectionManager{
      */
     private static final GeneratedID generatedID = new GeneratedID();
 
-    private static QueueManager instance = null;
+    private static QueueManager instance;
 
     private QueueManager() throws JAXBException {
         this.fileManager = new FileManager();
@@ -69,6 +70,14 @@ public class QueueManager implements CollectionManager{
         return new ArrayList<>(List.of(collection.getClass().toString(),
                                         String.valueOf(collection.size()),
                                         date.toString()));
+    }
+
+    /**
+     * set creation date and set unique id
+     */
+    public void setAutomaticGenerateField(Product product){
+        product.setCreationDate(new Date());
+        product.setId(generatedID.getID()) ;
     }
 
     /**
@@ -102,14 +111,14 @@ public class QueueManager implements CollectionManager{
         String nameVariable;
         System.getenv().forEach((k, v) -> System.out.println(k + " : " + v));
         try {
-            Scanner scr = new Scanner(System.in);
-            nameVariable = scr.nextLine();
+            BufferedReader scr = new BufferedReader(System.console().reader());
+            nameVariable = scr.readLine();
             filepath = System.getenv(nameVariable);
             if (filepath == null || filepath.equals("")) {
                 System.out.println("This environment variable not exist.");
                 setFilepath();
             }
-        } catch (NoSuchElementException | IllegalStateException | SecurityException | NullPointerException e) {
+        } catch (NoSuchElementException | IllegalStateException | SecurityException | NullPointerException | IOException e) {
             System.err.println(e.getMessage());
         }
     }
@@ -126,8 +135,8 @@ public class QueueManager implements CollectionManager{
      */
     @Override
     public void add(Product product) {
+        setAutomaticGenerateField(product);
         collection.add(product);
-        generatedID.setID(product.getId());
     }
 
     /**
@@ -182,7 +191,6 @@ public class QueueManager implements CollectionManager{
                 add(product);
                 return true;
             } else {
-                generatedID.removeID(product.getId());
                 return false;
             }
         } else {

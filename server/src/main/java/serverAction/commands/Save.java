@@ -1,6 +1,5 @@
 package serverAction.commands;
 
-import exception.CannotSaveException;
 import exceptions.EmptyFileException;
 import serverAction.AbstractCommandServer;
 import serverAction.ExecutionResources;

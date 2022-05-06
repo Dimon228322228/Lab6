@@ -1,11 +1,12 @@
 package serverAction;
 
-import action.Command;
 import action.CommandData;
 import action.TypeCommand;
+import lombok.Setter;
 import manager.CollectionManager;
 import manager.QueueManager;
 import serverAction.commands.*;
+import transmission.Request;
 
 import javax.xml.bind.JAXBException;
 import java.util.HashMap;
@@ -20,7 +21,8 @@ import java.util.stream.Stream;
 public class CommandHandler {
     CollectionManager colManag = QueueManager.getInstance();
     ExecutionResources execRes = new ExecutionResources(colManag);
-    private final Map<String, Command> commandMap = new HashMap<>();
+    @Setter Request request;
+    private final Map<String, AbstractCommandServer> commandMap = new HashMap<>();
 
     public CommandHandler() throws JAXBException {
         Stream.of(new Add(execRes), new AddIfMax(execRes), new Clear(execRes), new CountByManufactureCost(execRes),
@@ -40,7 +42,7 @@ public class CommandHandler {
     /**
      * @return command from string
      */
-    public Command getCommand(String commandName) {
+    public AbstractCommandServer getCommand(String commandName) {
         return commandMap.get(commandName);
     }
 
@@ -49,18 +51,24 @@ public class CommandHandler {
      * add given command in history if it is correct
      * calls a method to execute a certain type of command
      */
-    public void executeCommand() {
-//        Object command = getCommand(commandName);
-//        if (commandName.equals("") || command == null){
-//            System.err.println((new UnknownCommandException()).getMessage());
-//            return;
-//        }
-//        addCommandInHistory(commandName);
-//        try {
-//            command.execute(collectionManager, reader, arg, messenger, this);
-//        } catch (Exception e){
-//            System.err.println(e.getMessage());
-//        }
+    public String executeCommand(String commandName) {
+        AbstractCommandServer command = getCommand(commandName);
+        StringBuilder builder = new StringBuilder();
+        if (command.getCommandData().getTypes().contains(TypeCommand.ARG)) setArg(command);
+        if (command.getCommandData().getTypes().contains(TypeCommand.PRODUCT)) setProduct(command);
+        try {
+            builder.append(command.execute());
+        } catch (Exception e){
+            builder.append(e.getMessage());
+        }
+        return builder.toString();
     }
 
+    private void setArg(AbstractCommandServer command){
+        command.getExecutionResources().setArg(request.getArg());
+    }
+
+    private void setProduct(AbstractCommandServer command){
+        command.getExecutionResources().setProduct(request.getProduct());
+    }
 }

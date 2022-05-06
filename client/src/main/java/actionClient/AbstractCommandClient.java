@@ -9,8 +9,9 @@ import java.util.Set;
 
 public abstract class AbstractCommandClient implements Command {
     @Getter CommandData commandData;
+    protected CommandHandlerClient comHandl;
     public AbstractCommandClient(String name, Set<TypeCommand> types, String description){
         commandData = new CommandData(name, types, description);
     }
-    public abstract void execute();
+    public abstract String  execute();
 }

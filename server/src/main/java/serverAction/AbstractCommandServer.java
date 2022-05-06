@@ -13,4 +13,5 @@ public abstract class AbstractCommandServer implements Command {
     public AbstractCommandServer(String name, Set<TypeCommand> types, String description){
         commandData = new CommandData(name, types, description);
     }
+    public abstract String execute();
 }
