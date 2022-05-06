@@ -2,15 +2,13 @@ package connection;
 
 import exceptions.InvalidRecievedException;
 import serverAction.CommandHandler;
-import transmission.HandlerMessage;
 import transmission.Request;
+import transmission.Response;
+import transmissionServer.HandlerMessageServer;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.Iterator;
 import java.util.Map;
@@ -26,7 +24,7 @@ public class Server {
     private final Selector selector;
     private ServerSocketChannel serChannel;
     private SocketChannel readableChannel;
-    HandlerMessage handleMessage = new HandlerMessage();
+    HandlerMessageServer handlerMessage = new HandlerMessageServer();
     private final Map<SocketChannel, Request> registrationRequest = new ConcurrentHashMap<>();
 
 
@@ -84,7 +82,7 @@ public class Server {
     private void createNewChannel() throws IOException {
         SocketChannel socketChannel = serChannel.accept();
         socketChannel.configureBlocking(false);
-        sendCommand(socketChannel);
+        handlerMessage.sendCommandData(socketChannel, commandHandler);
         socketChannel.register(selector, SelectionKey.OP_READ);
     }
 
@@ -92,7 +90,7 @@ public class Server {
         readableChannel = (SocketChannel) key.channel();
         Request request = null;
         try {
-            request = handleMessage.readMessage(readableChannel);
+            request = handlerMessage.readMessage(readableChannel);
         } catch (IOException | InvalidRecievedException | ClassCastException e) {
             System.err.println(e.getMessage());
             closeChannel(readableChannel);
@@ -117,21 +115,24 @@ public class Server {
         }
     }
 
-    private void writeByKey(SelectionKey key) throws ClosedChannelException {
+    private void writeByKey(SelectionKey key) {
         SocketChannel writeableChannel = (SocketChannel) key.channel();
         Request clientRequest = registrationRequest.get(writeableChannel);
+        commandHandler.setRequest(clientRequest);
+        String answer = commandHandler.executeCommand(clientRequest.getCommandName());
+        Response response = new Response(answer);
+        try {
+            handlerMessage.sendMessage(writeableChannel, response);
+        } catch (IOException | ClassCastException e) {
+            System.err.println(e.getMessage());
+            closeChannel(writeableChannel);
+        }
+        try{
+            writeableChannel.register(selector, SelectionKey.OP_READ);
+        } catch (ClosedChannelException e) {
+            System.err.println(e.getMessage());
+        }
 
-        // doing command and create response
-//        handleMessage.sendMessage(writeableChannel, response);
-        writeableChannel.register(selector, SelectionKey.OP_READ);
-    }
-
-    private void sendCommand(SocketChannel channel) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        objectOutputStream.writeObject(commandHandler.getCommandDataForUser());
-        ByteBuffer byteBuffer = ByteBuffer.wrap(byteArrayOutputStream.toByteArray());
-        channel.write(byteBuffer);
     }
 
     private void handleServerInput(){

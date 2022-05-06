@@ -18,7 +18,7 @@ public class App {
         try {
             server = new Server(8800, commandHandler);
             server.run();
-//            commandHandler.executeCommand(); to do saving used commandHandler
+            System.out.println(commandHandler.executeCommand("save"));
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

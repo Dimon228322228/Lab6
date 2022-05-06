@@ -9,8 +9,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * a class of product
@@ -27,14 +25,6 @@ public class Product implements Serializable, Comparable<Product> {
     @Getter @Setter private double manufactureCost ; //
     @XmlJavaTypeAdapter(value = UnitSerializer.class) @Getter @Setter private UnitOfMeasure unitOfMeasure ; // maybe null
     @Getter @Setter private Person owner ; // maybe null
-
-    /**
-     * set creation date and set unique id
-     */
-    public void setAutomaticGenerateField(){
-        setCreationDate(new Date());
-        setId(GeneratedID.getID());
-    }
 
     @Override
     public boolean equals(Object o){
@@ -76,39 +66,4 @@ public class Product implements Serializable, Comparable<Product> {
         return this.getName().compareTo(o.getName());
     }
 
-    static class GeneratedID {
-        private static final Set<Long> idSet = new HashSet<>();
-
-        /**
-         * Get id which don't exist in set
-         * @return id
-         */
-        public static long getID() {
-            long id = 0;
-            do{
-                id ++;
-            } while (idExists(id));
-            idSet.add(id);
-            return id;
-        }
-
-        /**
-         * does an id exist in a set
-         * @return true if exist
-         */
-        public static boolean idExists(Long id){
-            return idSet.contains(id);
-        }
-
-        /**
-         * Remove an id from the set
-         */
-        public static void removeID(long id) {
-            idSet.remove(id);
-        }
-
-        public static void setID(long id){idSet.add(id);}
-
-        public static void clearIdSet(){idSet.clear();}
-    }
 }

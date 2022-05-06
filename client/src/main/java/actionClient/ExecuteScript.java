@@ -11,15 +11,16 @@ import java.util.Set;
  */
 public class ExecuteScript extends AbstractCommandClient {
     private final static Set<File> files = new HashSet<>();
-    public ExecuteScript(){
+    public ExecuteScript(CommandHandlerClient comHandl){
         super("executeScript",
                 Set.of(TypeCommand.USER, TypeCommand.EXECUTED, TypeCommand.ARG),
                 "read and execute the script from the specified file");
+        this.comHandl = comHandl;
     }
     /**
      * executes a script if file correctness
      */
-    public void execute(){
+    public String execute(){
 //        File file;
 //        try {
 //            file = new File(arg);
@@ -39,5 +40,6 @@ public class ExecuteScript extends AbstractCommandClient {
 //            System.err.println("File with name " + file.getName() + " is not found");
 //        }
 //        files.remove(file);
+        return null;
     }
 }

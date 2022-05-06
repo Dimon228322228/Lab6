@@ -4,10 +4,9 @@ import action.CommandData;
 import action.TypeCommand;
 import content.BuilderProduct;
 import content.Product;
+import content.UnitOfMeasure;
 import exceptions.InvalidProductFieldException;
 import exceptions.UnknownCommandException;
-import messager.EnglishMessenger;
-import messager.Messenger;
 import transmission.Request;
 
 import java.io.BufferedReader;
@@ -61,45 +60,44 @@ public class ReaderConsole implements Reader{
 
     private Product readProduct() throws IOException {
         BuilderProduct builderProduct = new BuilderProduct();
-        Messenger messenger = EnglishMessenger.getInstance();
 
-        System.out.println(messenger.getFieldInvitationMessage("name"));
+        System.out.println(getFieldInvitationMessage("product name"));
         setField(reader.readLine(), builderProduct::setName);
 
-        System.out.println(messenger.getFieldInvitationMessage("x"));
+        System.out.println(getFieldInvitationMessage("x coordinate"));
         setField(reader.readLine(), builderProduct::setXCoordinate);
 
-        System.out.println(messenger.getFieldInvitationMessage("y"));
+        System.out.println(getFieldInvitationMessage("y coordinate"));
         setField(reader.readLine(), builderProduct::setYCoordinate);
 
-        System.out.println(messenger.getFieldInvitationMessage("price"));
+        System.out.println(getFieldInvitationMessage("price"));
         setField(reader.readLine(), builderProduct::setPrice);
 
-        System.out.println(messenger.getFieldInvitationMessage("partNumber"));
+        System.out.println(getFieldInvitationMessage("part number"));
         setField(reader.readLine(), builderProduct::setPartNumber);
 
-        System.out.println(messenger.getFieldInvitationMessage("manufactureCost"));
+        System.out.println(getFieldInvitationMessage("manufacture cost"));
         setField(reader.readLine(), builderProduct::setManufactureCost);
 
-        System.out.println(messenger.getUnitOfMeasureInputInvitationMessage());
+        System.out.println("Choose value from list: " + UnitOfMeasure.getTitleInColumn() +  "And enter product unit of measurement: ");
         setField(reader.readLine(), builderProduct::setUnitOfMeasure);
 
         System.out.println("Is there an owner?(Y/n)");
         String str = reader.readLine();
         if (str.equals("Y") || str.equals("y") || str.equals("Yes") || str.equals("yes")) {
-            System.out.println(messenger.getFieldInvitationMessage("namePerson"));
+            System.out.println(getFieldInvitationMessage("owner name"));
             setField(reader.readLine(), builderProduct::setPersonName);
 
-            System.out.println(messenger.getPersonBirthdayInputInvitationMessage());
+            System.out.println("Enter owner birthday with separated - '-' (Year-Month-Day): ");
             setField(reader.readLine(), builderProduct::setPersonBirthday);
 
-            System.out.println(messenger.getFieldInvitationMessage("height"));
+            System.out.println(getFieldInvitationMessage("owner height"));
             setField(reader.readLine(), builderProduct::setPersonHeight);
 
-            System.out.println(messenger.getFieldInvitationMessage("weight"));
+            System.out.println(getFieldInvitationMessage("owner weight"));
             setField(reader.readLine(), builderProduct::setPersonWeight);
 
-            System.out.println(messenger.getFieldInvitationMessage("passportId"));
+            System.out.println(getFieldInvitationMessage("owner passport id"));
             setField(reader.readLine(), builderProduct::setPersonPassportId);
         }
         return builderProduct.getProduct();
@@ -115,8 +113,16 @@ public class ReaderConsole implements Reader{
         }
     }
 
+    /**
+     * @return an invitation to enter simple fields
+     */
+    public String getFieldInvitationMessage(String nameField){
+        return "Enter " + nameField + ": ";
+    }
+
+
     private List<String> parseCommand(String input){
-        return Arrays.stream(input.trim().split("[ ]+ ")).toList();
+        return Arrays.asList(input.trim().split("[ ]+ "));
     }
 
     private boolean checkedCommandByType(String commandName, TypeCommand type){

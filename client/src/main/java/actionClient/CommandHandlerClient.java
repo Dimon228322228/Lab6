@@ -2,20 +2,27 @@ package actionClient;
 
 import action.Command;
 import action.CommandData;
+import action.TypeCommand;
 import lombok.Getter;
+import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CommandHandlerClient {
     private final ArrayBlockingQueue<String> historyCommand = new ArrayBlockingQueue<>(13);
-    Set<Command> commands = Set.of(new Help(), new ExecuteScript(), new Exit(), new History());
-    @Getter  List<CommandData> commandData;
+    private final Map<String, Command> commandMap = new HashMap<>();
 
-    public CommandHandlerClient(List<CommandData> commandData){
-        this.commandData = commandData;
+    @Getter @Setter List<CommandData> serverCommandsData;
+
+    public CommandHandlerClient(){
+        Stream.of(new Help(this), new ExecuteScript(this), new Exit(this), new History(this))
+                .forEach(x -> commandMap.put(x.getCommandData().getName(), x));
     }
 
     /**
@@ -29,6 +36,13 @@ public class CommandHandlerClient {
         }
     }
 
+    public List<CommandData> getCurrentCommandData(){
+        return commandMap.keySet().stream()
+                .map(commandMap::get)
+                .map(Command::getCommandData)
+                .collect(Collectors.toList());
+    }
+
     /**
      * @return history command as column in console
      */
@@ -38,11 +52,17 @@ public class CommandHandlerClient {
                 System.lineSeparator()));
     }
 
-    public void executeCommand() {
+    public String executeCommand(String nameCommand) {
+        Optional<Command> command = getCommand(nameCommand);
+        if (command.isPresent()){
+            if (command.get().getCommandData().getTypes().contains(TypeCommand.EXECUTED)){
 
+            }
+        }
+        return null;
     }
 
-    public Command getCommand(String commandName) {
-        return null;
+    public Optional<Command> getCommand(String commandName) {
+        return Optional.of(commandMap.get(commandName));
     }
 }
