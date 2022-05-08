@@ -1,5 +1,7 @@
 package actionClient;
 
+import action.ResultAction;
+import action.State;
 import action.TypeCommand;
 
 import java.io.File;
@@ -11,23 +13,22 @@ import java.util.Set;
  */
 public class ExecuteScript extends AbstractCommandClient {
     private final static Set<File> files = new HashSet<>();
-    public ExecuteScript(CommandHandlerClient comHandl){
+    public ExecuteScript(CommandController comContr){
         super("executeScript",
                 Set.of(TypeCommand.USER, TypeCommand.EXECUTED, TypeCommand.ARG),
                 "read and execute the script from the specified file");
-        this.comHandl = comHandl;
+        this.comContr = comContr;
     }
     /**
      * executes a script if file correctness
      */
-    public String execute(){
-//        File file;
-//        try {
-//            file = new File(arg);
-//        } catch (NullPointerException ignored) {
-//            System.err.println("No such this file.");
-//            return;
-//        }
+    public ResultAction execute(){
+        File file;
+        try {
+            file = new File(comContr.getArgCommand());
+        } catch (NullPointerException ignored) {
+            return new ResultAction(State.ERROR, "No such this file.");
+        }
 //        if(files.contains(file)) {
 //            System.err.println("Error. Script recursion has been detected.");
 //            return;

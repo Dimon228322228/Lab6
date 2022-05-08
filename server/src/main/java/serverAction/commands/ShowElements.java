@@ -1,5 +1,7 @@
 package serverAction.commands;
 
+import action.ResultAction;
+import action.State;
 import action.TypeCommand;
 import serverAction.AbstractCommandServer;
 import serverAction.ExecutionResources;
@@ -12,20 +14,20 @@ import java.util.Set;
 public class ShowElements extends AbstractCommandServer {
     public ShowElements(ExecutionResources executionResources){
         super("show",
-                Set.of(TypeCommand.USER),
+                Set.of(TypeCommand.EXTERNAL),
                 "print all elements of the collection in string representation");
         this.executionResources = executionResources;
     }
     /**
      * a single method for showing all elements
      */
-    public String execute() {
+    public ResultAction execute() {
         StringBuilder builder = new StringBuilder();
         if (executionResources.getCollectionManager().showElements().isEmpty()){
-            return "Nothing";
+            return new ResultAction(State.FAILED, "Nothing");
         }else {
             executionResources.getCollectionManager().showElements().forEach(builder::append);
-            return builder.toString();
+            return new ResultAction(State.SUCCESS, builder.toString());
         }
     }
 }

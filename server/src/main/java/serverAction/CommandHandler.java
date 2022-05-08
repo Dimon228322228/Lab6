@@ -1,6 +1,7 @@
 package serverAction;
 
 import action.CommandData;
+import action.ResultAction;
 import action.TypeCommand;
 import lombok.Setter;
 import manager.CollectionManager;
@@ -34,7 +35,7 @@ public class CommandHandler {
 
     public List<CommandData> getCommandDataForUser(){
         return commandMap.keySet().stream()
-                .filter(x -> commandMap.get(x).getCommandData().getTypes().contains(TypeCommand.USER))
+                .filter(x -> commandMap.get(x).getCommandData().getTypes().contains(TypeCommand.EXTERNAL))
                 .map(x -> commandMap.get(x).getCommandData())
                 .collect(Collectors.toList());
     }
@@ -51,17 +52,11 @@ public class CommandHandler {
      * add given command in history if it is correct
      * calls a method to execute a certain type of command
      */
-    public String executeCommand(String commandName) {
+    public ResultAction executeCommand(String commandName) {
         AbstractCommandServer command = getCommand(commandName);
-        StringBuilder builder = new StringBuilder();
         if (command.getCommandData().getTypes().contains(TypeCommand.ARG)) setArg(command);
         if (command.getCommandData().getTypes().contains(TypeCommand.PRODUCT)) setProduct(command);
-        try {
-            builder.append(command.execute());
-        } catch (Exception e){
-            builder.append(e.getMessage());
-        }
-        return builder.toString();
+        return command.execute();
     }
 
     private void setArg(AbstractCommandServer command){

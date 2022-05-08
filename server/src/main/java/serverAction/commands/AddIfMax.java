@@ -1,5 +1,7 @@
 package serverAction.commands;
 
+import action.ResultAction;
+import action.State;
 import action.TypeCommand;
 import content.Product;
 import exceptions.InvalidProductFieldException;
@@ -14,7 +16,7 @@ import java.util.Set;
 public class AddIfMax extends AbstractCommandServer {
     public AddIfMax(ExecutionResources executionResources){
         super("addIfMax",
-                Set.of(TypeCommand.USER, TypeCommand.PRODUCT),
+                Set.of(TypeCommand.EXTERNAL, TypeCommand.PRODUCT),
                 "add a new element to the collection if its value is greater than the value of the largest element in this collection");
         this.executionResources = executionResources;
     }
@@ -23,10 +25,10 @@ public class AddIfMax extends AbstractCommandServer {
      * compare it with max product
      * add given product in the collection if it is large max element
      */
-    public String execute() {
+    public ResultAction execute() {
         Product product = executionResources.getProduct();
-        if (product == null) throw new InvalidProductFieldException("Haven't got any product. Nothing compare and add. ");
-        if (executionResources.getCollectionManager().addIfMax(product)) return "The product has been added. ";
-        else return "The product hasn't been added because it is not largest. ";
+        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing compare and add. ");
+        if (executionResources.getCollectionManager().addIfMax(product)) return new ResultAction(State.SUCCESS, "The product has been added. ");
+        else return new ResultAction(State.FAILED, "The product hasn't been added because it is not largest. ");
     }
 }

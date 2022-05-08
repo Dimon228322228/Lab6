@@ -1,6 +1,6 @@
 package action;
 
 public interface Command {
-    String execute();
+    ResultAction execute();
     CommandData getCommandData();
 }

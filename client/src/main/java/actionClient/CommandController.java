@@ -2,25 +2,25 @@ package actionClient;
 
 import action.Command;
 import action.CommandData;
-import action.TypeCommand;
+import action.ResultAction;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class CommandHandlerClient {
+public class CommandController {
+    @Getter @Setter private String argCommand;
     private final ArrayBlockingQueue<String> historyCommand = new ArrayBlockingQueue<>(13);
     private final Map<String, Command> commandMap = new HashMap<>();
 
     @Getter @Setter List<CommandData> serverCommandsData;
 
-    public CommandHandlerClient(){
+    public CommandController(){
         Stream.of(new Help(this), new ExecuteScript(this), new Exit(this), new History(this))
                 .forEach(x -> commandMap.put(x.getCommandData().getName(), x));
     }
@@ -29,7 +29,7 @@ public class CommandHandlerClient {
      * add command in history
      * if history is larger than 13, the first one added will be deleted
      */
-    private void addCommandInHistory(String command){
+    public void addCommandInHistory(String command){
         if (!historyCommand.offer(command)){
             historyCommand.remove();
             historyCommand.add(command);
@@ -43,6 +43,14 @@ public class CommandHandlerClient {
                 .collect(Collectors.toList());
     }
 
+    public List<CommandData> getFullCommandData(){
+        List<CommandData> commandData = commandMap.keySet().stream()
+                .map(commandMap::get)
+                .map(Command::getCommandData).toList();
+        commandData.addAll(serverCommandsData);
+        return commandData;
+    }
+
     /**
      * @return history command as column in console
      */
@@ -52,17 +60,12 @@ public class CommandHandlerClient {
                 System.lineSeparator()));
     }
 
-    public String executeCommand(String nameCommand) {
-        Optional<Command> command = getCommand(nameCommand);
-        if (command.isPresent()){
-            if (command.get().getCommandData().getTypes().contains(TypeCommand.EXECUTED)){
-
-            }
-        }
-        return null;
+    public ResultAction executeCommand(String nameCommand) {
+        Command command = getCommand(nameCommand);
+        return command.execute();
     }
 
-    public Optional<Command> getCommand(String commandName) {
-        return Optional.of(commandMap.get(commandName));
+    public Command getCommand(String commandName) {
+        return commandMap.get(commandName);
     }
 }

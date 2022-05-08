@@ -1,5 +1,6 @@
 package connection;
 
+import action.ResultAction;
 import exceptions.InvalidRecievedException;
 import serverAction.CommandHandler;
 import transmission.Request;
@@ -119,7 +120,7 @@ public class Server {
         SocketChannel writeableChannel = (SocketChannel) key.channel();
         Request clientRequest = registrationRequest.get(writeableChannel);
         commandHandler.setRequest(clientRequest);
-        String answer = commandHandler.executeCommand(clientRequest.getCommandName());
+        ResultAction answer = commandHandler.executeCommand(clientRequest.getCommandName());
         Response response = new Response(answer);
         try {
             handlerMessage.sendMessage(writeableChannel, response);

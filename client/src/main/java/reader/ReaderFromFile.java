@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class ReaderFromFile implements Reader{
+public class ReaderFromFile {
     BufferedReader reader;
     List<CommandData> commandData;
 
@@ -28,7 +28,6 @@ public class ReaderFromFile implements Reader{
         return null;
     }
 
-    @Override
     public List<Request> run() throws UnknownCommandException, IOException {
         return  null;
     }
