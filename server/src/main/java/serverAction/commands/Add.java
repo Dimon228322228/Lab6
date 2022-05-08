@@ -1,5 +1,7 @@
 package serverAction.commands;
 
+import action.ResultAction;
+import action.State;
 import action.TypeCommand;
 import content.Product;
 import exceptions.InvalidProductFieldException;
@@ -14,17 +16,17 @@ import java.util.Set;
 public class Add extends AbstractCommandServer {
     public Add(ExecutionResources executionResources){
         super("add",
-                Set.of(TypeCommand.USER, TypeCommand.PRODUCT),
+                Set.of(TypeCommand.EXTERNAL, TypeCommand.PRODUCT),
                 "add a new {Product} to the collection");
         this.executionResources = executionResources;
     }
     /**
      * add product in the collection
      */
-    public String execute() throws InvalidProductFieldException{
+    public ResultAction execute() throws InvalidProductFieldException{
         Product product = executionResources.getProduct();
-        if (product == null) throw new InvalidProductFieldException("Haven't got any product. Nothing adding. ");
+        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing adding. ");
         executionResources.getCollectionManager().add(product);
-        return "Product has been added successful. ";
+        return new ResultAction(State.SUCCESS, "Product has been added successful. ");
     }
 }

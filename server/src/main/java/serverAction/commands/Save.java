@@ -1,5 +1,7 @@
 package serverAction.commands;
 
+import action.ResultAction;
+import action.State;
 import exceptions.EmptyFileException;
 import serverAction.AbstractCommandServer;
 import serverAction.ExecutionResources;
@@ -22,12 +24,12 @@ public class Save extends AbstractCommandServer {
     /**
      * a single method for saving collection in file (format XML)
      */
-    public String execute() {
+    public ResultAction execute() {
         try {
             executionResources.getCollectionManager().save();
         } catch (JAXBException | EmptyFileException | IOException | InvalidPathException e) {
-            return "Can't save the collection. ";
+            return new ResultAction(State.ERROR, "Can't save the collection. ");
         }
-        return "The collection has been saved. ";
+        return new ResultAction(State.SUCCESS, "The collection has been saved. ");
     }
 }

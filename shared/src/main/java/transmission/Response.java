@@ -1,13 +1,12 @@
 package transmission;
 
+import action.ResultAction;
 import lombok.Getter;
 
 public class Response {
-    @Getter private final String arg;
-//    @Getter private final ResponseMode responseMode;
+    @Getter private final ResultAction resultAction;
 
-    public Response(String arg){
-//        this.responseMode = responseMode;
-        this.arg = arg;
+    public Response(ResultAction resultAction){
+        this.resultAction = resultAction;
     }
 }

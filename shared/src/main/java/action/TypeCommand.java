@@ -4,5 +4,6 @@ public enum TypeCommand {
     PRODUCT,
     EXECUTED,
     USER,
-    ARG
+    ARG,
+    EXTERNAL
 }

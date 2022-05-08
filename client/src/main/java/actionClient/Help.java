@@ -1,5 +1,7 @@
 package actionClient;
 
+import action.ResultAction;
+import action.State;
 import action.TypeCommand;
 
 import java.util.Set;
@@ -8,33 +10,33 @@ import java.util.Set;
  * used to describe the actions of the commands
  */
 public class Help  extends AbstractCommandClient {
-    public Help(CommandHandlerClient comHandl){
+    public Help(CommandController comContr){
         super("help",
                 Set.of(TypeCommand.USER),
                 "displays reference about all commands");
-        this.comHandl = comHandl;
+        this.comContr = comContr;
     }
     /**
      * outputs a description of the commands
      */
-    public String execute() {
+    public ResultAction execute() {
         StringBuilder builder = new StringBuilder();
         builder.append("Client command: ")
                 .append(System.lineSeparator());
-        comHandl.getCurrentCommandData()
+        comContr.getCurrentCommandData()
                 .forEach(x -> builder.append(x.getName())
                                      .append(" : ")
                                      .append(x.getDescription())
                                      .append(System.lineSeparator()));
         builder.append("Server command: ")
                 .append(System.lineSeparator());
-        comHandl.getServerCommandsData()
+        comContr.getServerCommandsData()
                 .forEach(x -> builder.append(x.getName())
                                      .append(" : ")
                                      .append(x.getDescription())
                                      .append(System.lineSeparator()));
         builder.append("NB! \"(argument)\" must be entered in in the same line as the command. Null it is empty string.")
                 .append(System.lineSeparator());
-        return builder.toString();
+        return new ResultAction(State.SUCCESS, builder.toString());
     }
 }

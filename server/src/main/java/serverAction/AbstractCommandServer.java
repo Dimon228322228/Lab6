@@ -2,6 +2,7 @@ package serverAction;
 
 import action.Command;
 import action.CommandData;
+import action.ResultAction;
 import action.TypeCommand;
 import lombok.Getter;
 
@@ -13,5 +14,5 @@ public abstract class AbstractCommandServer implements Command {
     public AbstractCommandServer(String name, Set<TypeCommand> types, String description){
         commandData = new CommandData(name, types, description);
     }
-    public abstract String execute();
+    public abstract ResultAction execute();
 }
