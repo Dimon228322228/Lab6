@@ -10,6 +10,7 @@ import reader.Reader;
 import transmission.Request;
 import transmission.Response;
 import transmissionClient.HandlerMesClient;
+import util.Supplier;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -24,10 +25,10 @@ public class CommandHandler {
     private final HandlerMesClient handlerMesClient;
     private final Session session;
 
-    public CommandHandler(CommandController commandController, HandlerMesClient handlerMesClient, Session session){
+    public CommandHandler(HandlerMesClient handlerMesClient, Session session){
         exchangeController = new ExchangeController();
         reader = new Reader(exchangeController);
-        controller = commandController;
+        controller = new CommandController(this, exchangeController);
         validatorCommand = new ValidatorCommand(controller.getFullCommandData());
         this.handlerMesClient = handlerMesClient;
         this.session = session;
@@ -35,7 +36,7 @@ public class CommandHandler {
 
     public void run()  {
         Optional<Product> product = Optional.empty();
-        Optional<String> commandOptional = readCommand();
+        Optional<String> commandOptional = read(reader::readCommand);
         String arg = "";
         if (commandOptional.isEmpty()) return;
         String commandline = commandOptional.get();
@@ -48,7 +49,7 @@ public class CommandHandler {
                 run();
             }
             if (validatorCommand.productPresent(commandList.get(0))){
-                product = readProduct();
+                product = read(reader::readProduct);
                 if (product.isEmpty()) return;
             }
             Optional<ResultAction> resultActionOptional;
@@ -60,33 +61,45 @@ public class CommandHandler {
                     if(result) run();
                 } catch (IOException e) {
                     exchangeController.writeErr("The IOException has been occurred. ");
+                    return;
                 }
             }
-            try {
-                session.disconnect();
-            } catch (IOException ignore) {}
+            if(session.reconnect(10)) run();
         } else {
             exchangeController.writeErr("This command is not found. Checked number arguments or name command. ");
             run();
         }
     }
 
+    public void updateCommandData() throws InvalidRecievedException, IOException {
+        controller.setServerCommandsData(handlerMesClient.getCommandData(session.getSocketChannel()));
+    }
+
     private List<String> parseCommand(String input){
         return Arrays.asList(input.trim().split("[ ]+ "));
     }
+//
+//    private Optional<String> readCommand(){
+//        try {
+//            return Optional.of(reader.readCommand());
+//        } catch (IOException e) {
+//            exchangeController.writeErr("The IOException has been occurred. ");
+//            return Optional.empty();
+//        }
+//    }
+//
+//    private Optional<Product> readProduct(){
+//        try {
+//            return Optional.of(reader.readProduct());
+//        } catch (IOException e) {
+//            exchangeController.writeErr("The IOException has been occurred. ");
+//            return Optional.empty();
+//        }
+//    }
 
-    private Optional<String> readCommand(){
+    private <T> Optional<T> read(Supplier<T> supplier){
         try {
-            return Optional.of(reader.readCommand());
-        } catch (IOException e) {
-            exchangeController.writeErr("The IOException has been occurred. ");
-            return Optional.empty();
-        }
-    }
-
-    private Optional<Product> readProduct(){
-        try {
-            return Optional.of(reader.readProduct());
+            return Optional.of(supplier.get());
         } catch (IOException e) {
             exchangeController.writeErr("The IOException has been occurred. ");
             return Optional.empty();
@@ -100,11 +113,11 @@ public class CommandHandler {
     }
 
     private Optional<ResultAction> handleServerCommand(String command, String arg, Product product) {
-        controller.addCommandInHistory(command);
         Request request = new Request(product, arg, command);
         try {
             handlerMesClient.sendMessage(session.getSocketChannel(), request);
             Response response = handlerMesClient.readMessage(session.getSocketChannel());
+            controller.addCommandInHistory(command);
             return Optional.of(response.getResultAction());
         } catch (IOException | InvalidRecievedException e) {
             exchangeController.writeErr("Sorry, exception is occurred. " + e.getMessage());

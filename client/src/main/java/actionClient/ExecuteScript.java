@@ -3,8 +3,9 @@ package actionClient;
 import action.ResultAction;
 import action.State;
 import action.TypeCommand;
+import reader.ExchangeController;
 
-import java.io.File;
+import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,11 +14,15 @@ import java.util.Set;
  */
 public class ExecuteScript extends AbstractCommandClient {
     private final static Set<File> files = new HashSet<>();
-    public ExecuteScript(CommandController comContr){
+    private final ExchangeController exchangeController;
+    private final CommandHandler commandHandler;
+    public ExecuteScript(CommandController comContr, ExchangeController exchangeController, CommandHandler commandHandler){
         super("executeScript",
                 Set.of(TypeCommand.USER, TypeCommand.EXECUTED, TypeCommand.ARG),
                 "read and execute the script from the specified file");
         this.comContr = comContr;
+        this.exchangeController = exchangeController;
+        this.commandHandler = commandHandler;
     }
     /**
      * executes a script if file correctness
@@ -29,18 +34,19 @@ public class ExecuteScript extends AbstractCommandClient {
         } catch (NullPointerException ignored) {
             return new ResultAction(State.ERROR, "No such this file.");
         }
-//        if(files.contains(file)) {
-//            System.err.println("Error. Script recursion has been detected.");
-//            return;
-//        }
-//        files.add(file);
-//        try{
-//            FileReader fileReader = new FileReader(commandFactory, file);
-//            fileReader.readCommand();
-//        } catch (FileNotFoundException e){
-//            System.err.println("File with name " + file.getName() + " is not found");
-//        }
-//        files.remove(file);
-        return null;
+        if(!files.add(file)) {
+            return new ResultAction(State.ERROR, "Error. Script recursion has been detected.");
+        }
+        try {
+            exchangeController.replaceIn(new BufferedReader(new FileReader(file)))
+                    .replaceOut(new BufferedWriter(new StringWriter()));
+        } catch (FileNotFoundException e) {
+            return new ResultAction(State.ERROR, "No such this file.");
+        }
+        commandHandler.run();
+        files.remove(file);
+        exchangeController.replaceOut(new BufferedWriter(System.console().writer()))
+                .replaceIn(new BufferedReader(System.console().reader()));
+        return new ResultAction(State.SUCCESS, "File " + file.getAbsolutePath() + "has been executed");
     }
 }

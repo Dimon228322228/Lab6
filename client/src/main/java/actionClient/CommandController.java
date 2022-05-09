@@ -5,6 +5,7 @@ import action.CommandData;
 import action.ResultAction;
 import lombok.Getter;
 import lombok.Setter;
+import reader.ExchangeController;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,12 +17,13 @@ import java.util.stream.Stream;
 public class CommandController {
     @Getter @Setter private String argCommand;
     private final ArrayBlockingQueue<String> historyCommand = new ArrayBlockingQueue<>(13);
-    private final Map<String, Command> commandMap = new HashMap<>();
+    private final Map<String, AbstractCommandClient> commandMap = new HashMap<>();
 
     @Getter @Setter List<CommandData> serverCommandsData;
 
-    public CommandController(){
-        Stream.of(new Help(this), new ExecuteScript(this), new Exit(this), new History(this))
+    public CommandController(CommandHandler commandHandler, ExchangeController exchangeController){
+        Stream.of(new Help(this), new ExecuteScript(this, exchangeController, commandHandler),
+                        new Exit(this), new History(this))
                 .forEach(x -> commandMap.put(x.getCommandData().getName(), x));
     }
 
@@ -61,11 +63,11 @@ public class CommandController {
     }
 
     public ResultAction executeCommand(String nameCommand) {
-        Command command = getCommand(nameCommand);
+        AbstractCommandClient command = getCommand(nameCommand);
         return command.execute();
     }
 
-    public Command getCommand(String commandName) {
+    public AbstractCommandClient getCommand(String commandName) {
         return commandMap.get(commandName);
     }
 }
