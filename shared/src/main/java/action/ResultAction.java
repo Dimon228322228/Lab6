@@ -2,7 +2,9 @@ package action;
 
 import lombok.Getter;
 
-public class ResultAction {
+import java.io.Serializable;
+
+public class ResultAction implements Serializable {
     @Getter private final State state;
     @Getter private final String description;
     public ResultAction(State state, String description){

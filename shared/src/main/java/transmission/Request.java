@@ -3,7 +3,9 @@ package transmission;
 import content.Product;
 import lombok.Getter;
 
-public class Request {
+import java.io.Serializable;
+
+public class Request implements Serializable {
     @Getter private final Product product;
     @Getter private final String arg;
     @Getter private final String commandName;

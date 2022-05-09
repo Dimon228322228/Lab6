@@ -2,9 +2,10 @@ package action;
 
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class CommandData {
+public class CommandData implements Serializable {
     @Getter String name;
     @Getter Set<TypeCommand> types;
     @Getter String description;
