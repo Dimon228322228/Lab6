@@ -1,6 +1,8 @@
 package action;
 
-public enum TypeCommand {
+import java.io.Serializable;
+
+public enum TypeCommand implements Serializable{
     PRODUCT,
     USER,
     ARG,

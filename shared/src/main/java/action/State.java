@@ -1,6 +1,8 @@
 package action;
 
-public enum State {
+import java.io.Serializable;
+
+public enum State implements Serializable {
     SUCCESS,
     FAILED,
     ERROR,
