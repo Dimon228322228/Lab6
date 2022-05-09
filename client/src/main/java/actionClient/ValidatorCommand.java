@@ -3,7 +3,6 @@ package actionClient;
 import action.CommandData;
 import action.TypeCommand;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ValidatorCommand {
