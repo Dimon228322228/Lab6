@@ -168,7 +168,7 @@ public class QueueManager implements CollectionManager{
      * Saves the collection to a file
      */
     @Override
-    public void save() throws JAXBException, IOException, InvalidPathException, EmptyFileException{
+    public void save() throws JAXBException, IOException, InvalidPathException, EmptyFileException, NullPointerException{
         if (filepath == null || filepath.equals("")) setFilepath();
         fileManager.saveCollectionInXML(collection, filepath);
     }

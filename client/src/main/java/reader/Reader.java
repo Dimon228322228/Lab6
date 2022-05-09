@@ -3,7 +3,6 @@ package reader;
 import content.BuilderProduct;
 import content.Product;
 import exceptions.InvalidProductFieldException;
-import exceptions.UnknownCommandException;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -15,33 +14,34 @@ public class Reader {
         this.exchanger = exchanger;
     }
 
-    public String readCommand() throws IOException, UnknownCommandException{
+    public String readCommand() throws IOException{
         return exchanger.readLine();
     }
 
     public Product readProduct() throws IOException {
         BuilderProduct builderProduct = new BuilderProduct();
-        setField(builderProduct::setName).setField(builderProduct::setXCoordinate).setField(builderProduct::setYCoordinate)
-                .setField(builderProduct::setPrice).setField(builderProduct::setPartNumber)
-                .setField(builderProduct::setManufactureCost).setField(builderProduct::setUnitOfMeasure);
+        setField(builderProduct, builderProduct::setName).setField(builderProduct, builderProduct::setXCoordinate)
+                .setField(builderProduct, builderProduct::setYCoordinate).setField(builderProduct, builderProduct::setPrice)
+                .setField(builderProduct, builderProduct::setPartNumber).setField(builderProduct, builderProduct::setManufactureCost)
+                .setField(builderProduct, builderProduct::setUnitOfMeasure);
         exchanger.writeMassage("Is there an owner?(Y/n)");
         String str = exchanger.readLine();
         if (str.equals("Y") || str.equals("y") || str.equals("Yes") || str.equals("yes")) {
-            setField(builderProduct::setPersonName).setField(builderProduct::setPersonBirthday)
-                    .setField(builderProduct::setPersonHeight).setField(builderProduct::setPersonWeight)
-                    .setField(builderProduct::setPersonPassportId);
+            setField(builderProduct, builderProduct::setPersonName).setField(builderProduct, builderProduct::setPersonBirthday)
+                    .setField(builderProduct, builderProduct::setPersonHeight).setField(builderProduct, builderProduct::setPersonWeight)
+                    .setField(builderProduct, builderProduct::setPersonPassportId);
         }
         return builderProduct.getProduct();
     }
 
-    private Reader setField(Consumer<String> setter) throws IOException{
+    private Reader setField(BuilderProduct builderProduct, Consumer<String> setter) throws IOException{
         try{
-            exchanger.writeMassage(BuilderProduct.getInvitation(setter));
+            exchanger.writeMassage(builderProduct.getInvitation(setter));
             setter.accept(exchanger.readLine());
         } catch (InvalidProductFieldException | NumberFormatException | DateTimeException e){
             System.err.println(e.getMessage());
             System.out.println("Please, entered the field again: ");
-            setField(setter);
+            setField(builderProduct, setter);
         }
         return this;
     }
