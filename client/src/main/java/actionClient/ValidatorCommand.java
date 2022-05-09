@@ -20,7 +20,7 @@ public class ValidatorCommand {
     }
 
     public boolean argPresent(String command, List<String> commandList){
-        return checkedCommandByType(command, TypeCommand.ARG) && commandList.size() == 2;
+        return checkedCommandByType(command, TypeCommand.ARG) ;
     }
 
     public boolean productPresent(String command){

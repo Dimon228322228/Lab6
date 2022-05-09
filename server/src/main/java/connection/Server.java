@@ -87,6 +87,7 @@ public class Server {
         socketChannel.configureBlocking(false);
         handlerMessage.sendCommandData(socketChannel, commandHandler);
         socketChannel.register(selector, SelectionKey.OP_READ);
+        System.out.print("New channel is connected. ");
     }
 
     private void readByKey(SelectionKey key) {
@@ -110,7 +111,8 @@ public class Server {
     }
 
     private void registerRequest(Request request){
-        registrationRequest.put(readableChannel, request);
+        if (request != null) registrationRequest.put(readableChannel, request);
+        else return;
         try{
             readableChannel.register(selector, SelectionKey.OP_WRITE);
         } catch (ClosedChannelException e) {
@@ -141,6 +143,7 @@ public class Server {
     private void handleServerInput(){
         String inputStr;
         try{
+            if (System.in.available() == 0) return;
             inputStr = bufferedReader.readLine();
         } catch (IOException ignore){
             return;

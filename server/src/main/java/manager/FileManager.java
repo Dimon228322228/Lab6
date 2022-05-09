@@ -40,7 +40,7 @@ public class FileManager {
      * @throws IOException if I/O exception occurred
      * @throws EmptyFileException if file is empty
      */
-    public File assertFileIsUsable(String dataFilePath) throws InvalidPathException, IOException, EmptyFileException {
+    public File assertFileIsUsable(String dataFilePath) throws InvalidPathException, IOException, EmptyFileException, NullPointerException {
         String filePath = Paths.get(dataFilePath).toAbsolutePath().toString();
         File fileToRetrieve = new File(filePath);
         if (!fileToRetrieve.exists())
@@ -59,7 +59,7 @@ public class FileManager {
      * @throws JAXBException If there was an error in the parser
      * @throws EmptyFileException if file is empty
      */
-    public void saveCollectionInXML(PriorityQueue<Product> collection, String fileName) throws IOException, InvalidPathException, JAXBException, EmptyFileException {
+    public void saveCollectionInXML(PriorityQueue<Product> collection, String fileName) throws IOException, InvalidPathException, JAXBException, EmptyFileException,NullPointerException {
         try (BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(assertFileIsUsable(fileName)))) {
             CollectionQueuer queueproduct = new CollectionQueuer();
             queueproduct.setProducts(collection);
@@ -79,8 +79,8 @@ public class FileManager {
         String dataStr = null;
         try {
             dataStr = this.getStrFromFile(filepath);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | NullPointerException e) {
+            return collection;
         }
         if (dataStr != null && !dataStr.equals("")) {
             try(StringReader reader = new StringReader(dataStr)) {
@@ -97,7 +97,7 @@ public class FileManager {
      * @throws InvalidPathException if file path invalid
      * @throws EmptyFileException if file is empty
      */
-    public String getStrFromFile(String filePath) throws IOException, InvalidPathException, EmptyFileException {
+    public String getStrFromFile(String filePath) throws IOException, InvalidPathException, EmptyFileException, NullPointerException {
         File fileToRetrieve = assertFileIsUsable(filePath);
         int len = 0;
         try {

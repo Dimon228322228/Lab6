@@ -16,7 +16,7 @@ public class BuilderProduct {
     private final CasterPersonFromString casterPersonFromString = new CasterPersonFromString();
     private final CasterFieldProductFromString casterFieldProductFromString = new CasterFieldProductFromString();
     private final CasterCoordinatesFromString casterCoordinatesFromString = new CasterCoordinatesFromString();
-    private static final Map<Consumer<String>, String> invitation = new HashMap<>();
+    private final Map<Consumer<String>, String> invitation = new HashMap<>();
 
     public BuilderProduct(){
         product = new Product();
@@ -106,7 +106,7 @@ public class BuilderProduct {
     /**
      * @return an invitation to enter simple fields
      */
-    public static String getInvitation(Consumer<String> setter){
+    public String getInvitation(Consumer<String> setter){
         return invitation.get(setter);
     }
 }

@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import reader.ExchangeController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,9 +47,9 @@ public class CommandController {
     }
 
     public List<CommandData> getFullCommandData(){
-        List<CommandData> commandData = commandMap.keySet().stream()
+        List<CommandData> commandData = new ArrayList<>( commandMap.keySet().stream()
                 .map(commandMap::get)
-                .map(Command::getCommandData).toList();
+                .map(Command::getCommandData).toList());
         commandData.addAll(serverCommandsData);
         return commandData;
     }
