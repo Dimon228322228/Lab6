@@ -9,6 +9,7 @@ import transmissionServer.HandlerMessageServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.nio.channels.*;
 import java.util.Iterator;
@@ -32,8 +33,9 @@ public class Server {
     public Server(int port, CommandHandler commandHandler) throws IOException {
         this.commandHandler = commandHandler;
         this.port = port;
-        bufferedReader = new BufferedReader(System.console().reader());
+        bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         selector = initSelector();
+        commandHandler.getCollectionFromFile();
     }
 
     private Selector initSelector() throws IOException{

@@ -18,7 +18,7 @@ public class ExecuteScript extends AbstractCommandClient {
     private final CommandHandler commandHandler;
     public ExecuteScript(CommandController comContr, ExchangeController exchangeController, CommandHandler commandHandler){
         super("executeScript",
-                Set.of(TypeCommand.USER, TypeCommand.EXECUTED, TypeCommand.ARG),
+                Set.of(TypeCommand.USER, TypeCommand.ARG),
                 "read and execute the script from the specified file");
         this.comContr = comContr;
         this.exchangeController = exchangeController;
@@ -45,8 +45,8 @@ public class ExecuteScript extends AbstractCommandClient {
         }
         commandHandler.run();
         files.remove(file);
-        exchangeController.replaceOut(new BufferedWriter(System.console().writer()))
-                .replaceIn(new BufferedReader(System.console().reader()));
+        exchangeController.replaceOut(new BufferedWriter(new OutputStreamWriter(System.out)))
+                .replaceIn(new BufferedReader(new InputStreamReader(System.in)));
         return new ResultAction(State.SUCCESS, "File " + file.getAbsolutePath() + "has been executed");
     }
 }

@@ -66,4 +66,8 @@ public class CommandHandler {
     private void setProduct(AbstractCommandServer command){
         command.getExecutionResources().setProduct(request.getProduct());
     }
+
+    public void getCollectionFromFile(){
+        colManag.parseDateFromFile();
+    }
 }
