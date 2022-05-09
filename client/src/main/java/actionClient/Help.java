@@ -4,6 +4,7 @@ import action.ResultAction;
 import action.State;
 import action.TypeCommand;
 
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -21,19 +22,19 @@ public class Help  extends AbstractCommandClient {
      */
     public ResultAction execute() {
         StringBuilder builder = new StringBuilder();
-        builder.append("Client command: ")
+        builder.append(" -------------- Client command ------------- ")
                 .append(System.lineSeparator());
         comContr.getCurrentCommandData()
                 .forEach(x -> builder.append(x.getName())
-                                     .append(" : ")
-                                     .append(x.getDescription())
+                                     .append(" : \n----- ")
+                                     .append(x.getDescription().toUpperCase())
                                      .append(System.lineSeparator()));
-        builder.append("Server command: ")
+        builder.append(" -------------- Server command ------------- ")
                 .append(System.lineSeparator());
         comContr.getServerCommandsData()
                 .forEach(x -> builder.append(x.getName())
-                                     .append(" : ")
-                                     .append(x.getDescription())
+                                     .append(" : \n----- ")
+                                     .append(x.getDescription().toUpperCase())
                                      .append(System.lineSeparator()));
         builder.append("NB! \"(argument)\" must be entered in in the same line as the command. Null it is empty string.")
                 .append(System.lineSeparator());

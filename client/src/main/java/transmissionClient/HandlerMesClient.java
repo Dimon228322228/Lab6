@@ -11,6 +11,7 @@ import java.nio.channels.SocketChannel;
 import java.util.List;
 
 public class HandlerMesClient {
+    @SuppressWarnings("unchecked")
     public List<CommandData> getCommandData(SocketChannel channel) throws IOException, InvalidRecievedException {
         byte[] buffer = new byte[8192];
         List<CommandData> recievedMessage;

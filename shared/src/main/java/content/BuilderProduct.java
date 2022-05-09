@@ -6,8 +6,6 @@ import content.caster.CasterPersonFromString;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 public class BuilderProduct {
     private final Product product;
@@ -16,7 +14,7 @@ public class BuilderProduct {
     private final CasterPersonFromString casterPersonFromString = new CasterPersonFromString();
     private final CasterFieldProductFromString casterFieldProductFromString = new CasterFieldProductFromString();
     private final CasterCoordinatesFromString casterCoordinatesFromString = new CasterCoordinatesFromString();
-    private final Map<Consumer<String>, String> invitation = new HashMap<>();
+    private static final Map<String, String> invitation = new HashMap<>();
 
     public BuilderProduct(){
         product = new Product();
@@ -89,24 +87,24 @@ public class BuilderProduct {
     }
 
     public void initialInvitation(){
-        invitation.put(this::setName, "Enter name product: ");
-        invitation.put(this::setXCoordinate, "Enter x coordinate: ");
-        invitation.put(this::setYCoordinate, "Enter y coordinate");
-        invitation.put(this::setPrice, "Enter price: ");
-        invitation.put(this::setPartNumber, "Enter part number: ");
-        invitation.put(this::setManufactureCost, "Enter manufacture cost: ");
-        invitation.put(this::setUnitOfMeasure, "Choose value from list: " + UnitOfMeasure.getTitleInColumn() + " And enter product unit of measurement: ");
-        invitation.put(this::setPersonName, "Enter owner name: ");
-        invitation.put(this::setPersonBirthday, "Enter owner birthday with separated - '-' (Year-Month-Day): ");
-        invitation.put(this::setPersonHeight, "Enter owner height: ");
-        invitation.put(this::setPersonWeight, "Enter person weight: ");
-        invitation.put(this::setPersonPassportId, "Enter owner passport id: ");
+        invitation.put("name", "Enter name product: ");
+        invitation.put("x", "Enter x coordinate: ");
+        invitation.put("y", "Enter y coordinate: ");
+        invitation.put("price", "Enter price: ");
+        invitation.put("part number", "Enter part number: ");
+        invitation.put("cost", "Enter manufacture cost: ");
+        invitation.put("unit", "Choose value from list: " + UnitOfMeasure.getTitleInColumn() + "And enter product unit of measurement: ");
+        invitation.put("oName", "Enter owner name: ");
+        invitation.put("oBirthday", "Enter owner birthday with separated - '-' (Year-Month-Day): ");
+        invitation.put("height", "Enter owner height: ");
+        invitation.put("weight", "Enter person weight: ");
+        invitation.put("passport", "Enter owner passport id: ");
     }
 
     /**
      * @return an invitation to enter simple fields
      */
-    public String getInvitation(Consumer<String> setter){
-        return invitation.get(setter);
+    public static String getInvitation(String str){
+        return invitation.get(str);
     }
 }

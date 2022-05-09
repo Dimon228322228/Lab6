@@ -9,8 +9,8 @@ public class ExchangeController {
     private PrintStream err = System.err;
 
     public void writeMassage(String str) throws IOException {
-        out.flush();
         out.write(str);
+        out.flush();
     }
 
     public String readLine() throws IOException {

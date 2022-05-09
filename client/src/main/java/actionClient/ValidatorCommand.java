@@ -19,7 +19,7 @@ public class ValidatorCommand {
                 .anyMatch(x -> x.contains(type));
     }
 
-    public boolean argPresent(String command, List<String> commandList){
+    public boolean argPresent(String command){
         return checkedCommandByType(command, TypeCommand.ARG) ;
     }
 

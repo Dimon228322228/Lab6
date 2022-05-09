@@ -46,42 +46,35 @@ public class CommandHandler {
     public void handleCommand()  {
         Optional<Product> product = Optional.empty();
         ValidatorCommand validatorCommand = new ValidatorCommand(controller.getFullCommandData());
-        Optional<String> commandOptional = readCommand();
+        Optional<String> commandOptional = read(reader::readCommand);
         String arg = "";
         if (commandOptional.isEmpty()) return;
         String commandline = commandOptional.get();
         List<String> commandList = parseCommand(commandline);
-        if(validatorCommand.commandValidString(commandList) && validatorCommand.isCommandPresent(commandList.get(0))){
-            if (validatorCommand.argPresent(commandList.get(0), commandList)) {
-                if (commandList.size() == 2) {
-                    arg = commandList.get(1);
-                } else {
-                    exchangeController.writeErr("You didn't write any argument of this command");
-                    return;
-                }
-            }
-            if (validatorCommand.productPresent(commandList.get(0))){
-                product = readProduct();
-                if (product.isEmpty()) return;
-            }
-            Optional<ResultAction> resultActionOptional;
-            if (validatorCommand.isUserCommand(commandList.get(0))) resultActionOptional = handleUserCommand(commandList.get(0), arg);
-            else resultActionOptional = handleServerCommand(commandList.get(0), arg, product.orElse(null));
-            if (resultActionOptional.isPresent()){
-                try{
-                    boolean result = handleResultAction(resultActionOptional.get());
-                    if(result) return;
-                } catch (IOException e) {
-                    exchangeController.writeErr("The IOException has been occurred. ");
-                    return;
-                }
-            }
-            if(session.reconnect(10)) return;
-        } else {
+        if(!(validatorCommand.commandValidString(commandList) && validatorCommand.isCommandPresent(commandList.get(0)))){
             exchangeController.writeErr("This command is not found. Checked number arguments or name command. ");
             return;
         }
-        resetFlag();
+        if (validatorCommand.argPresent(commandList.get(0))) {
+            if (commandList.size() != 2) {
+                exchangeController.writeErr("You didn't write any argument of this command");
+                return;
+            }
+            arg = commandList.get(1);
+        }
+        if (validatorCommand.productPresent(commandList.get(0))){
+            product = read(reader::readProduct);
+            if (product.isEmpty()) {
+                exchangeController.writeErr("For executing command need a product. ");
+                return;
+            }
+        }
+        Optional<ResultAction> resultActionOptional;
+        if (validatorCommand.isUserCommand(commandList.get(0))) resultActionOptional = handleUserCommand(commandList.get(0), arg);
+        else resultActionOptional = handleServerCommand(commandList.get(0), arg, product.orElse(null));
+        if (resultActionOptional.isEmpty()) return;
+        boolean result = handleResultAction(resultActionOptional.get());
+        if(!result) resetFlag();
     }
 
     public void updateCommandData() throws InvalidRecievedException, IOException {
@@ -92,32 +85,14 @@ public class CommandHandler {
         return Arrays.asList(input.trim().split("[ ]+ "));
     }
 
-    private Optional<String> readCommand(){
+    private <T> Optional<T> read(Supplier<T> supplier){
         try {
-            return Optional.of(reader.readCommand());
+            return Optional.of(supplier.get());
         } catch (IOException e) {
             exchangeController.writeErr("The IOException has been occurred. ");
             return Optional.empty();
         }
     }
-
-    private Optional<Product> readProduct(){
-        try {
-            return Optional.of(reader.readProduct());
-        } catch (IOException e) {
-            exchangeController.writeErr("The IOException has been occurred. ");
-            return Optional.empty();
-        }
-    }
-
-//    private <T> Optional<T> read(Supplier<T> supplier){
-//        try {
-//            return Optional.of(supplier.get());
-//        } catch (IOException e) {
-//            exchangeController.writeErr("The IOException has been occurred. ");
-//            return Optional.empty();
-//        }
-//    }
 
     private Optional<ResultAction> handleUserCommand(String command, String arg) {
         controller.addCommandInHistory(command);
@@ -138,11 +113,17 @@ public class CommandHandler {
         }
     }
 
-    private boolean handleResultAction(ResultAction resultAction) throws IOException {
+    private boolean handleResultAction(ResultAction resultAction) {
         String answer = resultAction.getDescription();
         switch (resultAction.getState()){
             case ERROR -> exchangeController.writeErr("Error: " + answer);
-            case SUCCESS -> exchangeController.writeMassage(answer);
+            case SUCCESS -> {
+                try {
+                    exchangeController.writeMassage(answer);
+                } catch (IOException e) {
+                    exchangeController.writeErr(e.getMessage());
+                }
+            }
             case FAILED -> exchangeController.writeErr(answer);
         }
         return resultAction.getState() != State.EXIT;

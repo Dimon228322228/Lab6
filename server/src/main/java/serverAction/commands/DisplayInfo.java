@@ -26,6 +26,6 @@ public class DisplayInfo extends AbstractCommandServer {
         List<String> info = executionResources.getCollectionManager().displayInfo();
         return new ResultAction(State.SUCCESS, "Collection type: " + info.get(0) +
                 "\nCollection size: " + info.get(1) +
-                "\nInitialization time: " + info.get(2));
+                "\nInitialization time: " + info.get(2) + "\n");
     }
 }
