@@ -11,6 +11,11 @@ repositories {
 dependencies {
     implementation project(':shared')
 
+    implementation 'javax.activation:activation:1.1.1'
+    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+    implementation 'javax.activation:javax.activation-api:1.2.0'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 

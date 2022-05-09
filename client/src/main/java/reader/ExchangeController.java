@@ -4,8 +4,8 @@ import java.io.*;
 
 public class ExchangeController {
 
-    private BufferedReader in = new BufferedReader(System.console().reader());
-    private BufferedWriter out = new BufferedWriter(System.console().writer());
+    private BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+    private BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
     private PrintStream err = System.err;
 
     public void writeMassage(String str) throws IOException {

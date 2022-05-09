@@ -18,7 +18,7 @@ public class App {
         try {
             server = new Server(8800, commandHandler);
             server.run();
-            System.out.println(commandHandler.executeCommand("save"));
+            System.out.println(commandHandler.executeCommand("save").getDescription());
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

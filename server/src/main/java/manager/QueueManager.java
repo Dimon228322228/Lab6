@@ -9,6 +9,7 @@ import exceptions.ProductNotFoundException;
 import javax.xml.bind.JAXBException;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.InvalidPathException;
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -111,7 +112,7 @@ public class QueueManager implements CollectionManager{
         String nameVariable;
         System.getenv().forEach((k, v) -> System.out.println(k + " : " + v));
         try {
-            BufferedReader scr = new BufferedReader(System.console().reader());
+            BufferedReader scr = new BufferedReader(new InputStreamReader(System.in));
             nameVariable = scr.readLine();
             filepath = System.getenv(nameVariable);
             if (filepath == null || filepath.equals("")) {

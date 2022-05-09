@@ -17,31 +17,6 @@ public class Reader {
 
     public String readCommand() throws IOException, UnknownCommandException{
         return exchanger.readLine();
-//        List<String> parsedCommand = parseCommand(input);
-//        if (parsedCommand.size() > 2) throw new UnknownCommandException();
-//        if (commands.stream().map(CommandData::getName).anyMatch(parsedCommand.get(0)::equals)){
-//                commandName = parsedCommand.get(0);
-//        } else throw new UnknownCommandException();
-//        if (checkedCommandByType(commandName, TypeCommand.ARG)){
-//            try {
-//                arg = parsedCommand.get(1);
-//            } catch (IndexOutOfBoundsException e){
-//                throw new UnknownCommandException("This command has a one argument");
-//            }
-//        }
-//        else arg = "";
-//        if (checkedCommandByType(commandName, TypeCommand.EXECUTED)) {
-//            try{
-//                File file = new File(arg);
-//                requestions.addAll(new ReaderFromFile(file, commands).run());
-//            } catch (NullPointerException ignored) {
-//                System.err.println("No such this file.");
-//                throw new UnknownCommandException("This command has a one argument");
-//            }
-//        }
-//        if (checkedCommandByType(commandName, TypeCommand.PRODUCT)){
-//            requestions.add(new Request(readProduct(), arg, commandName));
-//        } else requestions.add(new Request(null, arg, commandName));
     }
 
     public Product readProduct() throws IOException {

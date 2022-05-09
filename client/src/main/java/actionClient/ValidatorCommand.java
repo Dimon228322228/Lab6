@@ -27,10 +27,6 @@ public class ValidatorCommand {
         return checkedCommandByType(command, TypeCommand.PRODUCT);
     }
 
-    public boolean executeModePresent(String command){
-        return checkedCommandByType(command, TypeCommand.EXECUTED);
-    }
-
     public boolean isUserCommand(String command){
         return checkedCommandByType(command, TypeCommand.USER);
     }

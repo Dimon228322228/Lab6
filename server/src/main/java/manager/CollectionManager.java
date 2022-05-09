@@ -63,4 +63,6 @@ public interface CollectionManager {
      * method which leaves id product and remove unnecessary
      */
     void autoUpdateId();
+
+    void parseDateFromFile();
 }
