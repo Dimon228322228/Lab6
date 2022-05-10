@@ -23,6 +23,6 @@ public class Clear extends AbstractCommandServer {
      */
     public ResultAction execute() {
         executionResources.getCollectionManager().clear();
-        return new ResultAction(State.SUCCESS, "Collection has been clear. ");
+        return new ResultAction(State.SUCCESS, "Collection has been clear. \n");
     }
 }

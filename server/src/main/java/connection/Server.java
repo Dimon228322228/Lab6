@@ -87,7 +87,7 @@ public class Server {
         socketChannel.configureBlocking(false);
         handlerMessage.sendCommandData(socketChannel, commandHandler);
         socketChannel.register(selector, SelectionKey.OP_READ);
-        System.out.print("New channel is connected. ");
+        System.out.print("New channel is connected. \n");
     }
 
     private void readByKey(SelectionKey key) {
@@ -96,7 +96,7 @@ public class Server {
         try {
             request = handlerMessage.readMessage(readableChannel);
         } catch (IOException | InvalidRecievedException | ClassCastException e) {
-            System.err.println(e.getMessage());
+            System.out.println("Channel has been disconnect. \n");
             closeChannel(readableChannel);
         }
         registerRequest(request);

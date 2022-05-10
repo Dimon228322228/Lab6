@@ -4,12 +4,80 @@
         <id>1</id>
         <name>milk</name>
         <coordinates>
-            <x>12</x>
-            <y>123</y>
+            <x>23</x>
+            <y>32</y>
         </coordinates>
         <creationDate>10.05.2022</creationDate>
-        <price>223.0</price>
-        <manufactureCost>123.0</manufactureCost>
+        <price>80.0</price>
+        <partNumber>00000000000000000000001</partNumber>
+        <manufactureCost>60.0</manufactureCost>
         <unitOfMeasure>PCS</unitOfMeasure>
+        <owner>
+            <name>Oleg</name>
+            <birthday>2000-12-20T00:00</birthday>
+            <height>180</height>
+            <weight>80</weight>
+            <passportID>123456789</passportID>
+        </owner>
+    </products>
+    <products>
+        <id>2</id>
+        <name>milk</name>
+        <coordinates>
+            <x>23</x>
+            <y>32</y>
+        </coordinates>
+        <creationDate>10.05.2022</creationDate>
+        <price>80.0</price>
+        <partNumber>00000000000000000000001</partNumber>
+        <manufactureCost>60.0</manufactureCost>
+        <unitOfMeasure>PCS</unitOfMeasure>
+        <owner>
+            <name>Oleg</name>
+            <birthday>2000-12-20T00:00</birthday>
+            <height>180</height>
+            <weight>80</weight>
+            <passportID>123456789</passportID>
+        </owner>
+    </products>
+    <products>
+        <id>3</id>
+        <name>milk</name>
+        <coordinates>
+            <x>23</x>
+            <y>32</y>
+        </coordinates>
+        <creationDate>10.05.2022</creationDate>
+        <price>80.0</price>
+        <partNumber>00000000000000000000001</partNumber>
+        <manufactureCost>60.0</manufactureCost>
+        <unitOfMeasure>PCS</unitOfMeasure>
+        <owner>
+            <name>Oleg</name>
+            <birthday>2000-12-20T00:00</birthday>
+            <height>180</height>
+            <weight>80</weight>
+            <passportID>123456789</passportID>
+        </owner>
+    </products>
+    <products>
+        <id>4</id>
+        <name>milk</name>
+        <coordinates>
+            <x>23</x>
+            <y>32</y>
+        </coordinates>
+        <creationDate>10.05.2022</creationDate>
+        <price>80.0</price>
+        <partNumber>00000000000000000000001</partNumber>
+        <manufactureCost>60.0</manufactureCost>
+        <unitOfMeasure>PCS</unitOfMeasure>
+        <owner>
+            <name>Oleg</name>
+            <birthday>2000-12-20T00:00</birthday>
+            <height>180</height>
+            <weight>80</weight>
+            <passportID>123456789</passportID>
+        </owner>
     </products>
 </Products>

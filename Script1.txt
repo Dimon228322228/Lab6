@@ -1,14 +1,3 @@
-add
-milk
-23
-32
-80
-00000000000000000000001
-60
-pcs
-y
-Oleg
-2000-12-20
-180
-80
-123456789
+executeScript Script2.txt
+executeScript Script2.txt
+executeScript Script2.txt

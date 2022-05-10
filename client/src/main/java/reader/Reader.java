@@ -4,6 +4,7 @@ import content.BuilderProduct;
 import content.Product;
 import exceptions.InvalidProductFieldException;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.util.function.Consumer;
@@ -37,10 +38,11 @@ public class Reader {
     private Reader setField(String descr, Consumer<String> setter) throws IOException{
         try{
             exchanger.writeMassage(BuilderProduct.getInvitation(descr));
-            setter.accept(exchanger.readLine());
+            String str = exchanger.readLine();
+            if (str == null) throw new EOFException();
+            setter.accept(str);
         } catch (InvalidProductFieldException | NumberFormatException | DateTimeException e){
-            System.err.println(e.getMessage());
-            System.out.println("Please, entered the field again: ");
+            exchanger.writeErr(e.getMessage());
             setField(descr, setter);
         }
         return this;

@@ -27,8 +27,8 @@ public class AddIfMax extends AbstractCommandServer {
      */
     public ResultAction execute() {
         Product product = executionResources.getProduct();
-        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing compare and add. ");
-        if (executionResources.getCollectionManager().addIfMax(product)) return new ResultAction(State.SUCCESS, "The product has been added. ");
-        else return new ResultAction(State.FAILED, "The product hasn't been added because it is not largest. ");
+        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing compare and add. \n");
+        if (executionResources.getCollectionManager().addIfMax(product)) return new ResultAction(State.SUCCESS, "The product has been added. \n");
+        else return new ResultAction(State.FAILED, "The product hasn't been added because it is not largest. \n");
     }
 }

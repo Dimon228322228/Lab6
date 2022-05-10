@@ -28,8 +28,8 @@ public class Save extends AbstractCommandServer {
         try {
             executionResources.getCollectionManager().save();
         } catch (JAXBException | EmptyFileException | IOException | InvalidPathException | NullPointerException e) {
-            return new ResultAction(State.ERROR, "Can't save the collection. ");
+            return new ResultAction(State.ERROR, "Can't save the collection. \n");
         }
-        return new ResultAction(State.SUCCESS, "The collection has been saved. ");
+        return new ResultAction(State.SUCCESS, "The collection has been saved. \n");
     }
 }

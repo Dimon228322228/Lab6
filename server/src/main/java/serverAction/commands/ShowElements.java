@@ -24,7 +24,7 @@ public class ShowElements extends AbstractCommandServer {
     public ResultAction execute() {
         StringBuilder builder = new StringBuilder();
         if (executionResources.getCollectionManager().showElements().isEmpty()){
-            return new ResultAction(State.FAILED, "Nothing");
+            return new ResultAction(State.FAILED, "Nothing. \n");
         }else {
             executionResources.getCollectionManager().showElements().forEach(builder::append);
             return new ResultAction(State.SUCCESS, builder.toString());

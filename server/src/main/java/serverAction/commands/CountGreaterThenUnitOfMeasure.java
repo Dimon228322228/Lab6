@@ -18,14 +18,14 @@ public class CountGreaterThenUnitOfMeasure extends AbstractCommandServer {
     public CountGreaterThenUnitOfMeasure(ExecutionResources executionResources){
         super("CountGreaterThenUnitOfMeasure",
                 Set.of(TypeCommand.EXTERNAL, TypeCommand.ARG),
-                "display the number of elements whose unitOfMeasure field value is greater than the given one");
+                "display the number of elements whose unitOfMeasure field value is greater than the given one. Here list of the available unit: " + UnitOfMeasure.getTitleInString());
         this.executionResources = executionResources;
     }
     /**
      * read unit product
      * then counts and print number
      */
-    public ResultAction execute() throws InvalidProductFieldException {
+    public ResultAction execute() {
         UnitOfMeasure unitOfMeasure = UnitOfMeasure.fromString(executionResources.getArg());
         if (unitOfMeasure == null) {
             return new ResultAction(State.ERROR, "No such this enum. Unit of measure must be one of: " +
@@ -33,6 +33,6 @@ public class CountGreaterThenUnitOfMeasure extends AbstractCommandServer {
         }
         return new ResultAction(State.SUCCESS, "Has been found " +
                 executionResources.getCollectionManager().countGreaterThenUnitOfMeashure(unitOfMeasure)
-                + " elements of the collection. ");
+                + " elements of the collection. \n");
     }
 }

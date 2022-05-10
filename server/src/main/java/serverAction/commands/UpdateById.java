@@ -35,14 +35,14 @@ public class UpdateById extends AbstractCommandServer {
             id = Long.parseLong(executionResources.getArg());
             executionResources.getCollectionManager().removeById(id);
         } catch (NumberFormatException e){
-            return new ResultAction(State.ERROR, "Id must be long!");
+            return new ResultAction(State.ERROR, "Id must be long! \n");
         } catch (ProductNotFoundException e){
             return new ResultAction(State.FAILED, e.getMessage());
         }
-        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing adding. ");
+        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing adding. \n");
         executionResources.getCollectionManager().autoUpdateId();
         product.setId(id);
         executionResources.getCollectionManager().add(product);
-        return new ResultAction(State.SUCCESS, "Added success");
+        return new ResultAction(State.SUCCESS, "Added success \n");
     }
 }

@@ -5,6 +5,8 @@ import action.State;
 import connection.Session;
 import content.Product;
 import exceptions.InvalidRecievedException;
+import lombok.Getter;
+import lombok.Setter;
 import reader.ExchangeController;
 import reader.Reader;
 import transmission.Request;
@@ -12,10 +14,11 @@ import transmission.Response;
 import transmissionClient.HandlerMesClient;
 import util.Supplier;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CommandHandler {
     private final ExchangeController exchangeController;
@@ -24,6 +27,7 @@ public class CommandHandler {
     private final HandlerMesClient handlerMesClient;
     private final Session session;
     private boolean flag = true;
+    @Getter @Setter private boolean executionMode = false;
 
     public CommandHandler(HandlerMesClient handlerMesClient, Session session){
         exchangeController = new ExchangeController();
@@ -41,6 +45,9 @@ public class CommandHandler {
 
     public void resetFlag(){
         flag = false;
+    }
+    public void setFlag(){
+        flag = true;
     }
 
     public void handleCommand()  {
@@ -63,11 +70,13 @@ public class CommandHandler {
             arg = commandList.get(1);
         }
         if (validatorCommand.productPresent(commandList.get(0))){
+            if (isExecutionMode()) exchangeController.replaceOut(new BufferedWriter(new StringWriter()));
             product = read(reader::readProduct);
             if (product.isEmpty()) {
-                exchangeController.writeErr("For executing command need a product. ");
+                exchangeController.writeErr( commandList.get(0) + ": For executing command need a product. ");
                 return;
             }
+            exchangeController.replaceOut(new BufferedWriter(new OutputStreamWriter(System.out)));
         }
         Optional<ResultAction> resultActionOptional;
         if (validatorCommand.isUserCommand(commandList.get(0))) resultActionOptional = handleUserCommand(commandList.get(0), arg);
@@ -81,13 +90,14 @@ public class CommandHandler {
         controller.setServerCommandsData(handlerMesClient.getCommandData(session.getSocketChannel()));
     }
 
-    private List<String> parseCommand(String input){
-        return Arrays.asList(input.trim().split("[ ]+ "));
-    }
+    private List<String> parseCommand(String input){return Arrays.stream(input.trim().split("[ ]+")).collect(Collectors.toList());}
 
     private <T> Optional<T> read(Supplier<T> supplier){
         try {
             return Optional.of(supplier.get());
+        } catch (NullPointerException | EOFException e) {
+            resetFlag();
+            return Optional.empty();
         } catch (IOException e) {
             exchangeController.writeErr("The IOException has been occurred. ");
             return Optional.empty();
@@ -107,7 +117,11 @@ public class CommandHandler {
             Response response = handlerMesClient.readMessage(session.getSocketChannel());
             controller.addCommandInHistory(command);
             return Optional.of(response.getResultAction());
-        } catch (IOException | InvalidRecievedException e) {
+        } catch (IOException e) {
+            exchangeController.writeErr("Sorry, exception is occurred. Server is not response. ");
+            if (!session.reconnect(10)) return Optional.of(new ResultAction(State.EXIT, ""));
+            return Optional.empty();
+        } catch (InvalidRecievedException e){
             exchangeController.writeErr("Sorry, exception is occurred. " + e.getMessage());
             return Optional.empty();
         }
@@ -116,7 +130,7 @@ public class CommandHandler {
     private boolean handleResultAction(ResultAction resultAction) {
         String answer = resultAction.getDescription();
         switch (resultAction.getState()){
-            case ERROR -> exchangeController.writeErr("Error: " + answer);
+            case ERROR, FAILED -> exchangeController.writeErr(answer);
             case SUCCESS -> {
                 try {
                     exchangeController.writeMassage(answer);
@@ -124,7 +138,6 @@ public class CommandHandler {
                     exchangeController.writeErr(e.getMessage());
                 }
             }
-            case FAILED -> exchangeController.writeErr(answer);
         }
         return resultAction.getState() != State.EXIT;
     }

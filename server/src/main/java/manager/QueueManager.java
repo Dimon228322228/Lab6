@@ -148,6 +148,7 @@ public class QueueManager implements CollectionManager{
     public void removeById(long id) {
         int size = collection.size();
         collection.stream()
+                .sorted()
                 .filter(x -> x.getId() == id)
                 .forEach(collection::remove);
         if(size == collection.size())

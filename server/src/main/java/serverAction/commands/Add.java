@@ -25,8 +25,8 @@ public class Add extends AbstractCommandServer {
      */
     public ResultAction execute() throws InvalidProductFieldException{
         Product product = executionResources.getProduct();
-        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing adding. ");
+        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing adding. \n");
         executionResources.getCollectionManager().add(product);
-        return new ResultAction(State.SUCCESS, "Product has been added successful. ");
+        return new ResultAction(State.SUCCESS, "Product has been added successful. \n");
     }
 }

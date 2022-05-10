@@ -16,7 +16,7 @@ import java.util.Set;
 public class RemoveById extends AbstractCommandServer {
     public RemoveById(ExecutionResources executionResources){
         super("removeById",
-                Set.of(TypeCommand.EXTERNAL, TypeCommand.PRODUCT, TypeCommand.ARG),
+                Set.of(TypeCommand.EXTERNAL, TypeCommand.ARG),
                 "remove element from collection by its id");
         this.executionResources = executionResources;
     }
@@ -30,10 +30,10 @@ public class RemoveById extends AbstractCommandServer {
             id = Long.parseLong(executionResources.getArg());
             executionResources.getCollectionManager().removeById(id);
         } catch (NumberFormatException e){
-            return new ResultAction(State.ERROR, "Id must be long!");
+            return new ResultAction(State.ERROR, "Id must be long! \n");
         } catch (ProductNotFoundException e){
             return new ResultAction(State.FAILED, e.getMessage());
         }
-        return new ResultAction(State.SUCCESS, "A product with id = " + id + " has been removed");
+        return new ResultAction(State.SUCCESS, "A product with id = " + id + " has been removed. \n");
     }
 }

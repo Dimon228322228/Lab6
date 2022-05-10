@@ -25,15 +25,15 @@ public class CountByManufactureCost extends AbstractCommandServer {
      * count number of element
      * print result
      */
-    public ResultAction execute() throws InvalidProductFieldException{
+    public ResultAction execute() {
         double cost;
         try{
             cost = Double.parseDouble(executionResources.getArg());
         } catch (NumberFormatException | NullPointerException e){
-            return new ResultAction(State.ERROR, "Manufacture cost must be convert to double.");
+            return new ResultAction(State.ERROR, "Manufacture cost must be convert to double. \n");
         }
         return new ResultAction(State.SUCCESS, "Has been found "
                 + executionResources.getCollectionManager().countByManufactureCost(cost) +
-                " elements of the collection. ");
+                " elements of the collection. \n");
     }
 }

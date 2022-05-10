@@ -26,8 +26,8 @@ public class RemoveLower extends AbstractCommandServer {
      */
     public ResultAction execute() {
         Product product = executionResources.getProduct();
-        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing compare. ");
+        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing compare. \n");
         int count = executionResources.getCollectionManager().removeLower(product);
-        return new ResultAction(State.SUCCESS, "Removing " + count + " element of the collection. ");
+        return new ResultAction(State.SUCCESS, "Removing " + count + " element of the collection. \n");
     }
 }

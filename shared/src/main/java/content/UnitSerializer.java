@@ -17,7 +17,7 @@ public class UnitSerializer extends XmlAdapter<String, UnitOfMeasure> {
             return UnitOfMeasure.fromString(v);
         } else {
             count++;
-            System.err.println("Invalid unit product in file. Check it. "+ count +" fields of unit have been incorrectly set null. Unit should be: " + UnitOfMeasure.getTitleInString().toUpperCase());
+            System.err.println("Invalid unit product in file. Check it. "+ count +" fields of unit have been incorrectly set null. Unit should be: \n" + UnitOfMeasure.getTitleInString().toUpperCase());
             throw new InvalidProductFieldException("Invalid value has been entered. Choose unit of measurement include list!");
         }
     }

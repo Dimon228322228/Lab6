@@ -50,11 +50,16 @@ public class CasterFieldProductFromString {
       * @return checked manufacture cost from the string
       */
      public double castManufactureCost(String str){
-          double manufactureCost = Double.parseDouble(str.trim());
+          double manufactureCost;
+          try{
+                manufactureCost = Double.parseDouble(str.trim());
+          } catch (NullPointerException | NumberFormatException e){
+               throw new InvalidProductFieldException("Manufacture cost must be converted to double. \n");
+          }
           if(valProd.manufactureCostValid(manufactureCost)){
                return manufactureCost;
           } else {
-               throw new InvalidProductFieldException("Invalid manufacture cost has been entered!");
+               throw new InvalidProductFieldException("Invalid manufacture cost has been entered! \n");
           }
      }
 

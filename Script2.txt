@@ -1,5 +1,9 @@
-executeScript Script1.txt
-executeScript Script1.txt
-executeScript Script1.txt
-executeScript Script1.txt
-executeScript Script1.txt
+add
+milk
+23
+32
+80
+00000000000000000000001
+60
+pcs
+n

@@ -23,11 +23,11 @@ public enum UnitOfMeasure  implements Serializable {
      * @return description all field as string
      */
     public static String getTitleInString(){
-        return System.lineSeparator() + KILOGRAMS.title + " " +
+        return  KILOGRAMS.title + " " +
                 CENTIMETERS.title + " " +
                 PCS.title + " " +
                 MILLILITERS.title + " " +
-                GRAMS.title + System.lineSeparator();
+                GRAMS.title ;
     }
 
     public static String getTitleInColumn(){
