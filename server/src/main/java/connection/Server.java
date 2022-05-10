@@ -2,6 +2,7 @@ package connection;
 
 import action.ResultAction;
 import exceptions.InvalidRecievedException;
+import lombok.extern.log4j.Log4j2;
 import serverAction.CommandHandler;
 import transmission.Request;
 import transmission.Response;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Log4j2
 public class Server {
     volatile boolean runningFlag;
 
@@ -78,7 +80,7 @@ public class Server {
                 writeByKey(key);
             }
         } catch (IOException e){
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
         }
     }
 
@@ -87,7 +89,7 @@ public class Server {
         socketChannel.configureBlocking(false);
         handlerMessage.sendCommandData(socketChannel, commandHandler);
         socketChannel.register(selector, SelectionKey.OP_READ);
-        System.out.print("New channel is connected. \n");
+        log.info("New channel is connected. ");
     }
 
     private void readByKey(SelectionKey key) {
@@ -96,7 +98,7 @@ public class Server {
         try {
             request = handlerMessage.readMessage(readableChannel);
         } catch (IOException | InvalidRecievedException | ClassCastException e) {
-            System.out.println("Channel has been disconnect. \n");
+            log.info("Channel has been disconnect. ");
             closeChannel(readableChannel);
         }
         registerRequest(request);
@@ -113,10 +115,11 @@ public class Server {
     private void registerRequest(Request request){
         if (request != null) registrationRequest.put(readableChannel, request);
         else return;
+        log.info("Given new request: " + request.getCommandName() + ". ");
         try{
             readableChannel.register(selector, SelectionKey.OP_WRITE);
         } catch (ClosedChannelException e) {
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
         }
     }
 
@@ -129,13 +132,14 @@ public class Server {
         try {
             handlerMessage.sendMessage(writeableChannel, response);
         } catch (IOException | ClassCastException e) {
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
             closeChannel(writeableChannel);
         }
+        log.info(response.getResultAction().getState() + " - state response which has sent. \n");
         try{
             writeableChannel.register(selector, SelectionKey.OP_READ);
         } catch (ClosedChannelException e) {
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
         }
 
     }
@@ -164,8 +168,7 @@ public class Server {
             serChannel.socket().close();
             serChannel.close();
         } catch (IOException e){
-            System.err.println("Can't closing socket");
+            log.error("Can't closing socket");
         }
     }
-
 }

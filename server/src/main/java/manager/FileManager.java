@@ -65,7 +65,6 @@ public class FileManager {
             queueproduct.setProducts(collection);
             jaxbMarshaller.marshal(queueproduct, os);
         }
-        System.out.println("Collection has been save successful");
     }
 
     /**

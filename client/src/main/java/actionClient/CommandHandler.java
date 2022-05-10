@@ -120,6 +120,10 @@ public class CommandHandler {
         } catch (IOException e) {
             exchangeController.writeErr("Sorry, exception is occurred. Server is not response. ");
             if (!session.reconnect(10)) return Optional.of(new ResultAction(State.EXIT, ""));
+            try {
+                handlerMesClient.getCommandData(session.getSocketChannel());
+            } catch (IOException | InvalidRecievedException ignored) {
+            }
             return Optional.empty();
         } catch (InvalidRecievedException e){
             exchangeController.writeErr("Sorry, exception is occurred. " + e.getMessage());

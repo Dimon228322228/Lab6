@@ -1,0 +1,4 @@
+2022-05-10 23:25:54.870 INFO [main] [connection.App.main(App.java:24)] - Server works. 
+2022-05-10 23:25:59.892 INFO [main] [connection.App.main(App.java:26)] - Server finished. 
+2022-05-10 23:25:59.902 INFO [main] [connection.App.main(App.java:28)] - The collection has been saved. 
+
