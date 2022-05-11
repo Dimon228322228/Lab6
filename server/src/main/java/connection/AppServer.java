@@ -9,7 +9,7 @@ import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
 @Log4j2
-public class App {
+public class AppServer {
     public static void main(String[] args) {
         CommandHandler commandHandler;
         Server server;

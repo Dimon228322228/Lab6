@@ -4,7 +4,6 @@ import action.ResultAction;
 import action.State;
 import action.TypeCommand;
 
-import java.util.Locale;
 import java.util.Set;
 
 /**

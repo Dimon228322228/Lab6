@@ -1,3 +1,5 @@
+package App;
+
 import actionClient.CommandHandler;
 import connection.ClientSession;
 import connection.Session;
@@ -6,7 +8,7 @@ import transmissionClient.HandlerMesClient;
 
 import java.io.IOException;
 
-public class App {
+public class AppClient {
     public static void main(String [] arg){
         Session clientSession = new ClientSession("localhost", 8800);
         HandlerMesClient handlerMessage = new HandlerMesClient();
@@ -17,7 +19,7 @@ public class App {
         }
         try {
             commandHandler.updateCommandData();
-        } catch (IOException | InvalidRecievedException e) {
+        } catch (IOException | InvalidRecievedException | NullPointerException e) {
             System.out.println("Can't get the list of commands from server.");
             return;
         }

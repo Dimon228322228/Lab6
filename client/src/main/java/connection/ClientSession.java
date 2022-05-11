@@ -37,7 +37,7 @@ public class ClientSession implements Session{
                     Thread.sleep(1000);
                     System.out.println("Reconnecting to server");
                 } else {
-                    System.out.println("Connected");
+                    System.out.println("Connected to server. ");
                     return true;
                 }
             } catch (InterruptedException ignored) {

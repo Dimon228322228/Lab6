@@ -118,11 +118,13 @@ public class CommandHandler {
             controller.addCommandInHistory(command);
             return Optional.of(response.getResultAction());
         } catch (IOException e) {
-            exchangeController.writeErr("Sorry, exception is occurred. Server is not response. ");
-            if (!session.reconnect(10)) return Optional.of(new ResultAction(State.EXIT, ""));
+            exchangeController.writeErr("Server hasn't responded. Try again late. ");
+            if (!session.reconnect(1)) {
+                return Optional.empty();
+            }
             try {
-                handlerMesClient.getCommandData(session.getSocketChannel());
-            } catch (IOException | InvalidRecievedException ignored) {
+                controller.setServerCommandsData(handlerMesClient.getCommandData(session.getSocketChannel()));
+            } catch (IOException | InvalidRecievedException | NullPointerException ignored) {
             }
             return Optional.empty();
         } catch (InvalidRecievedException e){

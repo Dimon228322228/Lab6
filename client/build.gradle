@@ -28,3 +28,16 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+jar{
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveBaseName = "client"
+    manifest {
+        attributes "Main-class": "app.AppClient"
+    }
+
+    from{
+        configurations.runtimeClasspath.collect{it.isDirectory() ? it:zipTree(it)}
+    }
+
+}
