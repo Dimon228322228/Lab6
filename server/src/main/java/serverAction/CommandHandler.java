@@ -9,7 +9,6 @@ import manager.QueueManager;
 import serverAction.commands.*;
 import transmission.Request;
 
-import javax.xml.bind.JAXBException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,7 @@ public class CommandHandler {
     @Setter Request request;
     private final Map<String, AbstractCommandServer> commandMap = new HashMap<>();
 
-    public CommandHandler() throws JAXBException {
+    public CommandHandler() {
         Stream.of(new Add(execRes), new AddIfMax(execRes), new Clear(execRes), new CountByManufactureCost(execRes),
                 new CountGreaterThenUnitOfMeasure(execRes), new DisplayInfo(execRes), new PrintInAscendingOrder(execRes),
                         new RemoveById(execRes), new RemoveLower(execRes), new Save(execRes), new ShowElements(execRes),
@@ -67,7 +66,4 @@ public class CommandHandler {
         command.getExecutionResources().setProduct(request.getProduct());
     }
 
-    public void getCollectionFromFile(){
-        colManag.parseDateFromFile();
-    }
 }

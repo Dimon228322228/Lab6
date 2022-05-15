@@ -1,4 +1,4 @@
-package App;
+package app;
 
 import actionClient.CommandHandler;
 import connection.ClientSession;

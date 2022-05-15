@@ -1,6 +1,6 @@
-2022-05-10 23:25:54.870 INFO [main] [connection.App.main(App.java:24)] - Server works. 
-2022-05-10 23:25:59.892 INFO [main] [connection.App.main(App.java:26)] - Server finished. 
-2022-05-10 23:25:59.902 INFO [main] [connection.App.main(App.java:28)] - The collection has been saved. 
+2022-05-10 23:25:54.870 INFO [main] [connection.app.main(app.java:24)] - Server works.
+2022-05-10 23:25:59.892 INFO [main] [connection.app.main(app.java:26)] - Server finished.
+2022-05-10 23:25:59.902 INFO [main] [connection.app.main(app.java:28)] - The collection has been saved.
 
 2022-05-11 12:27:08.073 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server works. 
 2022-05-11 12:27:48.244 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
@@ -254,4 +254,32 @@
 2022-05-11 14:03:46.772 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
 2022-05-11 14:03:57.601 INFO [main] [connection.AppServer.main(AppServer.java:26)] - Server finished. 
 2022-05-11 14:03:57.613 INFO [main] [connection.AppServer.main(AppServer.java:28)] - The collection has been saved. 
+
+2022-05-15 14:10:47.706 INFO [main] [connection.AppServer.main(AppServer.java:17)] - Server works. 
+2022-05-15 14:10:55.544 INFO [main] [connection.AppServer.main(AppServer.java:19)] - Server finished. 
+2022-05-15 14:10:55.546 INFO [main] [connection.AppServer.main(AppServer.java:21)] - The collection has been saved. 
+
+2022-05-15 14:11:00.583 INFO [main] [connection.AppServer.main(AppServer.java:17)] - Server works. 
+2022-05-15 14:11:23.075 INFO [main] [connection.Server.createNewChannel(Server.java:91)] - New channel is connected. 
+2022-05-15 14:11:44.855 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: info. 
+2022-05-15 14:11:44.868 INFO [main] [connection.Server.writeByKey(Server.java:137)] - SUCCESS - state response which has sent. 
+
+2022-05-15 14:11:48.645 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: show. 
+2022-05-15 14:11:48.763 INFO [main] [connection.Server.writeByKey(Server.java:137)] - FAILED - state response which has sent. 
+
+2022-05-15 14:12:20.672 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: add. 
+2022-05-15 14:12:20.674 INFO [main] [connection.Server.writeByKey(Server.java:137)] - SUCCESS - state response which has sent. 
+
+2022-05-15 14:12:23.653 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: show. 
+2022-05-15 14:12:23.708 INFO [main] [connection.Server.writeByKey(Server.java:137)] - SUCCESS - state response which has sent. 
+
+2022-05-15 14:12:44.659 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: add. 
+2022-05-15 14:12:44.661 INFO [main] [connection.Server.writeByKey(Server.java:137)] - SUCCESS - state response which has sent. 
+
+2022-05-15 14:12:47.660 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: show. 
+2022-05-15 14:12:47.663 INFO [main] [connection.Server.writeByKey(Server.java:137)] - SUCCESS - state response which has sent. 
+
+2022-05-15 14:13:08.673 INFO [main] [connection.Server.readByKey(Server.java:100)] - Channel has been disconnect. 
+2022-05-15 14:13:27.858 INFO [main] [connection.AppServer.main(AppServer.java:19)] - Server finished. 
+2022-05-15 14:13:27.890 INFO [main] [connection.AppServer.main(AppServer.java:21)] - The collection has been saved. 
 

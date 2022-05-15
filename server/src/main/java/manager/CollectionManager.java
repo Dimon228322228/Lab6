@@ -58,11 +58,4 @@ public interface CollectionManager {
      * Count amount element then greater given
      */
     long countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure);
-
-    /**
-     * method which leaves id product and remove unnecessary
-     */
-    void autoUpdateId();
-
-    void parseDateFromFile();
 }

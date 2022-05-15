@@ -37,7 +37,6 @@ public class Server {
         this.port = port;
         bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         selector = initSelector();
-        commandHandler.getCollectionFromFile();
     }
 
     private Selector initSelector() throws IOException{

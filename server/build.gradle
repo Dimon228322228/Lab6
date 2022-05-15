@@ -22,9 +22,22 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    implementation 'org.postgresql:postgresql:42.3.4'
 }
 
-//mainClassName = 'app.App'
+jar{
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveBaseName = "server"
+    manifest {
+        attributes "Main-class": "connection.AppServer"
+    }
+
+    from{
+        configurations.runtimeClasspath.collect{it.isDirectory() ? it:zipTree(it)}
+    }
+
+}
 
 test {
     useJUnitPlatform()

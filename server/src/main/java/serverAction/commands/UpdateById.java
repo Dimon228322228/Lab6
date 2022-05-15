@@ -4,7 +4,6 @@ import action.ResultAction;
 import action.State;
 import action.TypeCommand;
 import content.Product;
-import exceptions.InvalidProductFieldException;
 import exceptions.ProductNotFoundException;
 import serverAction.AbstractCommandServer;
 import serverAction.ExecutionResources;
@@ -40,7 +39,6 @@ public class UpdateById extends AbstractCommandServer {
             return new ResultAction(State.FAILED, e.getMessage());
         }
         if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing adding. \n");
-        executionResources.getCollectionManager().autoUpdateId();
         product.setId(id);
         executionResources.getCollectionManager().add(product);
         return new ResultAction(State.SUCCESS, "Added success \n");
