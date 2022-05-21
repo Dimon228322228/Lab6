@@ -3,27 +3,21 @@ package content;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * a class of product
  */
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Product implements Serializable, Comparable<Product> {
     @Getter @Setter private long id; // >0 , unique and automatic generated
     @Getter @Setter private String name ; // not null and not empty
     @Getter @Setter private Coordinates coordinates ; // not null
-    @XmlJavaTypeAdapter(value = DateSerializer.class) @Getter @Setter private Date creationDate ; // not null and automatic generation
+    @Getter @Setter private Date creationDate ; // not null and automatic generation
     @Getter @Setter private Double price ; // not null and >0
     @Getter @Setter private String partNumber ; // >=22 and maybe null
     @Getter @Setter private double manufactureCost ; //
-    @XmlJavaTypeAdapter(value = UnitSerializer.class) @Getter @Setter private UnitOfMeasure unitOfMeasure ; // maybe null
+    @Getter @Setter private UnitOfMeasure unitOfMeasure ; // maybe null
     @Getter @Setter private Person owner ; // maybe null
 
     @Override

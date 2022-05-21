@@ -3,6 +3,7 @@ package actionClient;
 import action.Command;
 import action.CommandData;
 import action.ResultAction;
+import connection.Session;
 import lombok.Getter;
 import lombok.Setter;
 import reader.ExchangeController;
@@ -22,9 +23,9 @@ public class CommandController {
 
     @Getter @Setter List<CommandData> serverCommandsData;
 
-    public CommandController(CommandHandler commandHandler, ExchangeController exchangeController){
+    public CommandController(CommandHandler commandHandler, ExchangeController exchangeController, Session session){
         Stream.of(new Help(this), new ExecuteScript(this, exchangeController, commandHandler),
-                        new Exit(this), new History(this))
+                        new Exit(this), new History(this), new ConnectToServer(session, commandHandler))
                 .forEach(x -> commandMap.put(x.getCommandData().getName(), x));
     }
 
@@ -50,7 +51,7 @@ public class CommandController {
         List<CommandData> commandData = new ArrayList<>( commandMap.keySet().stream()
                 .map(commandMap::get)
                 .map(Command::getCommandData).toList());
-        commandData.addAll(serverCommandsData);
+        if (serverCommandsData != null) commandData.addAll(serverCommandsData);
         return commandData;
     }
 

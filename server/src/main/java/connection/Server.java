@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import serverAction.CommandHandler;
 import transmission.Request;
 import transmission.Response;
+import transmission.Target;
 import transmissionServer.HandlerMessageServer;
 
 import java.io.BufferedReader;
@@ -86,7 +87,6 @@ public class Server {
     private void createNewChannel() throws IOException {
         SocketChannel socketChannel = serChannel.accept();
         socketChannel.configureBlocking(false);
-        handlerMessage.sendCommandData(socketChannel, commandHandler);
         socketChannel.register(selector, SelectionKey.OP_READ);
         log.info("New channel is connected. ");
     }
@@ -95,7 +95,7 @@ public class Server {
         readableChannel = (SocketChannel) key.channel();
         Request request = null;
         try {
-            request = handlerMessage.readMessage(readableChannel);
+            request = handlerMessage.getRequest(readableChannel);
         } catch (IOException | InvalidRecievedException | ClassCastException e) {
             log.info("Channel has been disconnect. ");
             closeChannel(readableChannel);
@@ -125,22 +125,30 @@ public class Server {
     private void writeByKey(SelectionKey key) {
         SocketChannel writeableChannel = (SocketChannel) key.channel();
         Request clientRequest = registrationRequest.get(writeableChannel);
-        commandHandler.setRequest(clientRequest);
-        ResultAction answer = commandHandler.executeCommand(clientRequest.getCommandName());
-        Response response = new Response(answer);
-        try {
-            handlerMessage.sendMessage(writeableChannel, response);
-        } catch (IOException | ClassCastException e) {
-            log.error(e.getMessage());
-            closeChannel(writeableChannel);
-        }
-        log.info(response.getResultAction().getState() + " - state response which has sent. \n");
+        handleClientRequest(writeableChannel, clientRequest);
         try{
             writeableChannel.register(selector, SelectionKey.OP_READ);
         } catch (ClosedChannelException e) {
             log.error(e.getMessage());
         }
+    }
 
+    private void handleClientRequest(SocketChannel channel, Request request){
+        try {
+            if (request.getTarget().equals(Target.EXECUTECOMMAND)){
+                commandHandler.setRequest(request);
+                ResultAction answer = commandHandler.executeCommand(request.getCommandName());
+                Response response = new Response(answer);
+                handlerMessage.sendResponse(channel, response);
+                log.info(response.getResultAction().getState() + " - state response which has sent. \n");
+            } else {
+                handlerMessage.sendCommandData(channel, commandHandler);
+                log.info("Command data has been sent. \n");
+            }
+        } catch (IOException | ClassCastException e) {
+                log.error(e.getMessage());
+                closeChannel(channel);
+        }
     }
 
     private void handleServerInput(){

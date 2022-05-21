@@ -2,10 +2,6 @@ package manager;
 
 import content.Product;
 import content.UnitOfMeasure;
-import exceptions.EmptyFileException;
-
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
 import java.util.List;
 
 public interface CollectionManager {
@@ -37,7 +33,7 @@ public interface CollectionManager {
     /**
      * Upload collection in file
      */
-    void save() throws JAXBException, IOException, EmptyFileException;
+    void save();
 
     /**
      * Add element in collection if he is great then all

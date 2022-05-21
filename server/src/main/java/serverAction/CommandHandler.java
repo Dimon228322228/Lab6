@@ -21,7 +21,8 @@ import java.util.stream.Stream;
 public class CommandHandler {
     CollectionManager colManag = QueueManager.getInstance();
     ExecutionResources execRes = new ExecutionResources(colManag);
-    @Setter Request request;
+    @Setter
+    Request request;
     private final Map<String, AbstractCommandServer> commandMap = new HashMap<>();
 
     public CommandHandler() {

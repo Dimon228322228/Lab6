@@ -11,6 +11,7 @@ import reader.ExchangeController;
 import reader.Reader;
 import transmission.Request;
 import transmission.Response;
+import transmission.Target;
 import transmissionClient.HandlerMesClient;
 import util.Supplier;
 
@@ -32,7 +33,7 @@ public class CommandHandler {
     public CommandHandler(HandlerMesClient handlerMesClient, Session session){
         exchangeController = new ExchangeController();
         reader = new Reader(exchangeController);
-        controller = new CommandController(this, exchangeController);
+        controller = new CommandController(this, exchangeController, session);
         this.handlerMesClient = handlerMesClient;
         this.session = session;
     }
@@ -111,10 +112,10 @@ public class CommandHandler {
     }
 
     private Optional<ResultAction> handleServerCommand(String command, String arg, Product product) {
-        Request request = new Request(product, arg, command);
+        Request request = new Request(product, arg, command, Target.EXECUTECOMMAND);
         try {
-            handlerMesClient.sendMessage(session.getSocketChannel(), request);
-            Response response = handlerMesClient.readMessage(session.getSocketChannel());
+            handlerMesClient.sendRequest(session.getSocketChannel(), request);
+            Response response = handlerMesClient.getResponse(session.getSocketChannel());
             controller.addCommandInHistory(command);
             return Optional.of(response.getResultAction());
         } catch (IOException e) {

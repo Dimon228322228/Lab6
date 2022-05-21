@@ -30,7 +30,7 @@ public class Help  extends AbstractCommandClient {
                                      .append(System.lineSeparator()));
         builder.append(" -------------- Server command ------------- ")
                 .append(System.lineSeparator());
-        comContr.getServerCommandsData()
+        if (comContr.getServerCommandsData() != null) comContr.getServerCommandsData()
                 .forEach(x -> builder.append(x.getName())
                                      .append(" : \n----- ")
                                      .append(x.getDescription().toUpperCase())

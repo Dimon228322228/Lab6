@@ -25,11 +25,11 @@ public class Save extends AbstractCommandServer {
      * a single method for saving collection in file (format XML)
      */
     public ResultAction execute() {
-        try {
+//        try {
             executionResources.getCollectionManager().save();
-        } catch (JAXBException | EmptyFileException | IOException | InvalidPathException | NullPointerException e) {
-            return new ResultAction(State.ERROR, "Can't save the collection. \n");
-        }
+//        } catch (JAXBException | EmptyFileException | IOException | InvalidPathException | NullPointerException e) {
+//            return new ResultAction(State.ERROR, "Can't save the collection. \n");
+//        }
         return new ResultAction(State.SUCCESS, "The collection has been saved. \n");
     }
 }

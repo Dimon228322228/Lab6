@@ -13,19 +13,27 @@ public class AppClient {
         Session clientSession = new ClientSession("localhost", 8800);
         HandlerMesClient handlerMessage = new HandlerMesClient();
         CommandHandler commandHandler = new CommandHandler(handlerMessage, clientSession);
-        if(!waitConnection(clientSession)){
-            System.out.println("Failed to connect to the server.");
-            return;
-        }
-        try {
-            commandHandler.updateCommandData();
-        } catch (IOException | InvalidRecievedException | NullPointerException e) {
-            System.out.println("Can't get the list of commands from server.");
-            return;
+        if(!waitConnection(clientSession)) {
+            System.out.println("Failed connect to the server. ");
+        } else {
+            System.out.println("Connected to the server. ");
+            try {
+                commandHandler.updateCommandData();
+            } catch (IOException | InvalidRecievedException | NullPointerException e) {
+                System.out.println("Can't get the list of commands from server.");
+                disconnect(clientSession);
+            }
         }
         commandHandler.run();
     }
+
     private static boolean waitConnection(Session clientSession){
-        return clientSession.reconnect(10);
+        return clientSession.reconnect(3);
+    }
+
+    private static void disconnect(Session session){
+        try {
+            session.disconnect();
+        } catch (IOException ignored) {}
     }
 }
