@@ -57,6 +57,7 @@ public class Product implements Serializable, Comparable<Product> {
     }
 
     public int compareTo(Product o) {
+        if (o == null) return 1;
         return this.getName().compareTo(o.getName());
     }
 

@@ -54,4 +54,6 @@ public interface CollectionManager {
      * Count amount element then greater given
      */
     long countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure);
+
+    void remove(Product product);
 }

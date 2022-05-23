@@ -1,6 +1,7 @@
 package transmissionClient;
 
 import action.CommandData;
+import authentication.CurrentAccount;
 import exceptions.InvalidRecievedException;
 import transmission.HandlerMessage;
 import transmission.Request;
@@ -8,7 +9,6 @@ import transmission.Response;
 import transmission.Target;
 
 import java.io.*;
-import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.List;
 import java.util.Objects;
@@ -20,7 +20,7 @@ public class HandlerMesClient extends HandlerMessage {
 
     @SuppressWarnings("unchecked")
     public List<CommandData> getCommandData(SocketChannel channel) throws IOException, InvalidRecievedException {
-        sendRequest(channel, new Request(null, null, null, Target.GETCOMMANDDATA));
+        sendRequest(channel, new Request(null, null, null, Target.GETCOMMANDDATA, CurrentAccount.getAccount()));
         try {
             return (List<CommandData>) Objects.requireNonNull(getMessage(channel)).readObject();
         } catch (ClassNotFoundException | ClassCastException | NullPointerException e) {
@@ -36,4 +36,15 @@ public class HandlerMesClient extends HandlerMessage {
         }
     }
 
+    public void sendAuthentication(SocketChannel channel) throws IOException {
+        sendMessage(channel, CurrentAccount.getAccount());
+    }
+
+    public String getAuthenticationResponse(SocketChannel channel) throws IOException, InvalidRecievedException {
+        try {
+            return (String) Objects.requireNonNull(getMessage(channel)).readObject();
+        } catch (ClassNotFoundException | ClassCastException | NullPointerException e) {
+            throw new InvalidRecievedException("Failed cast input string to message");
+        }
+    }
 }

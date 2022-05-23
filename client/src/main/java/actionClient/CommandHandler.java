@@ -2,6 +2,7 @@ package actionClient;
 
 import action.ResultAction;
 import action.State;
+import authentication.CurrentAccount;
 import connection.Session;
 import content.Product;
 import exceptions.InvalidRecievedException;
@@ -33,7 +34,7 @@ public class CommandHandler {
     public CommandHandler(HandlerMesClient handlerMesClient, Session session){
         exchangeController = new ExchangeController();
         reader = new Reader(exchangeController);
-        controller = new CommandController(this, exchangeController, session);
+        controller = new CommandController(this, exchangeController, session, handlerMesClient);
         this.handlerMesClient = handlerMesClient;
         this.session = session;
     }
@@ -91,6 +92,10 @@ public class CommandHandler {
         controller.setServerCommandsData(handlerMesClient.getCommandData(session.getSocketChannel()));
     }
 
+    public ResultAction login(){
+        return controller.executeCommand("login");
+    }
+
     private List<String> parseCommand(String input){return Arrays.stream(input.trim().split("[ ]+")).collect(Collectors.toList());}
 
     private <T> Optional<T> read(Supplier<T> supplier){
@@ -112,7 +117,7 @@ public class CommandHandler {
     }
 
     private Optional<ResultAction> handleServerCommand(String command, String arg, Product product) {
-        Request request = new Request(product, arg, command, Target.EXECUTECOMMAND);
+        Request request = new Request(product, arg, command, Target.EXECUTECOMMAND, CurrentAccount.getAccount());
         try {
             handlerMesClient.sendRequest(session.getSocketChannel(), request);
             Response response = handlerMesClient.getResponse(session.getSocketChannel());

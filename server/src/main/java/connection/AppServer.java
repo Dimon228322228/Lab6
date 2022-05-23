@@ -11,13 +11,19 @@ import java.sql.SQLException;
 
 @Log4j2
 public class AppServer {
-    public static void main(String[] args) throws ClassNotFoundException {
-        Class.forName("org.postgresql.Driver");
+    public static void main(String[] args){
         CommandHandler commandHandler = new CommandHandler();
         Server server;
         try {
             server = new Server(8800, commandHandler);
-            DatabaseManager databaseManager = new DatabaseManager("localhost:9000/studs", "s336698", "");
+            System.out.println("Please, enter username for connect to database. ");
+//            String user = new BufferedReader(new InputStreamReader(System.in)).readLine();
+            String user = System.console().readLine();
+            System.out.println("Please, enter password for connect to database. ");
+//            String password = new BufferedReader(new InputStreamReader(System.in)).readLine();
+            String password = String.valueOf(System.console().readPassword());
+            DatabaseManager databaseManager = new DatabaseManager("localhost:9000/studs", user, password);
+            commandHandler.setDatabaseManagerToExecutionResources(databaseManager);
             log.info("Server works. ");
             server.run();
             log.info("Server finished. ");

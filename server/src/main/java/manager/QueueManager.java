@@ -110,17 +110,17 @@ public class QueueManager implements CollectionManager{
      */
     @Override
     public boolean addIfMax(Product product) {
-        if (maxProduct() != null) {
-            if (product.compareTo(maxProduct()) > 0) {
-                add(product);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        if (product.compareTo(maxProduct()) > 0) {
             add(product);
             return true;
+        } else {
+            return false;
         }
+    }
+
+    @Override
+    public void remove(Product product){
+        collection.stream().sorted().filter(product::equals).forEach(collection::remove);
     }
 
     /**

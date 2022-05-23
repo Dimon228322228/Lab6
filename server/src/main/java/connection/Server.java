@@ -3,6 +3,7 @@ package connection;
 import action.ResultAction;
 import exceptions.InvalidRecievedException;
 import lombok.extern.log4j.Log4j2;
+import manager.database.DatabaseManager;
 import serverAction.CommandHandler;
 import transmission.Request;
 import transmission.Response;

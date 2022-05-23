@@ -7,6 +7,7 @@ import connection.Session;
 import lombok.Getter;
 import lombok.Setter;
 import reader.ExchangeController;
+import transmissionClient.HandlerMesClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,9 +24,10 @@ public class CommandController {
 
     @Getter @Setter List<CommandData> serverCommandsData;
 
-    public CommandController(CommandHandler commandHandler, ExchangeController exchangeController, Session session){
+    public CommandController(CommandHandler commandHandler, ExchangeController exchangeController, Session session, HandlerMesClient handlerMessage){
         Stream.of(new Help(this), new ExecuteScript(this, exchangeController, commandHandler),
-                        new Exit(this), new History(this), new ConnectToServer(session, commandHandler))
+                        new Exit(this), new History(this), new ConnectToServer(session, commandHandler),
+                        new Login(session, handlerMessage, commandHandler))
                 .forEach(x -> commandMap.put(x.getCommandData().getName(), x));
     }
 

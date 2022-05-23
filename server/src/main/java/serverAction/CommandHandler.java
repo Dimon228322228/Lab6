@@ -6,6 +6,7 @@ import action.TypeCommand;
 import lombok.Setter;
 import manager.CollectionManager;
 import manager.QueueManager;
+import manager.database.DatabaseManager;
 import serverAction.commands.*;
 import transmission.Request;
 
@@ -67,4 +68,7 @@ public class CommandHandler {
         command.getExecutionResources().setProduct(request.getProduct());
     }
 
+    public void setDatabaseManagerToExecutionResources(DatabaseManager databaseManager){
+        execRes.setDatabaseManager(databaseManager);
+    }
 }
