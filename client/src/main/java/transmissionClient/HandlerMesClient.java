@@ -37,14 +37,7 @@ public class HandlerMesClient extends HandlerMessage {
     }
 
     public void sendAuthentication(SocketChannel channel) throws IOException {
-        sendMessage(channel, CurrentAccount.getAccount());
+        sendMessage(channel, new Request(null, null, null, Target.AUTHENTICATION, CurrentAccount.getAccount()));
     }
 
-    public String getAuthenticationResponse(SocketChannel channel) throws IOException, InvalidRecievedException {
-        try {
-            return (String) Objects.requireNonNull(getMessage(channel)).readObject();
-        } catch (ClassNotFoundException | ClassCastException | NullPointerException e) {
-            throw new InvalidRecievedException("Failed cast input string to message");
-        }
-    }
 }

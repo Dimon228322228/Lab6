@@ -19,6 +19,7 @@ public class Product implements Serializable, Comparable<Product> {
     @Getter @Setter private double manufactureCost ; //
     @Getter @Setter private UnitOfMeasure unitOfMeasure ; // maybe null
     @Getter @Setter private Person owner ; // maybe null
+    @Getter @Setter private String username;
 
     @Override
     public boolean equals(Object o){
@@ -53,7 +54,7 @@ public class Product implements Serializable, Comparable<Product> {
             }else{
                 builder.append("Owner: ").append(getOwner()).append("\n");
             }
-            return builder.append("\n").toString();
+            return builder.append("user: ").append(username).append("\n").toString();
     }
 
     public int compareTo(Product o) {

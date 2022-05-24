@@ -1,6 +1,7 @@
 package manager.database;
 
 import content.Product;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -11,7 +12,10 @@ import java.sql.*;
 
 @Log4j2
 public class DatabaseManager {
-    private final Connection connection;
+    private Connection connection;
+    String link;
+    String user;
+    String password;
 
     private PreparedStatement insert_with_owner;
 
@@ -23,14 +27,25 @@ public class DatabaseManager {
 
     private PreparedStatement select_password_by_login;
 
+    @Getter private final String paper = "fj#fOW2T>b";
+
+
     public DatabaseManager(String link, String user, String password) throws SQLException {
 //        ssh -L <порт>:pg:5432 s<ISU>@se.ifmo.ru -p 2222
 //        link = "localhost:<порт который используется в команде выше>/studs"
 //        user = логин от хелиоса
 //        password = пароль от хелиоса
-        connection = DriverManager.getConnection("jdbc:postgresql://" + link, user, password);
+        this.link = link;
+        this.user = user;
+        this.password = password;
+        bindToDatabase();
         initPrepareStatement();
         log.info("Has been connected to database. ");
+    }
+
+    public void bindToDatabase() throws SQLException {
+        if (connection == null || connection.isClosed())
+            connection = DriverManager.getConnection("jdbc:postgresql://" + link, user, password);
     }
 
     public PreparedStatement preparedStatement(String request) throws SQLException {
@@ -45,23 +60,23 @@ public class DatabaseManager {
             ),Coordinates_id AS (
                 INSERT INTO Coordinates (x,y,creationDate) VALUES (?,?,?) RETURNING id
             ),Product_id AS (
-                INSERT INTO product (name, coordinates , creationdate, price, partnumber, cost, unit, owner)
-                    VALUES (?, (SELECT id FROM Coordinates_id), ?, ?, ?, ?, (CAST(? AS unit)), (SELECT id FROM Person_id)) RETURNING id
+                INSERT INTO product (name, coordinates , creationdate, price, partnumber, cost, unit, owner, username)
+                    VALUES (?, (SELECT id FROM Coordinates_id), ?, ?, ?, ?, (CAST(? AS unit)), (SELECT id FROM Person_id), ?) RETURNING id
             ) (SELECT id FROM Product_id);""");
 
         insert_without_owner = preparedStatement("""
             WITH Coordinates_id AS (
                 INSERT INTO Coordinates (x,y,creationDate) VALUES (?,?,?) RETURNING id
             ),Product_id AS (
-                INSERT INTO product (name, coordinates , creationdate, price, partnumber, cost, unit, owner)
-                    VALUES (?, (SELECT id FROM Coordinates_id), ?, ?, ?, ?, (CAST(? AS unit)), null) RETURNING id
+                INSERT INTO product (name, coordinates , creationdate, price, partnumber, cost, unit, owner, username)
+                    VALUES (?, (SELECT id FROM Coordinates_id), ?, ?, ?, ?, (CAST(? AS unit)), null, ?) RETURNING id
             ) (SELECT id FROM Product_id);""");
 
         insert_login_data = preparedStatement("""
-                INSERT INTO access (login,password,salt) VALUES ('?','?','?')""");
+                INSERT INTO access (login,password,salt) VALUES (?,?,?)""");
 
-        select_salt_by_login = preparedStatement("select salt from access where login = '?'");
-        select_password_by_login = preparedStatement("select password from access where login = '?'");
+        select_salt_by_login = preparedStatement("select salt from access where login = ?");
+        select_password_by_login = preparedStatement("select password from access where login = ?");
     }
 
     private boolean fillStatementInsert(Product product) throws SQLException {
@@ -84,6 +99,7 @@ public class DatabaseManager {
             insert_with_owner.setDouble(14, product.getManufactureCost());
             if (product.getUnitOfMeasure() != null) insert_with_owner.setString(15, product.getUnitOfMeasure().getTitle().toUpperCase());
             else insert_with_owner.setString(15, null);
+            insert_with_owner.setString(16, product.getUsername());
             return true;
         } else {
             insert_without_owner.setInt(1, product.getCoordinates().getX());
@@ -97,6 +113,7 @@ public class DatabaseManager {
             insert_without_owner.setDouble(8, product.getManufactureCost());
             if (product.getUnitOfMeasure() != null) insert_without_owner.setString(9, product.getUnitOfMeasure().getTitle().toUpperCase());
             else insert_without_owner.setString(9, null);
+            insert_without_owner.setString(10, product.getUsername());
             return false;
         }
     }
@@ -112,7 +129,6 @@ public class DatabaseManager {
 
     private void fillInsertLoginData(String login, String password) throws SQLException{
         String salt = RandomStringUtils.random(10, true, true);
-        String paper = "fj#fOW2T>b";
         insert_login_data.setString(1, login);
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
@@ -143,7 +159,7 @@ public class DatabaseManager {
 
     public String executeSelectPassword(String login) throws SQLException {
         fillSelectPassword(login);
-        ResultSet answer = select_salt_by_login.executeQuery();
+        ResultSet answer = select_password_by_login.executeQuery();
         answer.next();
         return answer.getString("password");
     }

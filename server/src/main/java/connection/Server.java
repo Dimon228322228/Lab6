@@ -1,13 +1,12 @@
 package connection;
 
 import action.ResultAction;
+import action.State;
 import exceptions.InvalidRecievedException;
 import lombok.extern.log4j.Log4j2;
-import manager.database.DatabaseManager;
 import serverAction.CommandHandler;
 import transmission.Request;
 import transmission.Response;
-import transmission.Target;
 import transmissionServer.HandlerMessageServer;
 
 import java.io.BufferedReader;
@@ -136,15 +135,23 @@ public class Server {
 
     private void handleClientRequest(SocketChannel channel, Request request){
         try {
-            if (request.getTarget().equals(Target.EXECUTECOMMAND)){
-                commandHandler.setRequest(request);
-                ResultAction answer = commandHandler.executeCommand(request.getCommandName());
-                Response response = new Response(answer);
-                handlerMessage.sendResponse(channel, response);
-                log.info(response.getResultAction().getState() + " - state response which has sent. \n");
-            } else {
-                handlerMessage.sendCommandData(channel, commandHandler);
-                log.info("Command data has been sent. \n");
+            switch (request.getTarget()) {
+                case EXECUTECOMMAND -> {
+                    commandHandler.setRequest(request);
+                    ResultAction answer = commandHandler.executeCommand(request.getCommandName());
+                    Response response = new Response(answer);
+                    handlerMessage.sendResponse(channel, response);
+                    log.info(response.getResultAction().getState() + " - state response which has sent. \n");
+                }
+                case GETCOMMANDDATA -> {
+                    handlerMessage.sendCommandData(channel, commandHandler);
+                    log.info("Command data has been sent. \n");
+                }
+                case AUTHENTICATION -> {
+                    if (commandHandler.checkAuthentication(request))
+                        handlerMessage.sendResponse(channel, new Response(new ResultAction(State.SUCCESS, commandHandler.getAuthenticationMessage())));
+                    else handlerMessage.sendResponse(channel, new Response(new ResultAction(State.FAILED, commandHandler.getAuthenticationMessage())));
+                }
             }
         } catch (IOException | ClassCastException e) {
                 log.error(e.getMessage());

@@ -1,12 +1,12 @@
 package connection;
 
-import action.ResultAction;
-import action.State;
 import lombok.extern.log4j.Log4j2;
 import manager.database.DatabaseManager;
 import serverAction.CommandHandler;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 
 @Log4j2
@@ -27,9 +27,6 @@ public class AppServer {
             log.info("Server works. ");
             server.run();
             log.info("Server finished. ");
-            ResultAction result = commandHandler.executeCommand("save");
-            if(result.getState().equals(State.SUCCESS)) log.info(result.getDescription());
-            else log.error(result.getDescription());
         } catch (IOException | SQLException e) {
             log.error(e.getMessage());
         }

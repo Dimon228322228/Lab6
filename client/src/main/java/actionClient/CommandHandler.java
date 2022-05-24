@@ -92,6 +92,10 @@ public class CommandHandler {
         controller.setServerCommandsData(handlerMesClient.getCommandData(session.getSocketChannel()));
     }
 
+    public void resetCommandData(){
+        controller.setServerCommandsData(null);
+    }
+
     public ResultAction login(){
         return controller.executeCommand("login");
     }

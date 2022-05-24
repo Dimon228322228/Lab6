@@ -3,6 +3,7 @@ package serverAction.commands;
 import action.ResultAction;
 import action.State;
 import action.TypeCommand;
+import authentication.TypeAuthentication;
 import content.Product;
 import exceptions.InvalidProductFieldException;
 import manager.database.DatabaseManager;

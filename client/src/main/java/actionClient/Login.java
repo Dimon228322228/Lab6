@@ -5,8 +5,10 @@ import action.State;
 import action.TypeCommand;
 import authentication.CurrentAccount;
 import authentication.ReaderLoginData;
+import authentication.TypeAuthentication;
 import connection.Session;
 import exceptions.InvalidRecievedException;
+import transmission.Response;
 import transmissionClient.HandlerMesClient;
 
 import java.io.IOException;
@@ -31,22 +33,32 @@ public class Login extends AbstractCommandClient{
         if(!waitConnection(clientSession)) {
             return new ResultAction(State.FAILED, "Failed connect to the server. Try again later. ");
         } else {
-            String answerAuthen;
+            Response answerAuthen;
             try{
                 handlerMessage.sendAuthentication(clientSession.getSocketChannel());
-                answerAuthen = handlerMessage.getAuthenticationResponse(clientSession.getSocketChannel());
+                answerAuthen = handlerMessage.getResponse(clientSession.getSocketChannel());
             } catch (IOException | InvalidRecievedException e) {
                 disconnect(clientSession);
                 return new ResultAction(State.FAILED, "Can't send or get authentication data. " + e.getMessage() +
                         " Please, try authentication again with command 'login'. ");
             }
             try {
+                if (!answerAuthen.getResultAction().getState().equals(State.SUCCESS))
+                    return new ResultAction(State.FAILED, answerAuthen.getResultAction().getDescription());
                 commandHandler.updateCommandData();
             } catch (IOException | InvalidRecievedException | NullPointerException e) {
                 disconnect(clientSession);
                 return new ResultAction(State.FAILED, "Can't get the list of commands from server.");
             }
-            return new ResultAction(State.SUCCESS, "Connected to the server. " + answerAuthen);
+            if (answerAuthen.getResultAction().getState().equals(State.SUCCESS)){
+                CurrentAccount.getAccount().setType(TypeAuthentication.LOGIN);
+                return new ResultAction(State.SUCCESS, "Connected to the server. " + answerAuthen.getResultAction().getDescription());
+            }
+            else {
+                disconnect(clientSession);
+                return new ResultAction(State.FAILED, "Connected to the server. " + answerAuthen.getResultAction().getDescription());
+            }
+
         }
     }
 
@@ -56,6 +68,7 @@ public class Login extends AbstractCommandClient{
 
     private void disconnect(Session session){
         try {
+            commandHandler.resetCommandData();
             session.disconnect();
         } catch (IOException ignored) {}
     }

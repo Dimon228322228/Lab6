@@ -1,45 +1,53 @@
-2022-05-23 10:17:17.104 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:33)] - Has been connected to database. 
-2022-05-23 10:17:17.208 INFO [main] [connection.AppServer.main(AppServer.java:28)] - Server works. 
-2022-05-23 10:17:17.211 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:17:41.930 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:18:22.327 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:18:44.303 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:18:44.305 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:20:50.328 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:20:50.329 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:21:33.433 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:23:51.735 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:24:10.771 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:24:30.916 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:24:56.427 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:25:00.263 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:25:06.614 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:25:10.884 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:25:48.020 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:25:50.465 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:26:02.784 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:26:17.758 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:28:15.822 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:28:22.476 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:28:32.558 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:28:36.449 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:28:36.451 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:28:50.681 INFO [main] [connection.AppServer.main(AppServer.java:30)] - Server finished. 
-2022-05-23 10:28:50.683 INFO [main] [connection.AppServer.main(AppServer.java:32)] - The collection has been saved. 
+2022-05-24 00:07:53.858 ERROR [main] [connection.AppServer.main(AppServer.java:31)] - The connection attempt failed.
+2022-05-24 00:08:22.538 ERROR [main] [connection.AppServer.main(AppServer.java:31)] - Connection to localhost:9000 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2022-05-24 00:08:58.302 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:43)] - Has been connected to database. 
+2022-05-24 00:08:58.306 INFO [main] [connection.AppServer.main(AppServer.java:27)] - Server works. 
+2022-05-24 00:09:15.690 INFO [main] [connection.Server.createNewChannel(Server.java:90)] - New channel is connected. 
+2022-05-24 00:09:15.708 INFO [main] [connection.Server.registerRequest(Server.java:116)] - Given new request: null. 
+2022-05-24 00:09:58.440 INFO [main] [connection.Server.handleClientRequest(Server.java:154)] - SUCCESS - state check authentication. 
 
-2022-05-23 10:29:55.599 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:33)] - Has been connected to database. 
-2022-05-23 10:29:55.603 INFO [main] [connection.AppServer.main(AppServer.java:28)] - Server works. 
-2022-05-23 10:30:07.660 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-05-23 10:30:21.671 INFO [main] [connection.Server.registerRequest(Server.java:118)] - Given new request: null. 
-2022-05-23 10:30:21.715 INFO [main] [connection.Server.handleClientRequest(Server.java:147)] - Command data has been sent. 
+2022-05-24 00:09:58.442 INFO [main] [connection.Server.registerRequest(Server.java:116)] - Given new request: null. 
+2022-05-24 00:12:24.594 INFO [main] [connection.Server.handleClientRequest(Server.java:147)] - Command data has been sent. 
 
-2022-05-23 10:31:30.599 INFO [main] [connection.Server.registerRequest(Server.java:118)] - Given new request: add. 
-2022-05-23 10:31:30.928 INFO [main] [connection.Server.handleClientRequest(Server.java:144)] - SUCCESS - state response which has sent. 
+2022-05-24 00:12:35.234 INFO [main] [connection.Server.registerRequest(Server.java:116)] - Given new request: info. 
+2022-05-24 16:03:56.713 INFO [main] [connection.Server.handleClientRequest(Server.java:143)] - FAILED - state response which has sent. 
 
-2022-05-23 10:31:40.985 INFO [main] [connection.Server.registerRequest(Server.java:118)] - Given new request: show. 
-2022-05-23 10:31:41.021 INFO [main] [connection.Server.handleClientRequest(Server.java:144)] - SUCCESS - state response which has sent. 
+2022-05-24 16:04:04.703 INFO [main] [connection.Server.readByKey(Server.java:99)] - Channel has been disconnect. 
+2022-05-24 17:00:55.490 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:43)] - Has been connected to database. 
+2022-05-24 17:00:55.558 INFO [main] [connection.AppServer.main(AppServer.java:27)] - Server works. 
+2022-05-24 17:01:07.844 INFO [main] [connection.Server.createNewChannel(Server.java:91)] - New channel is connected. 
+2022-05-24 17:01:08.130 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: null. 
+2022-05-24 17:01:08.281 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: null. 
+2022-05-24 17:01:08.351 INFO [main] [connection.Server.handleClientRequest(Server.java:148)] - Command data has been sent. 
 
-2022-05-23 10:33:48.212 INFO [main] [connection.Server.readByKey(Server.java:101)] - Channel has been disconnect. 
-2022-05-23 10:33:54.828 INFO [main] [connection.AppServer.main(AppServer.java:30)] - Server finished. 
-2022-05-23 10:33:54.829 INFO [main] [connection.AppServer.main(AppServer.java:32)] - The collection has been saved. 
+2022-05-24 17:01:38.647 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: add. 
+2022-05-24 17:01:40.225 INFO [main] [connection.Server.handleClientRequest(Server.java:144)] - SUCCESS - state response which has sent. 
 
+2022-05-24 17:03:15.932 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: show. 
+2022-05-24 17:03:16.792 INFO [main] [connection.Server.handleClientRequest(Server.java:144)] - SUCCESS - state response which has sent. 
+
+2022-05-24 17:27:45.364 INFO [main] [connection.Server.readByKey(Server.java:100)] - Channel has been disconnect. 
+2022-05-24 17:27:49.343 INFO [main] [connection.AppServer.main(AppServer.java:29)] - Server finished. 
+2022-05-24 17:29:17.556 ERROR [main] [connection.AppServer.main(AppServer.java:31)] - The connection attempt failed.
+2022-05-24 17:29:49.181 ERROR [main] [connection.AppServer.main(AppServer.java:31)] - FATAL: password authentication failed for user "s336698"
+2022-05-24 17:30:00.845 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:43)] - Has been connected to database. 
+2022-05-24 17:30:00.849 INFO [main] [connection.AppServer.main(AppServer.java:27)] - Server works. 
+2022-05-24 17:30:11.739 INFO [main] [connection.Server.createNewChannel(Server.java:91)] - New channel is connected. 
+2022-05-24 17:30:12.106 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: null. 
+2022-05-24 17:30:27.768 INFO [main] [connection.Server.readByKey(Server.java:100)] - Channel has been disconnect. 
+2022-05-24 17:30:27.770 INFO [main] [connection.Server.createNewChannel(Server.java:91)] - New channel is connected. 
+2022-05-24 17:30:27.772 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: null. 
+2022-05-24 17:30:28.281 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: null. 
+2022-05-24 17:30:28.429 INFO [main] [connection.Server.handleClientRequest(Server.java:148)] - Command data has been sent. 
+
+2022-05-24 17:31:27.761 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: add. 
+2022-05-24 17:31:28.098 INFO [main] [connection.Server.handleClientRequest(Server.java:144)] - SUCCESS - state response which has sent. 
+
+2022-05-24 17:31:35.476 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: show. 
+2022-05-24 17:31:35.671 INFO [main] [connection.Server.handleClientRequest(Server.java:144)] - SUCCESS - state response which has sent. 
+
+2022-05-24 17:33:13.587 INFO [main] [connection.Server.registerRequest(Server.java:117)] - Given new request: add. 
+2022-05-24 17:33:14.143 INFO [main] [connection.Server.handleClientRequest(Server.java:144)] - SUCCESS - state response which has sent. 
+
+2022-05-24 17:33:39.782 INFO [main] [connection.Server.readByKey(Server.java:100)] - Channel has been disconnect. 
+2022-05-24 17:33:50.206 INFO [main] [connection.AppServer.main(AppServer.java:29)] - Server finished. 

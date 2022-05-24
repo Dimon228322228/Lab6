@@ -89,14 +89,6 @@ public class QueueManager implements CollectionManager{
     }
 
     /**
-     * Saves the collection to a file
-     */
-    @Override
-    public void save() {
-
-    }
-
-    /**
      * @return max product
      */
     private Product maxProduct() {

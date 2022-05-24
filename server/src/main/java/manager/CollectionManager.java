@@ -31,11 +31,6 @@ public interface CollectionManager {
     void clear();
 
     /**
-     * Upload collection in file
-     */
-    void save();
-
-    /**
      * Add element in collection if he is great then all
      */
     boolean addIfMax(Product product);

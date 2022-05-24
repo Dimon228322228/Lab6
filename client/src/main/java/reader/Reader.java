@@ -1,5 +1,6 @@
 package reader;
 
+import authentication.CurrentAccount;
 import content.BuilderProduct;
 import content.Product;
 import exceptions.InvalidProductFieldException;
@@ -32,6 +33,7 @@ public class Reader {
                     .setField("height", builderProduct::setPersonHeight).setField("weight", builderProduct::setPersonWeight)
                     .setField("passport", builderProduct::setPersonPassportId);
         }
+        builderProduct.setUsername(CurrentAccount.getAccount().getName());
         return builderProduct.getProduct();
     }
 

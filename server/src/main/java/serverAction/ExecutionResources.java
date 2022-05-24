@@ -1,5 +1,6 @@
 package serverAction;
 
+import authentication.Account;
 import content.Product;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ public class ExecutionResources {
     @Getter @Setter String arg;
     @Getter @Setter Product product;
     @Getter @Setter DatabaseManager databaseManager;
+    @Getter @Setter Account account;
     public ExecutionResources(CollectionManager collectionManager){
         this.collectionManager = collectionManager;
     }

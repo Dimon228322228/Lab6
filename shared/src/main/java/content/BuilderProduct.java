@@ -1,5 +1,6 @@
 package content;
 
+import authentication.Account;
 import content.caster.CasterCoordinatesFromString;
 import content.caster.CasterFieldProductFromString;
 import content.caster.CasterPersonFromString;
@@ -79,6 +80,8 @@ public class BuilderProduct {
      * set passport id from string
      */
     public BuilderProduct setPersonPassportId(String passportId){getOwner().setPassportID(casterPersonFromString.castPassportID(passportId));return this;}
+
+    public BuilderProduct setUsername(String username){product.setUsername(username); return this;}
 
     public Product getProduct(){
         product.setCoordinates(coordinates);
