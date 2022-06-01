@@ -4,6 +4,8 @@ import content.Product;
 import content.UnitOfMeasure;
 import exceptions.ProductNotFoundException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -44,13 +46,6 @@ public class QueueManager implements CollectionManager{
     }
 
     /**
-     * set creation date and set unique id
-     */
-    public void setAutomaticGenerateField(Product product){
-        product.setCreationDate(new Date());
-    }
-
-    /**
      * @return all elements of the collection as a list in ascending order
      */
     @Override
@@ -62,7 +57,14 @@ public class QueueManager implements CollectionManager{
      */
     @Override
     public void add(Product product) {
-        setAutomaticGenerateField(product);
+        try {
+            product.setCreationDate(new SimpleDateFormat("dd.MM.yyyy HH.mm.ss").parse(new SimpleDateFormat("dd.MM.yyyy HH.mm.ss").format(new Date())));
+        } catch (ParseException ignore) {}
+        collection.add(product);
+    }
+
+    @Override
+    public void addWithoutSetCreationDate(Product product){
         collection.add(product);
     }
 
@@ -71,13 +73,14 @@ public class QueueManager implements CollectionManager{
      * @param id elements id
      */
     @Override
-    public void removeById(long id) {
+    public void removeById(long id, String username) {
         int size = collection.size();
         collection.stream()
                 .sorted()
                 .filter(x -> x.getId() == id)
+                .filter(x -> x.getUsername().equals(username))
                 .forEach(collection::remove);
-        if(size == collection.size()) throw new ProductNotFoundException();
+        if(size == collection.size()) throw new ProductNotFoundException("This product belongs to another user or there is no such product with a given id. ");
     }
 
     /**
@@ -86,6 +89,11 @@ public class QueueManager implements CollectionManager{
     @Override
     public void clear() {
         collection.clear();
+    }
+
+    @Override
+    public void clearByUsername(String username) {
+        collection.stream().sorted().filter(x -> x.getUsername().equals(username)).forEach(collection::remove);
     }
 
     /**
@@ -120,15 +128,13 @@ public class QueueManager implements CollectionManager{
      * @param product is hair of class {@link Product}
      */
     @Override
-    public int removeLower(Product product) {
-        int size = collection.size();
-        if (size != 0) {
-            collection.stream()
-                    .sorted()
-                    .filter(x -> x.compareTo(product) < 0)
-                    .forEach(collection::remove);
-            return size - collection.size();
-        } else return 0;
+    public List<Product> removeLower(Product product, String username) {
+        return new ArrayList<>(collection.stream()
+                .sorted()
+                .filter(x -> x.getUsername().equals(username))
+                .filter(x -> x.compareTo(product) < 0)
+                .peek(collection::remove)
+                .toList());
     }
 
     /**
@@ -140,6 +146,15 @@ public class QueueManager implements CollectionManager{
         return collection.stream()
                 .filter(x -> x.getManufactureCost() == manufactureCost)
                 .count();
+    }
+
+    @Override
+    public Product getById(long id){
+        try{
+            return collection.stream().filter(x -> x.getId() == id).toList().get(0);
+        } catch (IndexOutOfBoundsException e){
+            throw new ProductNotFoundException("There is no such product with a given id. ");
+        }
     }
 
     /**

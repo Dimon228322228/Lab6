@@ -20,16 +20,22 @@ public interface CollectionManager {
      */
     void add(Product product);
 
+    void addWithoutSetCreationDate(Product product);
+
     /**
      * Remove element with this id
      */
-    void removeById(long id);
+    void removeById(long id, String username);
 
     /**
      * Remove all element in collection
      */
     void clear();
 
+    /**
+     * Remove all element by username
+     */
+    void clearByUsername(String username);
     /**
      * Add element in collection if he is great then all
      */
@@ -38,12 +44,14 @@ public interface CollectionManager {
     /**
      * Remove all element lower then given
      */
-    int removeLower(Product product);
+    List<Product> removeLower(Product product, String username);
 
     /**
      * Count all element then manufactureCost equals given
      */
     long countByManufactureCost(Double manufactureCost);
+
+    Product getById(long id);
 
     /**
      * Count amount element then greater given

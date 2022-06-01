@@ -3,7 +3,11 @@ package content.caster;
 import content.validator.ValidatorPerson;
 import exceptions.InvalidProductFieldException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  * A class which creates field of person from different classes
  */
@@ -28,18 +32,12 @@ public class CasterPersonFromString {
      * @return checked birthday from the string
      */
     public LocalDateTime castBirthday(String inputStr){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         if (valPer.birthdayValid(inputStr)){
-            String [] data = inputStr.split("-");
-            LocalDateTime date;
-            if (data.length == 3) {
-                date = LocalDateTime.of(Integer.parseInt(data[0]),
-                                        Integer.parseInt(data[1]),
-                                        Integer.parseInt(data[2]),
-                                        0,
-                                        0);
-                return date;
-            } else {
-                throw new InvalidProductFieldException("Invalid birthday date has been entered. Value isn't being null!");
+            try{
+                return LocalDate.from(formatter.parse(inputStr)).atStartOfDay();
+            } catch (DateTimeParseException e){
+                throw new InvalidProductFieldException("Invalid birthday date has been entered. ");
             }
         } else {
             throw new InvalidProductFieldException("Invalid birthday date has been entered. Value isn't being null!");

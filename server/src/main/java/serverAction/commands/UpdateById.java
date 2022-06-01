@@ -8,6 +8,7 @@ import exceptions.ProductNotFoundException;
 import serverAction.AbstractCommandServer;
 import serverAction.ExecutionResources;
 
+import java.sql.SQLException;
 import java.util.Set;
 
 /**
@@ -30,17 +31,24 @@ public class UpdateById extends AbstractCommandServer {
     public ResultAction execute() throws ProductNotFoundException {
         long id;
         Product product = executionResources.getProduct();
+        Product previousProduct = null;
+        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing adding. \n");
         try{
             id = Long.parseLong(executionResources.getArg());
-            executionResources.getCollectionManager().removeById(id);
-        } catch (NumberFormatException e){
-            return new ResultAction(State.ERROR, "Id must be long! \n");
+            previousProduct = executionResources.getCollectionManager().getById(id);
+            executionResources.getCollectionManager().removeById(id, getExecutionResources().getAccount().getName());
+            product.setId(id);
+            executionResources.getCollectionManager().add(product);
+            executionResources.getDatabaseManager().executeUpdateById(product, (int) id);
         } catch (ProductNotFoundException e){
             return new ResultAction(State.FAILED, e.getMessage());
+        } catch (NumberFormatException e){
+            return new ResultAction(State.ERROR, "Id must be long! \n");
+        } catch (SQLException e) {
+            executionResources.getCollectionManager().remove(product);
+            executionResources.getCollectionManager().addWithoutSetCreationDate(previousProduct);
+            return new ResultAction(State.FAILED, e.getMessage());
         }
-        if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing adding. \n");
-        product.setId(id);
-        executionResources.getCollectionManager().add(product);
         return new ResultAction(State.SUCCESS, "Added success \n");
     }
 }

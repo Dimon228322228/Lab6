@@ -22,7 +22,8 @@ public class ValidatorUnitOfMeasure {
      */
     public boolean validUnitOfMeasure(String unitOfMeasure){
         if (unitOfMeasure == null) return false;
-        return Arrays.asList(UnitOfMeasure.getTitleInString().trim().split(" ")).contains(unitOfMeasure);
+        return Arrays.stream(UnitOfMeasure.getTitleInString().trim().split(" "))
+                .anyMatch(x -> x.equalsIgnoreCase(unitOfMeasure));
     }
 
 }

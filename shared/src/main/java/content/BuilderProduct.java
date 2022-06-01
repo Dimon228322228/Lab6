@@ -1,10 +1,12 @@
 package content;
 
-import authentication.Account;
 import content.caster.CasterCoordinatesFromString;
 import content.caster.CasterFieldProductFromString;
 import content.caster.CasterPersonFromString;
+import exceptions.InvalidProductFieldException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,6 +85,14 @@ public class BuilderProduct {
 
     public BuilderProduct setUsername(String username){product.setUsername(username); return this;}
 
+    public BuilderProduct setCreationDate(String date){
+        try {
+            product.setCreationDate(new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(date));
+        } catch (ParseException e) {
+            throw new InvalidProductFieldException("Date is invalid. ");
+        }
+        return this;}
+
     public Product getProduct(){
         product.setCoordinates(coordinates);
         product.setOwner(owner);
@@ -98,7 +108,7 @@ public class BuilderProduct {
         invitation.put("cost", "Enter manufacture cost: ");
         invitation.put("unit", "Choose value from list: " + UnitOfMeasure.getTitleInColumn() + "And enter product unit of measurement: ");
         invitation.put("oName", "Enter owner name: ");
-        invitation.put("oBirthday", "Enter owner birthday with separated - '-' (Year-Month-Day): ");
+        invitation.put("oBirthday", "Enter owner birthday with separated(Day.Month.Year): ");
         invitation.put("height", "Enter owner height: ");
         invitation.put("weight", "Enter person weight: ");
         invitation.put("passport", "Enter owner passport id: ");

@@ -75,6 +75,7 @@ public class Server {
             if (key.isAcceptable()){
                 createNewChannel();
             } else if (key.isReadable()){
+                // CompletableFuture.supplyAsync(handleCommand, cachedThreadPool).andThen(writeByKey, forkJoinPool)
                 readByKey(key);
             } else if (key.isWritable()){
                 writeByKey(key);

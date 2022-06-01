@@ -4,7 +4,6 @@ import action.ResultAction;
 import action.State;
 import action.TypeCommand;
 import content.Product;
-import exceptions.InvalidProductFieldException;
 import manager.database.DatabaseManager;
 import serverAction.AbstractCommandServer;
 import serverAction.ExecutionResources;

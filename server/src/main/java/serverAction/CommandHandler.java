@@ -6,6 +6,7 @@ import action.State;
 import action.TypeCommand;
 import authentication.Account;
 import authentication.TypeAuthentication;
+import content.Product;
 import lombok.Getter;
 import lombok.Setter;
 import manager.CollectionManager;
@@ -18,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,13 +80,14 @@ public class CommandHandler {
         String password = account.getPassword();
         String salt;
         String pass;
+        bindToDatabase();
         if (account.getType().equals(TypeAuthentication.REGISTRATION)) {
             try {
                 execRes.getDatabaseManager().executeInsertAccessData(login, password);
                 authenticationMessage = "You're successfully registration. ";
                 return true;
             } catch (SQLException e) {
-                authenticationMessage = "This password yet exist in database or database hasn't responded. ";
+                authenticationMessage = "This login yet exist in database or database hasn't responded. ";
                 return false;
             }
         }
@@ -134,5 +137,15 @@ public class CommandHandler {
 
     public void setDatabaseManagerToExecutionResources(DatabaseManager databaseManager){
         execRes.setDatabaseManager(databaseManager);
+    }
+
+    public void synchronizeWithDatabase(){
+        List<Product> products = new ArrayList<>();
+        try {
+            products.addAll(execRes.getDatabaseManager().getCollectionFromDatabase());
+        } catch (SQLException e) {
+            System.err.println("Something wrong has occurred when collection load. ");
+        }
+        for (Product product : products) colManag.addWithoutSetCreationDate(product);
     }
 }

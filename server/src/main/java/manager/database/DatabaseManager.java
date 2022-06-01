@@ -1,34 +1,24 @@
 package manager.database;
 
+import content.BuilderProduct;
 import content.Product;
+import exceptions.InvalidProductFieldException;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.RandomStringUtils;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.time.DateTimeException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Log4j2
 public class DatabaseManager {
     private Connection connection;
+    StatementStorage storage ;
     String link;
     String user;
     String password;
-
-    private PreparedStatement insert_with_owner;
-
-    private PreparedStatement insert_without_owner;
-
-    private PreparedStatement insert_login_data;
-
-    private PreparedStatement select_salt_by_login;
-
-    private PreparedStatement select_password_by_login;
-
     @Getter private final String paper = "fj#fOW2T>b";
-
 
     public DatabaseManager(String link, String user, String password) throws SQLException {
 //        ssh -L <порт>:pg:5432 s<ISU>@se.ifmo.ru -p 2222
@@ -39,128 +29,100 @@ public class DatabaseManager {
         this.user = user;
         this.password = password;
         bindToDatabase();
-        initPrepareStatement();
+        storage = new StatementStorage(connection);
+        storage.initPrepareStatement();
         log.info("Has been connected to database. ");
     }
 
     public void bindToDatabase() throws SQLException {
-        if (connection == null || connection.isClosed())
             connection = DriverManager.getConnection("jdbc:postgresql://" + link, user, password);
     }
 
-    public PreparedStatement preparedStatement(String request) throws SQLException {
-        return connection.prepareStatement(request);
-    }
-
-    private void initPrepareStatement() throws SQLException {
-        insert_with_owner = preparedStatement("""
-            WITH Person_id AS (
-                INSERT INTO person (name,birthday, height, weight, passportid, creationdate)
-                    VALUES (?, ?, ?, ?, ?, ?) RETURNING id
-            ),Coordinates_id AS (
-                INSERT INTO Coordinates (x,y,creationDate) VALUES (?,?,?) RETURNING id
-            ),Product_id AS (
-                INSERT INTO product (name, coordinates , creationdate, price, partnumber, cost, unit, owner, username)
-                    VALUES (?, (SELECT id FROM Coordinates_id), ?, ?, ?, ?, (CAST(? AS unit)), (SELECT id FROM Person_id), ?) RETURNING id
-            ) (SELECT id FROM Product_id);""");
-
-        insert_without_owner = preparedStatement("""
-            WITH Coordinates_id AS (
-                INSERT INTO Coordinates (x,y,creationDate) VALUES (?,?,?) RETURNING id
-            ),Product_id AS (
-                INSERT INTO product (name, coordinates , creationdate, price, partnumber, cost, unit, owner, username)
-                    VALUES (?, (SELECT id FROM Coordinates_id), ?, ?, ?, ?, (CAST(? AS unit)), null, ?) RETURNING id
-            ) (SELECT id FROM Product_id);""");
-
-        insert_login_data = preparedStatement("""
-                INSERT INTO access (login,password,salt) VALUES (?,?,?)""");
-
-        select_salt_by_login = preparedStatement("select salt from access where login = ?");
-        select_password_by_login = preparedStatement("select password from access where login = ?");
-    }
-
-    private boolean fillStatementInsert(Product product) throws SQLException {
-        if (product.getOwner() != null){
-            insert_with_owner.setString(1, product.getOwner().getName());
-            insert_with_owner.setString(2, product.getOwner().getBirthday().toString());
-            insert_with_owner.setLong(3, product.getOwner().getHeight());
-            insert_with_owner.setInt(4, product.getOwner().getWeight());
-            insert_with_owner.setString(5, product.getOwner().getPassportID());
-            insert_with_owner.setString(6, product.getCreationDate().toString());
-
-            insert_with_owner.setInt(7, product.getCoordinates().getX());
-            insert_with_owner.setInt(8, product.getCoordinates().getY());
-            insert_with_owner.setString(9, product.getCreationDate().toString());
-
-            insert_with_owner.setString(10, product.getName());
-            insert_with_owner.setString(11, product.getCreationDate().toString());
-            insert_with_owner.setDouble(12, product.getPrice());
-            insert_with_owner.setString(13, product.getPartNumber());
-            insert_with_owner.setDouble(14, product.getManufactureCost());
-            if (product.getUnitOfMeasure() != null) insert_with_owner.setString(15, product.getUnitOfMeasure().getTitle().toUpperCase());
-            else insert_with_owner.setString(15, null);
-            insert_with_owner.setString(16, product.getUsername());
-            return true;
-        } else {
-            insert_without_owner.setInt(1, product.getCoordinates().getX());
-            insert_without_owner.setInt(2, product.getCoordinates().getY());
-            insert_without_owner.setString(3, product.getCreationDate().toString());
-
-            insert_without_owner.setString(4, product.getName());
-            insert_without_owner.setString(5, product.getCreationDate().toString());
-            insert_without_owner.setDouble(6, product.getPrice());
-            insert_without_owner.setString(7, product.getPartNumber());
-            insert_without_owner.setDouble(8, product.getManufactureCost());
-            if (product.getUnitOfMeasure() != null) insert_without_owner.setString(9, product.getUnitOfMeasure().getTitle().toUpperCase());
-            else insert_without_owner.setString(9, null);
-            insert_without_owner.setString(10, product.getUsername());
-            return false;
-        }
+    public void executeUpdateById(Product product, int id) throws SQLException {
+        if (storage.fillStatementUpdate(product, id)) storage.getUpdate_by_id_with_owner().execute();
+        else storage.getUpdate_by_id_without_owner().execute();
+        connection.createStatement().execute(storage.getUpdate_dependent_table());
     }
 
     public long executeInsert(Product product) throws SQLException {
         ResultSet result;
-        if (fillStatementInsert(product)) result = insert_with_owner.executeQuery();
-        else result = insert_without_owner.executeQuery();
+        if (storage.fillStatementInsert(product)) result = storage.getInsert_with_owner().executeQuery();
+        else result = storage.getInsert_without_owner().executeQuery();
         result.next();
         return result.getInt("id");
-        // write next() behind invoke getint()
-    }
-
-    private void fillInsertLoginData(String login, String password) throws SQLException{
-        String salt = RandomStringUtils.random(10, true, true);
-        insert_login_data.setString(1, login);
-        try {
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            insert_login_data.setString(2, new String(md5.digest((paper + password + salt).getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8));
-        } catch (NoSuchAlgorithmException ignore) {}
-        insert_login_data.setString(3, salt);
     }
 
     public void executeInsertAccessData(String login, String password) throws SQLException {
-        fillInsertLoginData(login, password);
-        insert_login_data.executeUpdate();
+        storage.fillInsertLoginData(login, password, paper);
+        storage.getInsert_login_data().executeUpdate();
     }
 
-    private void fillSelectSalt(String login) throws SQLException {
-        select_salt_by_login.setString(1, login);
-    }
-
-    private void fillSelectPassword(String login) throws SQLException {
-        select_password_by_login.setString(1, login);
+    public void executeClearCollection (String login) throws SQLException {
+        storage.fillClearCollection(login);
+        storage.getClear_collection_by_username().execute();
+        connection.createStatement().execute(storage.getUpdate_dependent_table());
     }
 
     public String executeSelectSalt(String login) throws SQLException {
-        fillSelectSalt(login);
-        ResultSet answer = select_salt_by_login.executeQuery();
+        storage.fillSelectSalt(login);
+        ResultSet answer = storage.getSelect_salt_by_login().executeQuery();
         answer.next();
         return answer.getString("salt");
     }
 
     public String executeSelectPassword(String login) throws SQLException {
-        fillSelectPassword(login);
-        ResultSet answer = select_password_by_login.executeQuery();
+        storage.fillSelectPassword(login);
+        ResultSet answer = storage.getSelect_password_by_login().executeQuery();
         answer.next();
         return answer.getString("password");
+    }
+
+    public void executeDeletedById(long id) throws SQLException {
+        storage.fillDeletedById(id);
+        storage.getDeleted_by_id().execute();
+        connection.createStatement().execute(storage.getUpdate_dependent_table());
+    }
+
+    private ResultSet executeSynchronized() throws SQLException {
+        return storage.getGet_all().executeQuery();
+    }
+
+    private ResultSet executeGetPersonById(int id) throws SQLException {
+        storage.getGet_person_by_id().setInt(1, id);
+        return storage.getGet_person_by_id().executeQuery();
+    }
+
+    public List<Product> getCollectionFromDatabase() throws SQLException {
+        ResultSet resultSet = executeSynchronized();
+        List<Product> products = new ArrayList<>();
+        while (resultSet.next()){
+            try {
+                BuilderProduct builderProduct = new BuilderProduct();
+                builderProduct.setName(resultSet.getString("name"))
+                        .setXCoordinate(String.valueOf(resultSet.getInt("x")))
+                        .setYCoordinate(String.valueOf(resultSet.getInt("y")))
+                        .setCreationDate(resultSet.getString("creationdate"))
+                        .setPrice(String.valueOf(resultSet.getDouble("price")))
+                        .setPartNumber(resultSet.getString("partnumber"))
+                        .setManufactureCost(String.valueOf(resultSet.getDouble("cost")))
+                        .setUnitOfMeasure(String.valueOf(resultSet.getObject("unit")))
+                        .setUsername(resultSet.getString("username"));
+                if (resultSet.getObject("owner") != null) {
+                    ResultSet resultSet1 = executeGetPersonById(resultSet.getInt("owner"));
+                    resultSet1.next();
+                    builderProduct.setPersonName(resultSet1.getString("name"))
+                            .setPersonBirthday(resultSet1.getString("birthday"))
+                            .setPersonHeight(String.valueOf(resultSet1.getInt("height")))
+                            .setPersonWeight(String.valueOf(resultSet1.getInt("weight")))
+                            .setPersonPassportId(resultSet1.getString("passportid"));
+                }
+                Product product = builderProduct.getProduct();
+                product.setId(resultSet.getInt("id"));
+                products.add(product);
+            } catch (InvalidProductFieldException | NumberFormatException | DateTimeException e){
+                log.info(e.getMessage());
+            }
+        }
+        return products;
     }
 }

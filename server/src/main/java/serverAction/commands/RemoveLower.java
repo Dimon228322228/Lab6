@@ -4,10 +4,11 @@ import action.ResultAction;
 import action.State;
 import action.TypeCommand;
 import content.Product;
-import exceptions.InvalidProductFieldException;
 import serverAction.AbstractCommandServer;
 import serverAction.ExecutionResources;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,7 +28,18 @@ public class RemoveLower extends AbstractCommandServer {
     public ResultAction execute() {
         Product product = executionResources.getProduct();
         if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing compare. \n");
-        int count = executionResources.getCollectionManager().removeLower(product);
-        return new ResultAction(State.SUCCESS, "Removing " + count + " element of the collection. \n");
+        List<Product> deletedList = executionResources.getCollectionManager().removeLower(product, getExecutionResources().getAccount().getName());
+        int count = 0;
+        for (Product product1 : deletedList) {
+            try {
+                executionResources.getDatabaseManager().executeDeletedById(product1.getId());
+                count++;
+            } catch (SQLException e) {
+                executionResources.getCollectionManager().addWithoutSetCreationDate(product1);
+            }
+        }
+        if (count != deletedList.size()) return new ResultAction(State.FAILED, "Removing " + count +
+                " element of the collection, but some elements hasn't removed because database error occurred.  \n");
+        return new ResultAction(State.SUCCESS, "Removing " + deletedList.size() + " element of the collection. \n");
     }
 }

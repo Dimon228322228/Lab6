@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -36,25 +38,25 @@ public class Product implements Serializable, Comparable<Product> {
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
-        builder.append("ID : ").append(getId()).append("\n")
-                .append("Product name : ").append(getName()).append("\n")
-                .append("X coordinate : ").append(getCoordinates().getX()).append("\n")
-                .append("Y coordinate : ").append(getCoordinates().getY()).append("\n")
-                .append("Creation date : ").append(getCreationDate()).append("\n")
-                .append("Price : ").append(getPrice()).append("\n")
-                .append("Part number : ").append(getPartNumber()).append("\n")
-                .append("Manufacture cost : ").append(getManufactureCost()).append("\n")
+        builder.append("ID : ").append(getId()).append("\n\t")
+                .append("Product name : ").append(getName()).append("\n\t")
+                .append("X coordinate : ").append(getCoordinates().getX()).append("\n\t")
+                .append("Y coordinate : ").append(getCoordinates().getY()).append("\n\t")
+                .append("Creation date : ").append(new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(getCreationDate())).append("\n\t")
+                .append("Price : ").append(getPrice()).append("\n\t")
+                .append("Part number : ").append(getPartNumber()).append("\n\t")
+                .append("Manufacture cost : ").append(getManufactureCost()).append("\n\t")
                 .append("Unit of measurement : ").append(getUnitOfMeasure()).append("\n");
             if (getOwner() != null) {
-                builder.append("Owner name : ").append(getOwner().getName()).append("\n")
-                        .append("Owner birthday : ").append(getOwner().getBirthday().toString()).append("\n")
-                        .append("Owner height : ").append(getOwner().getHeight()).append("\n")
-                        .append("Owner weight : ").append(getOwner().getWeight()).append("\n")
-                        .append("Owner passport id : ").append(getOwner().getPassportID()).append("\n");
+                builder.append("\tOwner name : ").append(getOwner().getName()).append("\n")
+                        .append("\tOwner birthday : ").append(DateTimeFormatter.ofPattern("dd.MM.yyyy").format(getOwner().getBirthday())).append("\n")
+                        .append("\tOwner height : ").append(getOwner().getHeight()).append("\n")
+                        .append("\tOwner weight : ").append(getOwner().getWeight()).append("\n")
+                        .append("\tOwner passport id : ").append(getOwner().getPassportID()).append("\n");
             }else{
-                builder.append("Owner: ").append(getOwner()).append("\n");
+                builder.append("\tOwner: ").append(getOwner()).append("\n");
             }
-            return builder.append("user: ").append(username).append("\n").toString();
+            return builder.append("\tuser: ").append(username).append("\n").toString();
     }
 
     public int compareTo(Product o) {

@@ -38,6 +38,7 @@ public class CasterFieldProductFromString {
       * @return checked part number from the string
       */
      public String castPartNumber(String str){
+          if (str == null) return null;
           if (str.trim().equals("")) return null;
           if (valProd.partNumberValid(str.trim())){
                return str.trim();
@@ -67,7 +68,7 @@ public class CasterFieldProductFromString {
       * @return checked unit product from the string
       */
      public UnitOfMeasure castUnitOfMeasure(String str){
-          if (str.trim().equals("")) return null;
+          if (str.trim().equals("") || str.trim().equals("null")) return null;
           if (valProd.unitOfMeasureValid(str)){
                return UnitOfMeasure.fromString(str.trim());
           } else {
