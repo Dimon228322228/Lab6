@@ -1,13 +1,13 @@
 package connection;
 
-import action.ResultAction;
-import action.State;
 import exceptions.InvalidRecievedException;
 import lombok.extern.log4j.Log4j2;
 import serverAction.CommandHandler;
 import transmission.Request;
 import transmission.Response;
 import transmissionServer.HandlerMessageServer;
+import transmissionServer.RequestHandler;
+import transmissionServer.ResponseSender;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.nio.channels.*;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.*;
 
 @Log4j2
 public class Server {
@@ -28,9 +28,10 @@ public class Server {
     private final BufferedReader bufferedReader;
     private final Selector selector;
     private ServerSocketChannel serChannel;
-    private SocketChannel readableChannel;
     HandlerMessageServer handlerMessage = new HandlerMessageServer();
-    private final Map<SocketChannel, Request> registrationRequest = new ConcurrentHashMap<>();
+    private final Map<SocketChannel, Future<Response>> registerResponseFuture = new ConcurrentHashMap<>();
+    private final ForkJoinPool forkJoinPool = new ForkJoinPool(4);
+    private final ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
 
 
     public Server(int port, CommandHandler commandHandler) throws IOException {
@@ -75,7 +76,6 @@ public class Server {
             if (key.isAcceptable()){
                 createNewChannel();
             } else if (key.isReadable()){
-                // CompletableFuture.supplyAsync(handleCommand, cachedThreadPool).andThen(writeByKey, forkJoinPool)
                 readByKey(key);
             } else if (key.isWritable()){
                 writeByKey(key);
@@ -93,70 +93,33 @@ public class Server {
     }
 
     private void readByKey(SelectionKey key) {
-        readableChannel = (SocketChannel) key.channel();
-        Request request = null;
+        SocketChannel readableChannel = (SocketChannel) key.channel();
+        Request request;
         try {
             request = handlerMessage.getRequest(readableChannel);
-        } catch (IOException | InvalidRecievedException | ClassCastException e) {
-            log.info("Channel has been disconnect. ");
-            closeChannel(readableChannel);
-        }
-        registerRequest(request);
-    }
-
-
-
-    private void closeChannel(SocketChannel socketChannel){
-        try{
-            socketChannel.close();
-        } catch (IOException ignore){}
-    }
-
-    private void registerRequest(Request request){
-        if (request != null) registrationRequest.put(readableChannel, request);
-        else return;
-        log.info("Given new request: " + request.getCommandName() + ". ");
-        try{
+            if (request == null) return;
+            log.info("Given new request: " + request.getCommandName() + ". ");
+            Future<Response> responseFuture = cachedThreadPool.submit(new RequestHandler(commandHandler, request));
+            registerResponseFuture.put(readableChannel, responseFuture);
             readableChannel.register(selector, SelectionKey.OP_WRITE);
         } catch (ClosedChannelException e) {
             log.error(e.getMessage());
+        } catch (IOException | InvalidRecievedException | ClassCastException e) {
+            log.error(e.getMessage());
+            log.info("Channel has been disconnect. ");
+            try{
+                readableChannel.close();
+            } catch (IOException ignore){}
         }
     }
 
     private void writeByKey(SelectionKey key) {
         SocketChannel writeableChannel = (SocketChannel) key.channel();
-        Request clientRequest = registrationRequest.get(writeableChannel);
-        handleClientRequest(writeableChannel, clientRequest);
+        forkJoinPool.submit(new ResponseSender(registerResponseFuture.get(writeableChannel), handlerMessage, writeableChannel));
         try{
             writeableChannel.register(selector, SelectionKey.OP_READ);
         } catch (ClosedChannelException e) {
             log.error(e.getMessage());
-        }
-    }
-
-    private void handleClientRequest(SocketChannel channel, Request request){
-        try {
-            switch (request.getTarget()) {
-                case EXECUTECOMMAND -> {
-                    commandHandler.setRequest(request);
-                    ResultAction answer = commandHandler.executeCommand(request.getCommandName());
-                    Response response = new Response(answer);
-                    handlerMessage.sendResponse(channel, response);
-                    log.info(response.getResultAction().getState() + " - state response which has sent. \n");
-                }
-                case GETCOMMANDDATA -> {
-                    handlerMessage.sendCommandData(channel, commandHandler);
-                    log.info("Command data has been sent. \n");
-                }
-                case AUTHENTICATION -> {
-                    if (commandHandler.checkAuthentication(request))
-                        handlerMessage.sendResponse(channel, new Response(new ResultAction(State.SUCCESS, commandHandler.getAuthenticationMessage())));
-                    else handlerMessage.sendResponse(channel, new Response(new ResultAction(State.FAILED, commandHandler.getAuthenticationMessage())));
-                }
-            }
-        } catch (IOException | ClassCastException e) {
-                log.error(e.getMessage());
-                closeChannel(channel);
         }
     }
 

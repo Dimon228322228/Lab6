@@ -1,12 +1,16 @@
 package transmission;
 
+import action.CommandData;
 import action.ResultAction;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Response implements Serializable {
     @Getter private final ResultAction resultAction;
+    @Setter @Getter private List<CommandData> commandData;
 
     public Response(ResultAction resultAction){
         this.resultAction = resultAction;

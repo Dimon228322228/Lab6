@@ -18,11 +18,11 @@ public class HandlerMesClient extends HandlerMessage {
         sendMessage(channel, request);
     }
 
-    @SuppressWarnings("unchecked")
     public List<CommandData> getCommandData(SocketChannel channel) throws IOException, InvalidRecievedException {
         sendRequest(channel, new Request(null, null, null, Target.GETCOMMANDDATA, CurrentAccount.getAccount()));
         try {
-            return (List<CommandData>) Objects.requireNonNull(getMessage(channel)).readObject();
+            Response response = (Response) Objects.requireNonNull(getMessage(channel)).readObject();
+            return response.getCommandData();
         } catch (ClassNotFoundException | ClassCastException | NullPointerException e) {
             throw new InvalidRecievedException("Failed cast input string to message");
         }
