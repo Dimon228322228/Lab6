@@ -4,7 +4,6 @@ import action.ResultAction;
 import action.State;
 import action.TypeCommand;
 import content.Product;
-import manager.database.DatabaseManager;
 import serverAction.AbstractCommandServer;
 import serverAction.ExecutionResources;
 
@@ -29,22 +28,12 @@ public class AddIfMax extends AbstractCommandServer {
     public ResultAction execute() {
         Product product = executionResources.getProduct();
         if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing compare and add. \n");
-        if (executionResources.getCollectionManager().addIfMax(product)) {
-            if (!addingToDatabase(executionResources.getDatabaseManager(), product)){
-                executionResources.getCollectionManager().remove(product);
-                return new ResultAction(State.FAILED, "Can't add product to database. \n");
-            }
-            return new ResultAction(State.SUCCESS, "The product has been added. \n");
-        }
-        else return new ResultAction(State.FAILED, "The product hasn't been added because it is not largest. \n");
-    }
-
-    private boolean addingToDatabase(DatabaseManager databaseManager, Product product){
-        try {
-            product.setId(databaseManager.executeInsert(product));
-            return true;
-        } catch (SQLException e) {
-            return false;
+        try{
+            if (executionResources.getCollectionManager().addIfMax(product))
+                return new ResultAction(State.SUCCESS, "The product has been added. \n");
+            else return new ResultAction(State.FAILED, "The product hasn't been added because it is not largest. \n");
+        } catch (SQLException e){
+            return new ResultAction(State.FAILED, "Can't add product to database. \n");
         }
     }
 }

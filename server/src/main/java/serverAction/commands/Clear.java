@@ -24,7 +24,6 @@ public class Clear extends AbstractCommandServer {
      */
     public ResultAction execute() {
         try {
-            executionResources.getDatabaseManager().executeClearCollection(executionResources.getAccount().getName());
             executionResources.getCollectionManager().clearByUsername(executionResources.getAccount().getName());
         } catch (SQLException e) {
             return new ResultAction(State.FAILED, "Can't deleted your collection from database. \n");

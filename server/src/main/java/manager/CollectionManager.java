@@ -2,6 +2,8 @@ package manager;
 
 import content.Product;
 import content.UnitOfMeasure;
+
+import java.sql.SQLException;
 import java.util.List;
 
 public interface CollectionManager {
@@ -17,34 +19,32 @@ public interface CollectionManager {
 
     /**
      * Add new element in collection
+     * @return
      */
-    void add(Product product);
+    boolean add(Product product) throws SQLException;
 
     void addWithoutSetCreationDate(Product product);
 
     /**
      * Remove element with this id
      */
-    void removeById(long id, String username);
+    boolean removeById(long id, String username);
 
-    /**
-     * Remove all element in collection
-     */
-    void clear();
+    boolean updateById(long id, Product product, String username);
 
     /**
      * Remove all element by username
      */
-    void clearByUsername(String username);
+    void clearByUsername(String username) throws SQLException;
     /**
      * Add element in collection if he is great then all
      */
-    boolean addIfMax(Product product);
+    boolean addIfMax(Product product) throws SQLException;
 
     /**
      * Remove all element lower then given
      */
-    List<Product> removeLower(Product product, String username);
+    int removeLower(Product product, String username);
 
     /**
      * Count all element then manufactureCost equals given
@@ -57,6 +57,4 @@ public interface CollectionManager {
      * Count amount element then greater given
      */
     long countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure);
-
-    void remove(Product product);
 }

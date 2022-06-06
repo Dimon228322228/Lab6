@@ -31,23 +31,15 @@ public class UpdateById extends AbstractCommandServer {
     public ResultAction execute() throws ProductNotFoundException {
         long id;
         Product product = executionResources.getProduct();
-        Product previousProduct = null;
         if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing adding. \n");
         try{
             id = Long.parseLong(executionResources.getArg());
-            previousProduct = executionResources.getCollectionManager().getById(id);
-            executionResources.getCollectionManager().removeById(id, getExecutionResources().getAccount().getName());
-            product.setId(id);
-            executionResources.getCollectionManager().add(product);
-            executionResources.getDatabaseManager().executeUpdateById(product, (int) id);
+            if (!executionResources.getCollectionManager().updateById(id, product, getExecutionResources().getAccount().getName()))
+                return new ResultAction(State.FAILED, "Can't adding product in database. ");
         } catch (ProductNotFoundException e){
             return new ResultAction(State.FAILED, e.getMessage());
         } catch (NumberFormatException e){
             return new ResultAction(State.ERROR, "Id must be long! \n");
-        } catch (SQLException e) {
-            executionResources.getCollectionManager().remove(product);
-            executionResources.getCollectionManager().addWithoutSetCreationDate(previousProduct);
-            return new ResultAction(State.FAILED, e.getMessage());
         }
         return new ResultAction(State.SUCCESS, "Added success \n");
     }

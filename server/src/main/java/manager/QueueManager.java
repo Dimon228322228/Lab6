@@ -3,15 +3,21 @@ package manager;
 import content.Product;
 import content.UnitOfMeasure;
 import exceptions.ProductNotFoundException;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j2;
+import manager.database.DatabaseManager;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * This class stores the collection and works with it
  * */
+@Log4j2
 public class QueueManager implements CollectionManager{
     /**
      * creation date
@@ -23,6 +29,7 @@ public class QueueManager implements CollectionManager{
      */
     private final PriorityQueue<Product> collection;
 
+    @Setter private DatabaseManager databaseManager;
     private static QueueManager instance;
 
     private QueueManager() {
@@ -30,7 +37,7 @@ public class QueueManager implements CollectionManager{
         this.date = ZonedDateTime.now();
     }
 
-    public static QueueManager getInstance() {
+    public synchronized static QueueManager getInstance() {
         if (instance == null) return new QueueManager();
         return instance;
     }
@@ -54,17 +61,21 @@ public class QueueManager implements CollectionManager{
     /**
      * add product in the collection
      * @param product is haired of class {@link Product}
+     * @return state of the adding product in the collection
      */
     @Override
-    public void add(Product product) {
+    public synchronized boolean add(Product product) throws SQLException {
+        if (product == null) return false;
         try {
             product.setCreationDate(new SimpleDateFormat("dd.MM.yyyy HH.mm.ss").parse(new SimpleDateFormat("dd.MM.yyyy HH.mm.ss").format(new Date())));
         } catch (ParseException ignore) {}
+        product.setId(databaseManager.executeInsert(product));
         collection.add(product);
+        return true;
     }
 
     @Override
-    public void addWithoutSetCreationDate(Product product){
+    public synchronized void addWithoutSetCreationDate(Product product){
         collection.add(product);
     }
 
@@ -73,33 +84,49 @@ public class QueueManager implements CollectionManager{
      * @param id elements id
      */
     @Override
-    public void removeById(long id, String username) {
-        int size = collection.size();
-        collection.stream()
-                .sorted()
-                .filter(x -> x.getId() == id)
-                .filter(x -> x.getUsername().equals(username))
+    public synchronized boolean removeById(long id, String username) {
+        AtomicReference<Product> product = new AtomicReference<>();
+        if (collection.stream().filter(x -> x.getId() == id).filter(x -> x.getUsername().equals(username))
+                .peek(product::set).count() == 0)
+            throw new ProductNotFoundException("This product belongs to another user or there is no such product with a given id. ");
+        try {
+            databaseManager.executeDeletedById(id);
+        } catch (SQLException e) {
+            collection.add(product.get());
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public synchronized boolean updateById(long id, Product product, String username) {
+        if (collection.stream().filter(x -> x.getId() == id).filter(x -> x.getUsername().equals(username))
+                .peek(x -> {
+                    product.setCreationDate(x.getCreationDate());
+                    product.setId(id);
+                }).count() == 0)
+            throw new ProductNotFoundException("This product belongs to another user or there is no such product with a given id. ");
+        try {
+            databaseManager.executeUpdateById(product, (int) id);
+        } catch (SQLException e) {
+            return false;
+        }
+        collection.stream().sorted().filter(x -> x.getId() == id).filter(x -> x.getUsername().equals(username))
                 .forEach(collection::remove);
-        if(size == collection.size()) throw new ProductNotFoundException("This product belongs to another user or there is no such product with a given id. ");
-    }
-
-    /**
-     * Clear collection (Delete all element of the collection)
-     */
-    @Override
-    public void clear() {
-        collection.clear();
+        collection.add(product);
+        return true;
     }
 
     @Override
-    public void clearByUsername(String username) {
+    public synchronized void clearByUsername(String username) throws SQLException {
+        databaseManager.executeClearCollection(username);
         collection.stream().sorted().filter(x -> x.getUsername().equals(username)).forEach(collection::remove);
     }
 
     /**
      * @return max product
      */
-    private Product maxProduct() {
+    private synchronized Product maxProduct() {
         Optional<Product> product = collection.stream().max(Product::compareTo);
         return product.orElse(null);
     }
@@ -109,18 +136,12 @@ public class QueueManager implements CollectionManager{
      * @param product is hair of class {@link Product}
      */
     @Override
-    public boolean addIfMax(Product product) {
+    public synchronized boolean addIfMax(Product product) throws SQLException {
         if (product.compareTo(maxProduct()) > 0) {
-            add(product);
-            return true;
+            return add(product);
         } else {
             return false;
         }
-    }
-
-    @Override
-    public void remove(Product product){
-        collection.stream().sorted().filter(product::equals).forEach(collection::remove);
     }
 
     /**
@@ -128,13 +149,23 @@ public class QueueManager implements CollectionManager{
      * @param product is hair of class {@link Product}
      */
     @Override
-    public List<Product> removeLower(Product product, String username) {
-        return new ArrayList<>(collection.stream()
+    public synchronized int removeLower(Product product, String username) {
+        List<Product> products = new ArrayList<>(collection.stream()
                 .sorted()
                 .filter(x -> x.getUsername().equals(username))
                 .filter(x -> x.compareTo(product) < 0)
                 .peek(collection::remove)
                 .toList());
+        int count = products.size();
+        for (Product product1: products){
+            try {
+                databaseManager.executeDeletedById(product1.getId());
+            } catch (SQLException e) {
+                collection.add(product1);
+                count--;
+            }
+        }
+        return count;
     }
 
     /**

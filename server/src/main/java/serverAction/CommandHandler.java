@@ -9,7 +9,6 @@ import authentication.TypeAuthentication;
 import content.Product;
 import lombok.Getter;
 import lombok.Setter;
-import manager.CollectionManager;
 import manager.QueueManager;
 import manager.database.DatabaseManager;
 import serverAction.commands.*;
@@ -30,7 +29,7 @@ import java.util.stream.Stream;
  * A class determines what type of command was entered and stores the command history
  */
 public class CommandHandler {
-    CollectionManager colManag = QueueManager.getInstance();
+    QueueManager colManag = QueueManager.getInstance();
     ExecutionResources execRes = new ExecutionResources(colManag);
     @Getter private String authenticationMessage = "";
     @Setter
@@ -137,6 +136,7 @@ public class CommandHandler {
 
     public void setDatabaseManagerToExecutionResources(DatabaseManager databaseManager){
         execRes.setDatabaseManager(databaseManager);
+        colManag.setDatabaseManager(databaseManager);
     }
 
     public void synchronizeWithDatabase(){
