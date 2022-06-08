@@ -30,7 +30,7 @@ import java.util.stream.Stream;
  */
 public class CommandHandler {
     QueueManager colManag = QueueManager.getInstance();
-    ExecutionResources execRes = new ExecutionResources(colManag);
+    final ExecutionResources execRes = new ExecutionResources(colManag);
     @Getter private String authenticationMessage = "";
     @Setter
     Request request;
@@ -63,14 +63,18 @@ public class CommandHandler {
      * add given command in history if it is correct
      * calls a method to execute a certain type of command
      */
-    public ResultAction executeCommand(String commandName) {
-        AbstractCommandServer command = getCommand(commandName);
-        setAccount(command);
-        bindToDatabase();
-        if (!checkAuthentication()) return new ResultAction(State.FAILED, "You're no log in the server. Please, log in or register with command login. ");
-        if (command.getCommandData().getTypes().contains(TypeCommand.ARG)) setArg(command);
-        if (command.getCommandData().getTypes().contains(TypeCommand.PRODUCT)) setProduct(command);
-        return command.execute();
+    public ResultAction executeCommand(String commandName, Request request) {
+        synchronized(execRes) {
+            setRequest(request);
+            AbstractCommandServer command = getCommand(commandName);
+            setAccount(command);
+            bindToDatabase();
+            if (!checkAuthentication())
+                return new ResultAction(State.FAILED, "You're no log in the server. Please, log in or register with command login. ");
+            if (command.getCommandData().getTypes().contains(TypeCommand.ARG)) setArg(command);
+            if (command.getCommandData().getTypes().contains(TypeCommand.PRODUCT)) setProduct(command);
+            return command.execute();
+        }
     }
 
     private boolean checkAuthentication(){
@@ -123,15 +127,15 @@ public class CommandHandler {
     }
 
     private void setArg(AbstractCommandServer command){
-        command.getExecutionResources().setArg(request.getArg());
+        command.getExecutionResources().get().setArg(request.getArg());
     }
 
     private void setProduct(AbstractCommandServer command){
-        command.getExecutionResources().setProduct(request.getProduct());
+        command.getExecutionResources().get().setProduct(request.getProduct());
     }
 
     private void setAccount(AbstractCommandServer command){
-        command.getExecutionResources().setAccount(request.getAccount());
+        command.getExecutionResources().get().setAccount(request.getAccount());
     }
 
     public void setDatabaseManagerToExecutionResources(DatabaseManager databaseManager){

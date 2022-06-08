@@ -17,14 +17,14 @@ public class Clear extends AbstractCommandServer {
         super("clear",
                 Set.of(TypeCommand.EXTERNAL),
                 "clear the collection. Note! You can deleted product if you create it. Product that another user has it you can't deleted. ");
-        this.executionResources = executionResources;
+        this.executionResources.set(executionResources);
     }
     /**
      * A single method which clear collection
      */
     public ResultAction execute() {
         try {
-            executionResources.getCollectionManager().clearByUsername(executionResources.getAccount().getName());
+            executionResources.get().getCollectionManager().clearByUsername(executionResources.get().getAccount().getName());
         } catch (SQLException e) {
             return new ResultAction(State.FAILED, "Can't deleted your collection from database. \n");
         }

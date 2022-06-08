@@ -18,7 +18,7 @@ public class AddIfMax extends AbstractCommandServer {
         super("addIfMax",
                 Set.of(TypeCommand.EXTERNAL, TypeCommand.PRODUCT),
                 "add a new element to the collection if its value is greater than the value of the largest element in this collection");
-        this.executionResources = executionResources;
+        this.executionResources.set(executionResources);
     }
     /**
      * read product from the console
@@ -26,10 +26,10 @@ public class AddIfMax extends AbstractCommandServer {
      * add given product in the collection if it is large max element
      */
     public ResultAction execute() {
-        Product product = executionResources.getProduct();
+        Product product = executionResources.get().getProduct();
         if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing compare and add. \n");
         try{
-            if (executionResources.getCollectionManager().addIfMax(product))
+            if (executionResources.get().getCollectionManager().addIfMax(product))
                 return new ResultAction(State.SUCCESS, "The product has been added. \n");
             else return new ResultAction(State.FAILED, "The product hasn't been added because it is not largest. \n");
         } catch (SQLException e){

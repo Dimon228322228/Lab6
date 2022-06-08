@@ -17,7 +17,7 @@ public class CountByManufactureCost extends AbstractCommandServer {
         super("countByManufactureCost",
                 Set.of(TypeCommand.EXTERNAL, TypeCommand.ARG),
                 "display the number of elements whose value of the manufactureCost field is equal to the specified one");
-        this.executionResources = executionResources;
+        this.executionResources.set(executionResources);
     }
     /**
      * read manufacture cost
@@ -28,12 +28,12 @@ public class CountByManufactureCost extends AbstractCommandServer {
     public ResultAction execute() {
         double cost;
         try{
-            cost = Double.parseDouble(executionResources.getArg());
+            cost = Double.parseDouble(executionResources.get().getArg());
         } catch (NumberFormatException | NullPointerException e){
             return new ResultAction(State.ERROR, "Manufacture cost must be convert to double. \n");
         }
         return new ResultAction(State.SUCCESS, "Has been found "
-                + executionResources.getCollectionManager().countByManufactureCost(cost) +
+                + executionResources.get().getCollectionManager().countByManufactureCost(cost) +
                 " elements of the collection. \n");
     }
 }

@@ -30,5 +30,6 @@ public class ResponseSender extends RecursiveAction {
         } catch (InterruptedException | ExecutionException | IOException e) {
             log.info(e.getMessage());
         }
+        log.info(Thread.currentThread().getName() + "finished. ");
     }
 }

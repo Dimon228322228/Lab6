@@ -17,16 +17,16 @@ public class RemoveLower extends AbstractCommandServer {
         super("removeLower",
                 Set.of(TypeCommand.EXTERNAL, TypeCommand.PRODUCT),
                 "remove all elements from the collection that are smaller than the given one");
-        this.executionResources = executionResources;
+        this.executionResources.set(executionResources);
     }
     /**
      * read product from console
      * removes all smaller elements by Comparable
      */
     public ResultAction execute() {
-        Product product = executionResources.getProduct();
+        Product product = executionResources.get().getProduct();
         if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing compare. \n");
-        int count = executionResources.getCollectionManager().removeLower(product, getExecutionResources().getAccount().getName());
+        int count = executionResources.get().getCollectionManager().removeLower(product, getExecutionResources().get().getAccount().getName());
         return new ResultAction(State.SUCCESS, "Removing " + count + " element of the collection. \n");
     }
 }

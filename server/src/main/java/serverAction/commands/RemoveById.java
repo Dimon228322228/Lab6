@@ -18,7 +18,7 @@ public class RemoveById extends AbstractCommandServer {
         super("removeById",
                 Set.of(TypeCommand.EXTERNAL, TypeCommand.ARG),
                 "remove element from collection by its id");
-        this.executionResources = executionResources;
+        this.executionResources.set(executionResources);
     }
     /**
      * read id from console
@@ -27,8 +27,8 @@ public class RemoveById extends AbstractCommandServer {
     public ResultAction execute() throws ProductNotFoundException, InvalidProductFieldException{
         long id;
         try{
-            id = Long.parseLong(executionResources.getArg());
-            if (!executionResources.getCollectionManager().removeById(id, getExecutionResources().getAccount().getName()))
+            id = Long.parseLong(executionResources.get().getArg());
+            if (!executionResources.get().getCollectionManager().removeById(id, getExecutionResources().get().getAccount().getName()))
                 return new ResultAction(State.FAILED, "Can't adding product in database. ");
         } catch (NumberFormatException e){
             return new ResultAction(State.ERROR, "Id must be long! \n");

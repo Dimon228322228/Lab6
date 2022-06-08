@@ -19,15 +19,15 @@ public class Add extends AbstractCommandServer {
         super("add",
                 Set.of(TypeCommand.EXTERNAL, TypeCommand.PRODUCT),
                 "add a new {Product} to the collection");
-        this.executionResources = executionResources;
+        this.executionResources.set(executionResources);
     }
     /**
      * add product in the collection
      */
     public ResultAction execute() throws InvalidProductFieldException{
-        Product product = executionResources.getProduct();
+        Product product = executionResources.get().getProduct();
         try {
-            if(executionResources.getCollectionManager().add(product))
+            if(executionResources.get().getCollectionManager().add(product))
             return new ResultAction(State.SUCCESS, "Product has been added successful. \n");
             else return new ResultAction(State.ERROR, "Haven't got any product. Nothing adding. \n");
         } catch (SQLException e) {

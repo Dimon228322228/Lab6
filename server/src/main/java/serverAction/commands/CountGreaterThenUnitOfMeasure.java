@@ -19,20 +19,20 @@ public class CountGreaterThenUnitOfMeasure extends AbstractCommandServer {
         super("CountGreaterThenUnitOfMeasure",
                 Set.of(TypeCommand.EXTERNAL, TypeCommand.ARG),
                 "display the number of elements whose unitOfMeasure field value is greater than the given one. Here list of the available unit: " + UnitOfMeasure.getTitleInString());
-        this.executionResources = executionResources;
+        this.executionResources.set(executionResources);
     }
     /**
      * read unit product
      * then counts and print number
      */
     public ResultAction execute() {
-        UnitOfMeasure unitOfMeasure = UnitOfMeasure.fromString(executionResources.getArg());
+        UnitOfMeasure unitOfMeasure = UnitOfMeasure.fromString(executionResources.get().getArg());
         if (unitOfMeasure == null) {
             return new ResultAction(State.ERROR, "No such this enum. Unit of measure must be one of: " +
                     UnitOfMeasure.getTitleInString().toLowerCase());
         }
         return new ResultAction(State.SUCCESS, "Has been found " +
-                executionResources.getCollectionManager().countGreaterThenUnitOfMeashure(unitOfMeasure)
+                executionResources.get().getCollectionManager().countGreaterThenUnitOfMeashure(unitOfMeasure)
                 + " elements of the collection. \n");
     }
 }

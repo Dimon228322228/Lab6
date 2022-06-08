@@ -17,13 +17,13 @@ public class DisplayInfo extends AbstractCommandServer {
         super("info",
                 Set.of(TypeCommand.EXTERNAL),
                 "displays information about collection");
-        this.executionResources = executionResources;
+        this.executionResources.set(executionResources);
     }
     /**
      * output information about collection: Class, size and date
      */
     public ResultAction execute() {
-        List<String> info = executionResources.getCollectionManager().displayInfo();
+        List<String> info = executionResources.get().getCollectionManager().displayInfo();
         return new ResultAction(State.SUCCESS, "Collection type: " + info.get(0) +
                 "\nCollection size: " + info.get(1) +
                 "\nInitialization time: " + info.get(2) + "\n");

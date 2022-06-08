@@ -16,17 +16,17 @@ public class ShowElements extends AbstractCommandServer {
         super("show",
                 Set.of(TypeCommand.EXTERNAL),
                 "print all elements of the collection in string representation");
-        this.executionResources = executionResources;
+        this.executionResources.set(executionResources);
     }
     /**
      * a single method for showing all elements
      */
     public ResultAction execute() {
         StringBuilder builder = new StringBuilder();
-        if (executionResources.getCollectionManager().showElements().isEmpty()){
+        if (executionResources.get().getCollectionManager().showElements().isEmpty()){
             return new ResultAction(State.FAILED, "Nothing. \n");
         }else {
-            executionResources.getCollectionManager().showElements().forEach(builder::append);
+            executionResources.get().getCollectionManager().showElements().forEach(builder::append);
             return new ResultAction(State.SUCCESS, builder.toString());
         }
     }

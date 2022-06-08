@@ -25,8 +25,7 @@ public class RequestHandler implements Callable<Response> {
     public Response call(){
         switch (request.getTarget()) {
             case EXECUTECOMMAND -> {
-                commandHandler.setRequest(request);
-                ResultAction answer = commandHandler.executeCommand(request.getCommandName());
+                ResultAction answer = commandHandler.executeCommand(request.getCommandName(), request);
                 return new Response(answer);
             }
             case GETCOMMANDDATA -> {
@@ -40,6 +39,7 @@ public class RequestHandler implements Callable<Response> {
                 else return new Response(new ResultAction(State.FAILED, commandHandler.getAuthenticationMessage()));
             }
         }
+        log.info(Thread.currentThread().getName() + "finished. ");
         return new Response(new ResultAction(State.FAILED, ""));
     }
 }

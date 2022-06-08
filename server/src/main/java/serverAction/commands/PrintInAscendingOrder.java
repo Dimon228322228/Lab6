@@ -16,17 +16,17 @@ public class PrintInAscendingOrder extends AbstractCommandServer {
         super("printInAscendingOrder",
                 Set.of(TypeCommand.EXTERNAL),
                 "display the elements of the collection in ascending order");
-        this.executionResources = executionResources;
+        this.executionResources.set(executionResources);
     }
     /**
      * a single method for output all element of the collection by ascending order
      */
     public ResultAction execute() {
         StringBuilder builder = new StringBuilder();
-        if (executionResources.getCollectionManager().showElements().isEmpty()){
+        if (executionResources.get().getCollectionManager().showElements().isEmpty()){
             return new ResultAction(State.FAILED, "Nothing");
         }else {
-            executionResources.getCollectionManager().showElements().stream().forEachOrdered(builder::append);
+            executionResources.get().getCollectionManager().showElements().stream().forEachOrdered(builder::append);
             return new ResultAction(State.SUCCESS, builder.toString());
         }
     }
