@@ -91,6 +91,7 @@ public class QueueManager implements CollectionManager{
             throw new ProductNotFoundException("This product belongs to another user or there is no such product with a given id. ");
         try {
             databaseManager.executeDeletedById(id);
+            collection.remove(product.get());
         } catch (SQLException e) {
             collection.add(product.get());
             return false;
