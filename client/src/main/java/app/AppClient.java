@@ -5,11 +5,15 @@ import action.State;
 import actionClient.CommandHandler;
 import connection.ClientSession;
 import connection.Session;
+import gui.SwingApp;
 import transmissionClient.HandlerMesClient;
+
+import javax.swing.*;
 
 
 public class AppClient {
     public static void main(String [] arg){
+        SwingUtilities.invokeLater(SwingApp::new);
         Session clientSession = new ClientSession("localhost", 8800);
         HandlerMesClient handlerMessage = new HandlerMesClient();
         CommandHandler commandHandler = new CommandHandler(handlerMessage, clientSession);

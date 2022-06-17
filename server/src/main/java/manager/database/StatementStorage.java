@@ -111,7 +111,7 @@ public class StatementStorage {
     }
 
     private void fillProductWithOwner(PreparedStatement ps, Product product) throws SQLException {
-        ps.setString(1, product.getOwner().getName());
+        ps.setString(1, product.getOwner().getNameOwner());
         ps.setString(2, DateTimeFormatter.ofPattern("dd.MM.yyyy").format(product.getOwner().getBirthday()));
         ps.setLong(3, product.getOwner().getHeight());
         ps.setInt(4, product.getOwner().getWeight());

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  */
 public class Person implements Serializable {
 
-    @Setter @Getter private String name; // not null and not empty
+    @Setter @Getter private String nameOwner; // not null and not empty
 
     @Setter @Getter private LocalDateTime birthday; // not null
 
@@ -24,6 +24,6 @@ public class Person implements Serializable {
     @Override
     public String toString(){
         return String.format("Person(owner) name = %s, birthday = %s," +
-                " height = %d, weight = %s, passport ID = %s", name, birthday, height, weight, passportID);
+                " height = %d, weight = %s, passport ID = %s", nameOwner, birthday, height, weight, passportID);
     }
 }

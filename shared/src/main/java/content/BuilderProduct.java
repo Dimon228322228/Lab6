@@ -65,7 +65,7 @@ public class BuilderProduct {
     /**
      * set name owner from string
      */
-    public BuilderProduct setPersonName(String name){getOwner().setName(casterPersonFromString.castName(name));return this;}
+    public BuilderProduct setPersonName(String name){getOwner().setNameOwner(casterPersonFromString.castName(name));return this;}
     /**
      * set birthday owner from string
      */

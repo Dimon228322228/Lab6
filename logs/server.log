@@ -1,154 +1,30 @@
-2022-06-08 00:01:12.942 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: add. 
-2022-06-08 00:01:14.018 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: add. 
-2022-06-08 00:01:26.680 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+2022-06-10 13:19:28.254 ERROR [main] [connection.AppServer.main(AppServer.java:26)] - The connection attempt failed.
+2022-06-10 13:20:09.572 ERROR [main] [connection.AppServer.main(AppServer.java:26)] - The server requested password-based authentication, but no password was provided by plugin null
+2022-06-10 13:20:41.489 ERROR [main] [connection.AppServer.main(AppServer.java:26)] - The server requested password-based authentication, but no password was provided by plugin null
+2022-06-10 13:23:35.917 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-10 13:23:36.036 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-10 13:28:44.379 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-10 13:28:45.011 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-10 13:28:46.695 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
 
-2022-06-08 00:01:26.683 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 00:01:26.688 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: add. 
-2022-06-08 00:01:31.393 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+2022-06-10 13:28:46.698 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-10 13:28:46.711 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-10 13:28:46.778 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
 
-2022-06-08 00:01:31.396 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-5finished. 
-2022-06-08 00:01:31.401 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: add. 
-2022-06-08 00:01:38.480 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+2022-06-10 13:28:46.778 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-10 13:29:00.127 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-10 13:29:00.127 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-10 13:29:26.317 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-10 13:29:26.366 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-10 13:29:27.130 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
 
-2022-06-08 00:01:38.481 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 00:01:38.487 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: add. 
-2022-06-08 00:01:43.494 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+2022-06-10 13:29:27.132 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-10 13:29:27.147 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-10 13:29:27.151 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
 
-2022-06-08 00:01:43.495 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-5finished. 
-2022-06-08 00:01:43.502 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: add. 
-2022-06-08 00:01:48.399 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 00:01:48.399 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 00:01:48.404 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: add. 
-2022-06-08 00:01:52.252 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 00:01:52.252 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-5finished. 
-2022-06-08 00:01:52.258 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: add. 
-2022-06-08 00:03:51.128 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 00:03:51.130 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 00:03:51.134 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: add. 
-2022-06-08 00:08:17.236 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 00:08:17.237 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-5finished. 
-2022-06-08 00:08:17.242 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: add. 
-2022-06-08 00:09:42.744 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 00:09:42.745 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 00:14:33.376 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 00:14:33.376 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-5finished. 
-2022-06-08 00:14:43.671 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: show. 
-2022-06-08 00:18:08.878 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 00:18:08.878 INFO [ForkJoinPool-1-worker-5] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-5finished. 
-2022-06-08 00:28:04.742 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
-2022-06-08 00:28:04.743 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
-2022-06-08 00:28:10.702 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
-2022-06-08 00:28:10.703 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
-2022-06-08 00:28:23.731 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server finished. 
-2022-06-08 13:50:38.486 ERROR [main] [connection.AppServer.main(AppServer.java:26)] - Connection to localhost:9000 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
-2022-06-08 13:51:13.613 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
-2022-06-08 13:51:13.958 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
-2022-06-08 13:51:49.984 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-06-08 13:51:50.384 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-08 13:51:55.859 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:51:55.861 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:51:55.973 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-08 13:51:56.001 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:51:56.002 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:52:11.913 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-06-08 13:52:11.967 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-08 13:52:12.555 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:52:12.556 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:52:12.576 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-08 13:52:12.580 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:52:12.581 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:52:26.775 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
-2022-06-08 13:52:26.776 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
-2022-06-08 13:52:26.778 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-06-08 13:52:26.782 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-08 13:52:26.840 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:52:26.840 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:52:26.843 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-08 13:52:26.847 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:52:26.848 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:52:37.178 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: show. 
-2022-06-08 13:52:37.345 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:52:37.346 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:52:58.119 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: clear. 
-2022-06-08 13:52:58.312 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:52:58.313 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:53:04.563 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: show. 
-2022-06-08 13:53:04.658 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:53:04.659 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:53:38.038 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: removeById. 
-2022-06-08 13:53:38.526 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
-
-2022-06-08 13:53:38.526 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:53:50.017 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: removeById. 
-2022-06-08 13:53:50.254 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:53:50.255 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:53:55.935 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: show. 
-2022-06-08 13:53:56.045 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:53:56.046 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:54:06.283 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: show. 
-2022-06-08 13:54:06.470 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:54:06.475 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:54:22.826 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: show. 
-2022-06-08 13:54:22.981 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:54:22.982 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:58:28.878 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
-2022-06-08 13:58:28.879 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
-2022-06-08 13:58:31.268 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
-2022-06-08 13:58:31.269 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
-2022-06-08 13:58:39.684 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server finished. 
-2022-06-08 13:59:07.322 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
-2022-06-08 13:59:07.410 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
-2022-06-08 13:59:22.994 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-06-08 13:59:23.153 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-08 13:59:23.237 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:59:23.239 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:59:23.256 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-08 13:59:23.266 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:59:23.267 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:59:31.164 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-06-08 13:59:31.216 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-08 13:59:31.316 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:59:31.317 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 13:59:31.338 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-08 13:59:31.341 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 13:59:31.343 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 14:00:09.507 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: show. 
-2022-06-08 14:00:09.640 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 14:00:09.640 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 14:00:29.653 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: removeById. 
-2022-06-08 14:00:30.064 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
-
-2022-06-08 14:00:30.065 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 14:00:39.231 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: removeById. 
-2022-06-08 14:00:39.409 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 14:00:39.410 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-08 14:00:47.632 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: show. 
-2022-06-08 14:00:47.713 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
-
-2022-06-08 14:00:47.714 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-10 13:29:27.152 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-10 13:30:14.727 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-10 13:30:14.728 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-10 13:31:04.099 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server finished. 
+2022-06-10 17:37:39.953 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-10 17:37:40.093 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 

@@ -48,7 +48,7 @@ public class Product implements Serializable, Comparable<Product> {
                 .append("Manufacture cost : ").append(getManufactureCost()).append("\n\t")
                 .append("Unit of measurement : ").append(getUnitOfMeasure()).append("\n");
             if (getOwner() != null) {
-                builder.append("\tOwner name : ").append(getOwner().getName()).append("\n")
+                builder.append("\tOwner name : ").append(getOwner().getNameOwner()).append("\n")
                         .append("\tOwner birthday : ").append(DateTimeFormatter.ofPattern("dd.MM.yyyy").format(getOwner().getBirthday())).append("\n")
                         .append("\tOwner height : ").append(getOwner().getHeight()).append("\n")
                         .append("\tOwner weight : ").append(getOwner().getWeight()).append("\n")

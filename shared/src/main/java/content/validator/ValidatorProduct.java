@@ -82,7 +82,7 @@ public class ValidatorProduct {
         if (person != null) {
             return (validperson.birthdayValid(person.getBirthday()) &&
                     validperson.heightValid(person.getHeight()) &&
-                    validperson.namePersonValid(person.getName()) &&
+                    validperson.namePersonValid(person.getNameOwner()) &&
                     validperson.passportidValid(person.getPassportID()) &&
                     validperson.weightValid(person.getWeight()));
         } else return true;
