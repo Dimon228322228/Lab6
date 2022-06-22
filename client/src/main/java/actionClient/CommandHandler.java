@@ -14,7 +14,7 @@ import transmission.Request;
 import transmission.Response;
 import transmission.Target;
 import transmissionClient.HandlerMesClient;
-import util.Supplier;
+import utilites.Supplier;
 
 import java.io.*;
 import java.util.Arrays;

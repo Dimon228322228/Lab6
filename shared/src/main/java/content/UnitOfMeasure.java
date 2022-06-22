@@ -45,6 +45,16 @@ public enum UnitOfMeasure  implements Serializable {
         return title;
     }
 
+    public static String [] getArrayNames(){
+        return new String[]{
+                UnitOfMeasure.KILOGRAMS.toString(),
+                UnitOfMeasure.CENTIMETERS.toString(),
+                UnitOfMeasure.PCS.toString(),
+                UnitOfMeasure.MILLILITERS.toString(),
+                UnitOfMeasure.GRAMS.toString()
+        };
+    }
+
     /**
      * @return translates the string to enum
      */

@@ -1,160 +1,120 @@
 package gui;
 
-import content.Coordinates;
-import content.Person;
 import content.Product;
-import lombok.Setter;
+import utilites.LanguageManager;
 
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Table extends JPanel{
 
-    private Reflector reflector;
+    private final Reflector reflector;
+    private final LanguageManager languageManager;
+    private MyTableModel tableModel;
 
-    private JTable table = new JTable(){
-        public boolean getScrollableTracksViewportWidth(){
-            return getPreferredSize().width < getParent().getWidth();
-        }
+    private JScrollPane pane;
+    private JTable table;
+    private final JPanel buttonsPanel = new JPanel();
+    private final JButton add;
+    private final JButton remove;
+    private final JButton updateById;
 
-        @Override
-        public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-            Component component = super.prepareRenderer(renderer, row, column);
-            int rendererWidth = component.getPreferredSize().width;
-            TableColumn tableColumn = getColumnModel().getColumn(column);
-            tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
-            return component;
-        }
-    };
-
-    public Table(Reflector reflector){
+    public Table(Reflector reflector, LanguageManager languageManager){
+        this.languageManager = languageManager;
         this.reflector = reflector;
-        createTable();
+        setName(languageManager.getString("table"));
+        setLayout(new BorderLayout());
+        add = new JButton(languageManager.getString("add"));
+        remove = new JButton(languageManager.getString("remove"));
+        updateById = new JButton(languageManager.getString("update"));
+        setButton();
     }
 
-    private void createTable(){
-        table.setModel(new MyTableModel());
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-//        setWidthColumns(table);
+    private JScrollPane repaintTable(){
+        tableModel = new MyTableModel(reflector);
+        table = new JTable(tableModel){
+            public boolean getScrollableTracksViewportWidth(){
+                return getPreferredSize().width < getParent().getWidth();
+            }
+
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                int rendererWidth = component.getPreferredSize().width;
+                TableColumn tableColumn = getColumnModel().getColumn(column);
+                tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+                return component;
+            }
+        };
+        resizeColumnWight(table);
         JTableHeader header = table.getTableHeader();
         header.setReorderingAllowed(false);
         header.setResizingAllowed(false);
-        BorderLayout layout = new BorderLayout();
-        setLayout(layout);
-        add(new JScrollPane(table));
-        for (Class<?> clas:
-                (new MyTableModel()).getColumnTypes() ) {
-            System.out.println(clas);
-        }
-        for (String clas:
-                (new MyTableModel()).getColumnNames() ) {
-            System.out.println(clas);
-        }
-
-        setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createRaisedBevelBorder(),
-                "Table"));
+        JScrollPane pane = new JScrollPane(table);
+        pane.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                resizeColumnWight(table);
+                repaint();
+            }
+        });
+        revalidate();
+        return pane;
     }
 
-//    private void resizeColumnWight(JTable table){
-//        int allWight = 0;
-//        TableColumnModel model = table.getColumnModel();
-//        for (int i = 0; i < table.getRowCount(); i++){
-//            int wight = 30;
-//            for
-//        }
-//    }
+    public void setButton(){
+        BoxLayout layout = new BoxLayout(buttonsPanel, BoxLayout.X_AXIS);
+        buttonsPanel.setLayout(layout);
+        buttonsPanel.add(Box.createHorizontalGlue());
+        buttonsPanel.add(add);
+        buttonsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+        buttonsPanel.add(updateById);
+        buttonsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+        buttonsPanel.add(remove);
+        add(buttonsPanel, BorderLayout.SOUTH);
+        revalidate();
+    }
 
-//    private void setWidthColumns(JTable table) {
-//        TableColumnModel model = table.getColumnModel();
-//        for (int i = 0; i < model.getColumnCount(); i++){
-//            TableColumn column = model.getColumn(i);
-//            column.setMinWidth(115);
-//        }
-//    }
+
+    private void resizeColumnWight(JTable table){
+        TableColumnModel model = table.getColumnModel();
+        for (int col = 0; col < tableModel.getColumnCount(); col++){
+            TableColumn column = model.getColumn(col);
+            int width = 50;
+            String name = tableModel.getColumnName(col);
+            width = Math.max(name.length() * 10 + 1 + getInsets().left + getInsets().right, width);
+            for (int row = 0; row < tableModel.getRowCount(); row++){
+                TableCellRenderer renderer = column.getCellRenderer();
+                Component cells = table.prepareRenderer(renderer, row, col);
+                width = Math.max(cells.getPreferredSize().width + 1 + getInsets().left + getInsets().right, width);
+            }
+            model.getColumn(col).setMinWidth(width);
+        }
+    }
+
+    public void updateTable() {
+        if (pane != null) remove(pane);
+        pane = repaintTable();
+
+        setVisible(false);
+        add(pane, BorderLayout.CENTER);
+        setVisible(true);
+    }
 
     class MyTableModel extends AbstractTableModel {
         private final ArrayList<String> columnNames;
         private final ArrayList<Class<?>> columnTypes;
 
-        public MyTableModel(){
-            columnNames = getColumnNames();
-            columnTypes = getColumnTypes();
+        public MyTableModel(Reflector reflector){
+            columnNames = reflector.getColumnNamesForProduct();
+            columnTypes = reflector.getColumnTypesForProduct();
         }
 
-        public ArrayList<Class<?>> getColumnTypes(){
-            ArrayList<Class<?>> allClasses = new ArrayList<>();
-            ArrayList<Class<?>> productColumnTypes = reflector.columnClasses(Product.class);
-            for (Class<?> clas: productColumnTypes){
-                if (Coordinates.class.equals(clas)) {
-                    allClasses.addAll(reflector.columnClasses(Coordinates.class));
-                } else if (Person.class.equals(clas)) {
-                    allClasses.addAll(reflector.columnClasses(Person.class));
-                } else {
-                    allClasses.add(clas);
-                }
-            }
-            return allClasses;
-        }
-
-        public ArrayList<String> getColumnNames(){
-            ArrayList<String> allClasses = new ArrayList<>();
-            ArrayList<String> productColumnNames = reflector.columnNames(Product.class);
-            for (String str: productColumnNames){
-                if ("coordinates".equals(str)) {
-                    allClasses.addAll(reflector.columnNames(Coordinates.class));
-                } else if ("owner".equals(str)) {
-                    allClasses.addAll(reflector.columnNames(Person.class));
-                } else {
-                    allClasses.add(str);
-                }
-            }
-            return allClasses;
-        }
-//        private ArrayList<String> columnNames = new ArrayList<>(java.util.List.of(
-//                "id",
-//                "name",
-//                "X",
-//                "Y",
-//                "creation date",
-//                "price",
-//                "part number",
-//                "manufacture cost",
-//                "unit of measure",
-//                "name owner",
-//                "birthday owner",
-//                "height owner",
-//                "weight owner",
-//                "passport id owner",
-//                "username"));
-
-
-//        private ArrayList<Class<?>> columnTypes = new ArrayList<>(List.of(
-//                int.class,
-//                String.class,
-//                Integer.class,
-//                Integer.class,
-//                Date.class,
-//                Double.class,
-//                String.class,
-//                double.class,
-//                Object.class,
-//                String.class,
-//                Date.class,
-//                Long.class,
-//                Integer.class,
-//                String.class,
-//                String.class
-//        ));
-
-
-        private ArrayList<ArrayList<Object>> data = new ArrayList<>();
-        @Setter
-        private boolean editable;
+        private final ArrayList<ArrayList<Object>> data = new ArrayList<>();
 
         @Override
         public int getRowCount() {
@@ -183,7 +143,7 @@ public class Table extends JPanel{
 
         @Override
         public boolean isCellEditable(int row, int column) {
-            return editable;
+            return false;
         }
 
         @Override

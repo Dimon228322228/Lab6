@@ -1,24 +1,26 @@
 package gui;
 
-import util.LanguageManager;
+import utilites.LanguageManager;
 
 import javax.swing.*;
+import java.util.Locale;
 
 
 public class SwingApp {
     public SwingApp() {
-        HomeFrame home = HomeFrame.getInstance();
+        LanguageManager languageManager = new LanguageManager();
 
-        RegistrationFrame registrationFrame = new RegistrationFrame();
+        RegistrationFrame registrationFrame = new RegistrationFrame("home", languageManager);
         registrationFrame.setPanel();
-
-        home.setHomePanel(new Table(new Reflector(new LanguageManager())));
-//        устанавливает название фрейма как название кнопки
-//        findButton.addActionListener(EventHandler.create(ActionListener.class, frame, "title", "source.text"));
         registrationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         registrationFrame.setVisible(true);
 
+        HomeFrame home = new HomeFrame(languageManager);
         home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         home.setVisible(true);
+
+        ProductFrame addProduct = new ProductFrame(languageManager);
+        addProduct.createAddPanel();
+        addProduct.setVisible(true);
     }
 }
