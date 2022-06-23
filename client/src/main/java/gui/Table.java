@@ -2,6 +2,7 @@ package gui;
 
 import content.Product;
 import utilites.LanguageManager;
+import utilites.UpdatablePanel;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -10,7 +11,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
-public class Table extends JPanel{
+public class Table extends UpdatablePanel {
 
     private final Reflector reflector;
     private final LanguageManager languageManager;
@@ -19,20 +20,25 @@ public class Table extends JPanel{
     private JScrollPane pane;
     private JTable table;
     private final JPanel buttonsPanel = new JPanel();
-    private final JButton add;
-    private final JButton remove;
-    private final JButton updateById;
+    private final JButton add = new JButton();
+    private final JButton remove = new JButton();
+    private final JButton updateById = new JButton();
 
     public Table(Reflector reflector, LanguageManager languageManager){
         this.languageManager = languageManager;
         this.reflector = reflector;
         setName(languageManager.getString("table"));
         setLayout(new BorderLayout());
-        add = new JButton(languageManager.getString("add"));
-        remove = new JButton(languageManager.getString("remove"));
-        updateById = new JButton(languageManager.getString("update"));
+        setButtonName();
         setButton();
     }
+
+    private void setButtonName(){
+        add.setText(languageManager.getString("add"));
+        remove.setText(languageManager.getString("remove"));
+        updateById.setText(languageManager.getString("update"));
+    }
+
 
     private JScrollPane repaintTable(){
         tableModel = new MyTableModel(reflector);
@@ -103,6 +109,13 @@ public class Table extends JPanel{
         setVisible(false);
         add(pane, BorderLayout.CENTER);
         setVisible(true);
+    }
+
+    @Override
+    public void update() {
+        setName(languageManager.getString("table"));
+        setButtonName();
+        updateTable();
     }
 
     class MyTableModel extends AbstractTableModel {

@@ -2,6 +2,7 @@ package transmissionClient;
 
 import action.CommandData;
 import authentication.CurrentAccount;
+import content.Product;
 import exceptions.InvalidRecievedException;
 import transmission.HandlerMessage;
 import transmission.Request;
@@ -16,6 +17,11 @@ import java.util.Objects;
 public class HandlerMesClient extends HandlerMessage {
     public void sendRequest(SocketChannel channel, Request request) throws IOException {
         sendMessage(channel, request);
+    }
+
+    public List<Product> getCollection(SocketChannel channel) throws IOException, InvalidRecievedException {
+        sendRequest(channel, new Request(null, null, null, Target.GETCOLLECTION, CurrentAccount.getAccount()));
+        return getResponse(channel).getCollection();
     }
 
     public List<CommandData> getCommandData(SocketChannel channel) throws IOException, InvalidRecievedException {

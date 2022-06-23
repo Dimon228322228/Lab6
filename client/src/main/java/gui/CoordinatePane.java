@@ -1,6 +1,7 @@
 package gui;
 
 import utilites.LanguageManager;
+import utilites.UpdatablePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.awt.event.*;
 
 import static java.lang.Math.abs;
 
-public class CoordinatePanel extends JPanel {
+public class CoordinatePane extends UpdatablePanel {
 
     private final LanguageManager languageManager;
     //Расстояние между линиями параллельными оси у
@@ -27,7 +28,7 @@ public class CoordinatePanel extends JPanel {
     private Integer movX = 0;
     private Integer movY = 0;
 
-    public CoordinatePanel(LanguageManager languageManager){
+    public CoordinatePane(LanguageManager languageManager){
         this.languageManager = languageManager;
         setPreferredSize(new Dimension(550, 500));
         setName(languageManager.getString("coordinate"));
@@ -146,5 +147,10 @@ public class CoordinatePanel extends JPanel {
         g2d.drawLine(0, currentY, getWidth(), currentY);
         g2d.setColor(Color.gray);
         g2d.drawString(String.valueOf(-value), getWidth()/2 + movX - new JLabel(String.valueOf(-value)).getPreferredSize().width, currentY + 6);
+    }
+
+    @Override
+    public void update() {
+        setName(languageManager.getString("coordinate"));
     }
 }

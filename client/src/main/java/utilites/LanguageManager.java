@@ -38,6 +38,10 @@ public class LanguageManager {
         }
     }
 
+    public Locale getCurrentLocale(){
+        return resourceBundle.getLocale();
+    }
+
     public void setLocalByString (String str){
         switch (str){
             case "Ελλην" -> {setLanguage(Locale.forLanguageTag("el"));}

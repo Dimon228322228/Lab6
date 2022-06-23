@@ -3,78 +3,82 @@ package gui;
 import lombok.Getter;
 import lombok.Setter;
 import utilites.LanguageManager;
+import utilites.UpdatablePanel;
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class HomeFrame extends JFrame {
 
     private final LanguageManager languageManager;
+
     private final JPanel mainPanel = new JPanel();
     private final JPanel titlePanel = new JPanel();
     private final JPanel helpPanel = new JPanel();
 
-    @Getter @Setter private JPanel bodyPanel = new JPanel();
+    private final JMenuItem tableItem = new JMenuItem();
+    private final JMenuItem coordinate = new JMenuItem();
+
+    private final Table table;
+    private final CoordinatePane coordinatePane;
+
+    private JComboBoxLanguage languageBox;
+
+    @Getter @Setter private UpdatablePanel bodyPanel = new UpdatablePanel();
     @Setter private JLabel username = new JLabel("");
 
     public HomeFrame(LanguageManager languageManager){
         super(languageManager.getString("home"));
         this.languageManager = languageManager;
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Dimension sizeScreen = toolkit.getScreenSize();
+        table = new Table(new Reflector(languageManager), languageManager);
+        coordinatePane = new CoordinatePane(languageManager);
+        Dimension sizeScreen = Toolkit.getDefaultToolkit().getScreenSize();
         setBounds(sizeScreen.width/2 - 325, sizeScreen.height/2 - 200, 750, 400);
         setMenu();
+        initLanguageBox();
+    }
+
+    private void initLanguageBox(){
+        languageBox = new JComboBoxLanguage(languageManager){
+            public void abstractDoing(){
+                bodyPanel.update();
+                setTitle(languageManager.getString("home"));
+                setMenu();
+                setUsernameLabel();
+                setHomePanel();
+            }
+        };
+    }
+
+    private void setNameItems(){
+        tableItem.setText(languageManager.getString("table"));
+        coordinate.setText(languageManager.getString("coordinate"));
     }
 
     private void setMenu(){
-        JMenuItem itemru = new MyJMenuItem(languageManager.getString("ru_RU"));
-        JMenuItem itemel = new JMenuItem(languageManager.getString("el"));
-        JMenuItem itemca = new JMenuItem(languageManager.getString("es_PA"));
-        JMenuItem itemis = new JMenuItem(languageManager.getString("is_IS"));
-
-        JMenuItem table = new JMenuItem(languageManager.getString("table"));
-        table.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Table table = new Table(new Reflector(languageManager), languageManager);
+        setNameItems();
+        tableItem.addActionListener(e -> {
                 table.updateTable();
                 setBodyPanel(table);
                 setHomePanel();
-            }
         });
-
-        JMenuItem coordinate = new JMenuItem(languageManager.getString("coordinate"));
-        coordinate.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setBodyPanel(new CoordinatePanel(languageManager));
+        coordinate.addActionListener(e -> {
+                setBodyPanel(coordinatePane);
                 setHomePanel();
-            }
         });
-
-        JMenu changeLanguageCheckBox = new JMenu(languageManager.getString("language"));
-        changeLanguageCheckBox.setMnemonic('1');
-        changeLanguageCheckBox.add(itemru);
-        changeLanguageCheckBox.add(itemel);
-        changeLanguageCheckBox.add(itemca);
-        changeLanguageCheckBox.add(itemis);
 
         JMenu product = new JMenu(languageManager.getString("view"));
-        product.setMnemonic('3');
-        product.add(table);
+        product.setMnemonic('2');
+        product.add(tableItem);
         product.add(coordinate);
 
         JMenu changeAccount = new JMenu(languageManager.getString("change_account"));
-        changeAccount.setMnemonic('2');
+        changeAccount.setMnemonic('1');
+
         JMenu exit = new JMenu(languageManager.getString("exit"));
-        exit.setMnemonic('4');
+        exit.setMnemonic('3');
 
         JMenuBar menuBar = new JMenuBar();
-        menuBar.add(changeLanguageCheckBox);
         menuBar.add(changeAccount);
         menuBar.add(product);
         menuBar.add(exit);
@@ -112,14 +116,9 @@ public class HomeFrame extends JFrame {
         JLabel user = new JLabel(languageManager.getString("username") + ": ");
         BoxLayout titleLayout = new BoxLayout(titlePanel, BoxLayout.LINE_AXIS);
         titlePanel.setLayout(titleLayout);
+        titlePanel.add(languageBox);
         titlePanel.add(Box.createHorizontalGlue());
         titlePanel.add(user);
         titlePanel.add(username);
-    }
-
-    class MyJMenuItem extends JMenuItem{
-        public MyJMenuItem(String str){
-            super(str);
-        }
     }
 }
