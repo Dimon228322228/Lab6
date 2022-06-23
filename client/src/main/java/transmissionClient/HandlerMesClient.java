@@ -21,7 +21,7 @@ public class HandlerMesClient extends HandlerMessage {
 
     public List<Product> getCollection(SocketChannel channel) throws IOException, InvalidRecievedException {
         sendRequest(channel, new Request(null, null, null, Target.GETCOLLECTION, CurrentAccount.getAccount()));
-        return getResponse(channel).getCollection();
+        return getResponse(channel).getResultAction().getCollection();
     }
 
     public List<CommandData> getCommandData(SocketChannel channel) throws IOException, InvalidRecievedException {

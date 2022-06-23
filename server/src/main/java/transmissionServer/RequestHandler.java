@@ -38,6 +38,10 @@ public class RequestHandler implements Callable<Response> {
                     return new Response(new ResultAction(State.SUCCESS, commandHandler.getAuthenticationMessage()));
                 else return new Response(new ResultAction(State.FAILED, commandHandler.getAuthenticationMessage()));
             }
+            case GETCOLLECTION -> {
+                ResultAction resultAction = commandHandler.executeCommand("getCollection", request);
+                return new Response(resultAction);
+            }
         }
         log.info(Thread.currentThread().getName() + "finished. ");
         return new Response(new ResultAction(State.FAILED, ""));

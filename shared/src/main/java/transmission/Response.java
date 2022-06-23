@@ -12,7 +12,6 @@ import java.util.List;
 public class Response implements Serializable {
     @Getter private final ResultAction resultAction;
     @Setter @Getter private List<CommandData> commandData;
-    @Setter @Getter private List<Product> collection;
 
     public Response(ResultAction resultAction){
         this.resultAction = resultAction;

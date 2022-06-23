@@ -39,7 +39,8 @@ public class CommandHandler {
     public CommandHandler() {
         Stream.of(new Add(execRes), new AddIfMax(execRes), new Clear(execRes), new CountByManufactureCost(execRes),
                 new CountGreaterThenUnitOfMeasure(execRes), new DisplayInfo(execRes), new PrintInAscendingOrder(execRes),
-                new RemoveById(execRes), new RemoveLower(execRes), new ShowElements(execRes), new UpdateById(execRes))
+                new RemoveById(execRes), new RemoveLower(execRes), new ShowElements(execRes), new UpdateById(execRes),
+                new GetCollection(execRes))
                 .forEach(x -> commandMap.put(x.getCommandData().getName(), x));
     }
 
