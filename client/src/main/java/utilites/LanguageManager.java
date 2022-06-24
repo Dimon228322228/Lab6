@@ -31,9 +31,9 @@ public class LanguageManager {
     public String getLocaleName(){
         switch (resourceBundle.getLocale().toString()) {
             case "ru_RU" -> {return "Русский";}
-            case "el" -> {return "Ελληνική";}
+            case "el" -> {return "Ελλην";}
             case "es_PA" -> {return "Español";}
-            case "is_IS" -> {return "Íslenska";}
+            case "is_IS" -> {return "íslenskt";}
             default -> {return "English";}
         }
     }

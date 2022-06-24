@@ -1,30 +1,641 @@
-2022-06-10 13:19:28.254 ERROR [main] [connection.AppServer.main(AppServer.java:26)] - The connection attempt failed.
-2022-06-10 13:20:09.572 ERROR [main] [connection.AppServer.main(AppServer.java:26)] - The server requested password-based authentication, but no password was provided by plugin null
-2022-06-10 13:20:41.489 ERROR [main] [connection.AppServer.main(AppServer.java:26)] - The server requested password-based authentication, but no password was provided by plugin null
-2022-06-10 13:23:35.917 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
-2022-06-10 13:23:36.036 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
-2022-06-10 13:28:44.379 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-06-10 13:28:45.011 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-10 13:28:46.695 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+2022-06-24 11:10:07.068 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-24 11:10:07.325 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-24 11:11:22.971 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:11:24.302 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:11:24.567 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:31)] - java.lang.NullPointerException: Cannot invoke "authentication.Account.getName()" because "account" is null
+2022-06-24 11:11:24.569 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:14:20.065 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:14:20.066 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:14:20.116 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:14:20.117 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:14:20.117 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:14:30.099 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:14:30.196 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:14:31.616 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
 
-2022-06-10 13:28:46.698 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-10 13:28:46.711 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-10 13:28:46.778 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+2022-06-24 11:14:31.617 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:14:36.442 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:14:36.443 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:14:36.444 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:14:36.445 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:14:37.003 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
 
-2022-06-10 13:28:46.778 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-10 13:29:00.127 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
-2022-06-10 13:29:00.127 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
-2022-06-10 13:29:26.317 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
-2022-06-10 13:29:26.366 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-10 13:29:27.130 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+2022-06-24 11:14:37.003 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:16:22.627 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:16:22.628 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:16:22.630 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:16:22.633 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:16:23.185 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
 
-2022-06-10 13:29:27.132 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-10 13:29:27.147 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
-2022-06-10 13:29:27.151 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+2022-06-24 11:16:23.186 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:16:36.456 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:16:36.457 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:16:36.458 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:16:36.460 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:16:37.050 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
 
-2022-06-10 13:29:27.152 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
-2022-06-10 13:30:14.727 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
-2022-06-10 13:30:14.728 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
-2022-06-10 13:31:04.099 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server finished. 
-2022-06-10 17:37:39.953 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
-2022-06-10 17:37:40.093 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-24 11:16:37.051 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:19:42.929 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:19:42.929 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:19:42.930 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:19:42.932 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:19:43.491 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 11:19:43.491 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:21:50.613 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:21:50.768 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:22:10.863 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:22:11.154 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:22:11.156 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:31)] - java.lang.NullPointerException: Cannot invoke "authentication.Account.getName()" because "account" is null
+2022-06-24 11:22:11.156 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:23:30.879 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:23:30.880 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:23:30.880 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:23:31.007 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:23:31.030 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:35:03.082 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:35:03.233 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:38:16.779 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 11:38:16.780 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:39:03.623 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server finished. 
+2022-06-24 11:40:17.961 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-24 11:40:18.039 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-24 11:40:35.837 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:40:36.679 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:40:38.322 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 11:40:38.326 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:40:57.145 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:40:57.146 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:40:57.149 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:40:57.151 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:40:57.919 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 11:40:57.920 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:41:24.383 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:41:24.384 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:41:24.386 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:41:24.389 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:41:25.197 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 11:41:25.198 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:41:36.253 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:41:36.254 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:41:36.255 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:41:36.256 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:41:37.078 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 11:41:37.079 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:42:05.735 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:42:05.737 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:42:05.738 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:42:05.761 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:42:06.585 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 11:42:06.585 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:42:22.822 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:42:22.822 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:42:22.823 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:42:22.824 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:42:23.647 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 11:42:23.648 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:42:23.652 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:42:23.694 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 11:42:23.695 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:42:51.706 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:42:51.706 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:44:27.998 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:44:28.238 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:44:28.240 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:31)] - java.lang.NullPointerException: Cannot invoke "authentication.Account.getName()" because "account" is null
+2022-06-24 11:44:28.240 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:45:04.783 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:45:04.784 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:45:04.785 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:45:05.133 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:45:05.134 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:46:44.517 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:46:44.519 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:46:45.572 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 11:46:45.573 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:46:50.136 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:46:50.137 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 11:46:50.138 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 11:46:50.211 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:46:50.962 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 11:46:50.963 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:46:50.965 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 11:46:51.074 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 11:46:51.075 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 11:49:20.601 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 11:49:20.601 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 12:17:19.920 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 12:17:20.781 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 12:17:21.024 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:31)] - java.lang.NullPointerException: Cannot invoke "authentication.Account.getName()" because "account" is null
+2022-06-24 12:17:21.080 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 12:17:59.933 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 12:17:59.934 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 12:17:59.962 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 12:17:59.995 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 12:17:59.995 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 12:18:15.417 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 12:18:15.572 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 12:20:52.942 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 12:20:52.950 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 12:22:56.162 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server finished. 
+2022-06-24 20:43:35.608 ERROR [main] [connection.AppServer.main(AppServer.java:26)] - Connection to localhost:9000 refused. Check that the hostname and port are correct and that the postmaster is accepting TCP/IP connections.
+2022-06-24 20:44:28.974 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-24 20:44:29.073 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-24 20:44:41.078 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 20:44:41.388 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 20:44:41.470 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:31)] - java.lang.NullPointerException: Cannot invoke "authentication.Account.getName()" because "account" is null
+2022-06-24 20:44:41.472 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 20:45:45.822 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 20:45:45.823 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 20:45:45.826 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 20:45:45.907 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 20:45:45.908 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 20:45:52.167 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 20:45:52.173 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 20:45:53.447 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 20:45:53.449 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 20:45:53.492 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 20:45:53.519 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 20:45:53.519 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 20:46:18.053 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 20:46:18.054 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 20:48:08.675 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 20:48:09.119 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 20:48:09.120 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:31)] - java.lang.NullPointerException: Cannot invoke "authentication.Account.getName()" because "account" is null
+2022-06-24 20:48:09.121 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 20:49:00.556 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 20:49:00.556 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 20:49:00.557 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 20:49:00.652 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 20:49:00.653 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 20:49:03.735 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 20:49:03.738 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 20:49:04.581 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 20:49:04.582 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 20:49:04.633 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 20:49:04.637 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 20:49:04.638 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 20:50:33.945 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 20:50:33.945 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 20:52:17.982 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 20:52:18.035 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 20:52:18.104 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:31)] - java.lang.NullPointerException: Cannot invoke "authentication.Account.getName()" because "account" is null
+2022-06-24 20:52:18.105 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 20:52:22.834 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 20:52:22.834 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 20:53:29.703 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 20:53:29.751 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 20:53:29.752 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:31)] - java.lang.NullPointerException: Cannot invoke "authentication.Account.getName()" because "account" is null
+2022-06-24 20:53:29.753 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 20:53:44.950 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 20:53:44.950 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 20:53:44.951 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 20:53:44.952 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 20:53:44.954 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 20:53:51.763 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 20:53:51.766 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 20:53:52.877 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 20:53:52.878 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 20:53:52.890 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 20:53:52.892 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 20:53:52.892 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 20:55:15.018 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 20:55:15.055 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 21:06:30.445 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 21:06:30.929 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:07:21.038 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 21:07:21.039 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:07:53.083 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server finished. 
+2022-06-24 21:10:10.986 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-24 21:10:11.069 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-24 21:10:52.882 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 21:10:53.172 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:10:54.132 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:10:54.135 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:10:54.189 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:10:54.217 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:10:54.218 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:11:43.186 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 21:11:43.187 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 21:14:53.904 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 21:14:54.243 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:14:55.225 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:14:55.227 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:14:55.243 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:14:55.246 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:14:55.247 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:16:26.831 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 21:16:27.276 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 21:16:40.378 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 21:16:40.686 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:16:41.615 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:16:41.616 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:16:41.677 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:16:41.679 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:16:41.680 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:17:21.852 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 21:17:21.853 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 21:21:12.582 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 21:21:14.623 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:21:16.483 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 21:21:16.483 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:21:24.394 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 21:21:24.394 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 21:21:24.395 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 21:21:24.397 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:21:25.016 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:21:25.016 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:21:25.018 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:21:25.020 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:21:25.020 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:21:45.162 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 21:21:45.163 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 21:35:15.650 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 21:35:24.396 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:36:45.461 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 21:36:45.566 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:37:38.420 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server finished. 
+2022-06-24 21:40:40.509 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-24 21:40:40.583 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-24 21:40:57.056 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 21:40:57.619 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:40:58.767 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:40:58.770 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:40:58.922 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:40:58.942 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:40:58.942 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:41:55.716 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 21:41:55.814 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 21:50:04.225 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 21:50:04.611 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:50:29.585 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 21:50:29.729 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:50:54.697 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server finished. 
+2022-06-24 21:51:46.798 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-24 21:51:46.879 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-24 21:52:26.124 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 21:52:26.475 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:52:27.142 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:52:27.144 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:52:27.175 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 21:52:27.198 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 21:52:27.199 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 21:53:05.144 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 21:53:05.440 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 22:00:34.104 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 22:00:34.436 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 22:03:13.101 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 22:03:13.448 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 22:04:36.909 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:31)] - null
+2022-06-24 22:04:37.076 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 22:05:17.022 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server finished. 
+2022-06-24 22:06:00.930 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-24 22:06:01.107 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-24 22:06:32.488 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 22:06:33.386 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 22:06:35.460 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 22:06:35.462 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 22:06:35.708 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 22:06:35.739 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 22:06:35.740 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 22:07:11.303 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 22:07:11.477 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 22:11:25.245 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 22:11:25.564 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 22:11:27.118 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 22:11:27.119 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 22:11:27.173 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 22:11:27.363 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 22:11:27.364 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 22:13:06.992 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 22:13:08.181 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 22:59:50.755 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-24 22:59:50.993 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-24 23:01:45.259 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:01:45.458 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:01:46.365 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:01:46.368 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:01:46.522 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:01:46.534 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:01:46.535 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:02:19.100 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:02:19.101 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:07:53.213 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-24 23:07:53.348 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-24 23:08:06.083 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:08:06.246 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:08:07.415 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:08:07.419 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:08:07.448 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:08:07.460 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:08:07.461 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:08:53.518 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:08:53.519 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:08:53.520 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:08:53.532 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:08:54.408 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:08:54.409 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:09:10.220 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:09:10.222 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:09:10.224 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:09:10.226 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:09:11.089 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:09:11.090 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:09:34.391 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:09:34.415 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:13:14.651 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:13:14.728 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:13:15.598 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:13:15.599 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:13:19.380 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:13:19.381 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:13:19.382 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:13:19.385 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:13:19.949 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:13:19.950 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:13:25.528 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:13:25.528 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:13:25.530 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:13:25.532 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:13:26.102 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:13:26.104 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:14:08.655 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:14:08.656 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:14:08.657 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:14:08.659 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:14:09.464 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:14:09.466 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:14:09.469 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:14:09.473 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:14:09.473 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:14:38.567 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:14:38.568 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:14:38.569 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:14:38.571 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:14:39.377 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:14:39.378 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:14:58.050 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:14:58.051 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:14:58.052 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:14:58.054 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:14:58.583 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:14:58.584 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:14:58.588 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:14:58.591 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:14:58.591 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:15:11.909 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:15:11.909 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:16:03.625 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:16:03.667 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:16:04.222 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:16:04.223 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:16:04.239 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:16:04.241 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:16:04.241 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:16:20.432 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:16:20.433 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:16:20.435 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:16:20.436 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:16:21.590 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:16:21.591 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:16:28.143 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:16:28.144 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:16:28.145 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:16:28.146 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:16:28.783 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:16:28.784 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:16:28.787 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:16:28.789 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:16:28.790 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:16:35.011 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:16:35.011 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:17:05.811 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:17:05.853 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:17:06.410 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:17:06.410 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:17:06.426 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:17:06.430 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:17:06.431 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:17:33.668 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:17:33.669 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:17:33.670 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:17:33.672 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:17:34.491 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:17:34.491 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:17:36.169 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:17:36.170 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:17:36.171 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:17:36.172 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:17:36.747 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:17:36.748 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:17:42.848 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:17:42.849 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:17:42.850 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:17:42.851 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:17:43.407 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:17:43.409 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:17:43.412 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:17:43.414 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:17:43.415 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:18:08.182 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:18:08.183 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:18:08.184 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:18:08.185 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:18:09.000 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:18:09.001 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:18:10.417 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:18:10.418 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:18:10.419 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:18:10.421 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:18:10.930 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:18:10.932 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:18:50.814 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:18:50.814 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:22:58.499 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:22:58.542 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:22:59.383 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:22:59.384 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:23:09.223 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:23:09.224 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:23:09.226 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:23:09.228 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:23:09.823 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:23:09.825 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:23:14.263 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:23:14.263 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:23:14.264 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:23:14.266 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:23:14.869 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:23:14.870 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:23:37.454 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:23:37.455 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:23:37.456 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:23:37.458 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:23:38.152 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:23:38.153 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:23:43.472 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:23:43.473 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:23:43.474 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:23:43.476 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:23:44.067 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:23:44.068 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:23:44.071 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:23:44.073 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:23:44.073 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:23:50.328 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:23:50.329 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:31:55.800 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:31:55.842 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:32:12.814 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - FAILED - state response which has sent. 
+
+2022-06-24 23:32:12.814 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:32:37.718 INFO [main] [connection.AppServer.main(AppServer.java:24)] - Server finished. 
+2022-06-24 23:33:00.982 INFO [main] [manager.database.DatabaseManager.<init>(DatabaseManager.java:34)] - Has been connected to database. 
+2022-06-24 23:33:01.075 INFO [main] [connection.AppServer.main(AppServer.java:22)] - Server works. 
+2022-06-24 23:33:13.994 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:33:14.088 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:33:15.153 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:33:15.155 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:33:15.167 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:33:15.176 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:33:15.177 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:33:44.946 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:33:44.946 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:35:02.767 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:35:02.808 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:35:03.951 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:35:03.952 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:35:03.968 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:35:03.972 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:35:03.972 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:35:22.021 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:35:22.022 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:35:46.950 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:35:46.992 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:35:47.841 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:35:47.842 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:35:47.859 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:35:47.861 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:35:47.861 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:39:09.824 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:39:09.825 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:39:29.106 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:39:29.148 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:39:30.008 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:39:30.009 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:39:30.024 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:39:30.026 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:39:30.027 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:39:40.302 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:39:40.303 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:42:40.291 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:42:40.335 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:42:41.140 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:42:41.141 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:42:41.157 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:42:41.159 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:42:41.160 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:43:59.346 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:43:59.347 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:45:01.073 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:45:01.116 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:45:01.880 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:45:01.881 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:45:01.894 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:45:01.896 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:45:01.897 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:46:01.301 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:46:01.302 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 
+2022-06-24 23:49:51.012 INFO [main] [connection.Server.createNewChannel(Server.java:92)] - New channel is connected. 
+2022-06-24 23:49:51.055 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:49:51.938 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:49:51.940 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:49:51.954 INFO [main] [connection.Server.readByKey(Server.java:101)] - Given new request: null. 
+2022-06-24 23:49:51.956 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:29)] - SUCCESS - state response which has sent. 
+
+2022-06-24 23:49:51.957 INFO [ForkJoinPool-1-worker-3] [transmissionServer.ResponseSender.compute(ResponseSender.java:33)] - ForkJoinPool-1-worker-3finished. 
+2022-06-24 23:50:26.253 ERROR [main] [connection.Server.readByKey(Server.java:108)] - invalid stream header: 00000000
+2022-06-24 23:50:26.253 INFO [main] [connection.Server.readByKey(Server.java:109)] - Channel has been disconnect. 

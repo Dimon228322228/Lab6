@@ -30,6 +30,7 @@ public class Table extends UpdatablePanel {
         setName(languageManager.getString("table"));
         setLayout(new BorderLayout());
         setButtonName();
+        setButtonAction();
         setButton();
     }
 
@@ -37,6 +38,10 @@ public class Table extends UpdatablePanel {
         add.setText(languageManager.getString("add"));
         remove.setText(languageManager.getString("remove"));
         updateById.setText(languageManager.getString("update"));
+    }
+
+    private void setButtonAction(){
+
     }
 
 

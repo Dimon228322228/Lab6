@@ -1,5 +1,11 @@
 package gui;
 
+import action.ResultAction;
+import action.State;
+import actionClient.CommandHandler;
+import authentication.Account;
+import authentication.CurrentAccount;
+import authentication.TypeAuthentication;
 import utilites.LanguageManager;
 
 import javax.swing.*;
@@ -7,46 +13,61 @@ import java.awt.*;
 
 public class RegistrationFrame extends JFrame{
 
-    private final LanguageManager languageManager;
+    protected final LanguageManager languageManager;
+    protected final CommandHandler commandHandler;
 
-    private final String nameFrame;
+    protected final String nameFrame;
 
-    private final JPanel mainPanel = new JPanel();
-    private final JPanel forCenteringMainPanel = new JPanel();
-    private final JPanel forSeparateMainAndLanguagePanels = new JPanel();
-    private final JPanel languagePanel = new JPanel();
+    protected final JPanel mainPanel = new JPanel();
+    protected final JPanel forCenteringMainPanel = new JPanel();
+    protected final JPanel forSeparateMainAndLanguagePanels = new JPanel();
+    protected final JPanel languagePanel = new JPanel();
 
-    private JComboBoxLanguage languageBox;
+    protected JComboBoxLanguage languageBox;
 
-    private final JButton registerButton = new JButton();
-    private final JButton logButton = new JButton();
-    private final JLabel loginLabel = new JLabel();
-    private final JLabel passLabel = new JLabel();
+    protected final JButton registerButton = new JButton();
+    protected final JButton logButton = new JButton();
+    protected final JLabel loginLabel = new JLabel();
+    protected final JLabel passLabel = new JLabel();
 
-    private final JTextField textFieldForUsername = new JTextField();
-    private final JPasswordField passwordFieldForPassword = new JPasswordField();
+    protected final JTextField textFieldForUsername = new JTextField();
+    protected final JPasswordField passwordFieldForPassword = new JPasswordField();
 
-    public RegistrationFrame(String nameFrame, LanguageManager languageManager){
+    public RegistrationFrame(String nameFrame, LanguageManager languageManager, CommandHandler commandHandler){
         super(languageManager.getString(nameFrame));
         this.nameFrame = nameFrame;
         this.languageManager=languageManager;
+        this.commandHandler = commandHandler;
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setBounds(screenSize.width/2 - 250, screenSize.height/2 - 100, 500, 200);
         initComboBox();
         setTextForButtonSAndLabels();
         setDimensionTextField();
+        configLanguagePanel();
+        configCenteringPanel(mainPanel);
+        configSeparatedPanel();
+        setButtonAction();
+
+        add(forSeparateMainAndLanguagePanels);
+        pack();
+        revalidate();
     }
 
-    private void initComboBox(){
+    protected void initComboBox(){
         languageBox = new JComboBoxLanguage(languageManager){
             public void abstractDoing(){
                 setTitle(languageManager.getString(nameFrame));
                 setTextForButtonSAndLabels();
+                repaintChildrenComponent();
+                SwingApp.repaintAll();
                 pack();
                 revalidate();
             }
         };
     }
+
+    protected void repaintChildrenComponent(){}
 
     private void setTextForButtonSAndLabels(){
         registerButton.setText(languageManager.getString("registration"));
@@ -55,9 +76,41 @@ public class RegistrationFrame extends JFrame{
         passLabel.setText(languageManager.getString("password"));
     }
 
+    private void setButtonAction(){
+        registerButton.addActionListener(e -> {
+            String login = textFieldForUsername.getText();
+            String password = new String(passwordFieldForPassword.getPassword());
+            if (!password.equals("")){
+                CurrentAccount.setPreviousAccount(CurrentAccount.getAccount());
+                CurrentAccount.setAccount(new Account(login, password, TypeAuthentication.REGISTRATION));
+                handleRegistration(commandHandler.login());
+            } else JOptionPane.showMessageDialog(this, languageManager.getString("The password must contain at least one character. "), languageManager.getString("error"), JOptionPane.ERROR_MESSAGE);
+
+    });
+        logButton.addActionListener(e -> {
+            String login = textFieldForUsername.getText();
+            String password = new String(passwordFieldForPassword.getPassword());
+            if (!password.equals("")){
+                CurrentAccount.setPreviousAccount(CurrentAccount.getAccount());
+                CurrentAccount.setAccount(new Account(login, password, TypeAuthentication.LOGIN));
+                handleRegistration(commandHandler.login());
+            } else JOptionPane.showMessageDialog(this, languageManager.getString("The password must contain at least one character. "), languageManager.getString("error"), JOptionPane.ERROR_MESSAGE);
+        });
+    }
+
+    private void handleRegistration(ResultAction resultAction){
+        if (resultAction.getState().equals(State.SUCCESS)) {
+            SwingApp.setHomeFrame();
+            setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, resultAction.getDescription(), languageManager.getString("error"), JOptionPane.ERROR_MESSAGE);
+            CurrentAccount.setAccount(CurrentAccount.getPreviousAccount());
+        }
+    }
+
     private void setDimensionTextField(){
-        textFieldForUsername.setMaximumSize(new Dimension(250, 1));
-        passwordFieldForPassword.setMaximumSize(new Dimension(250, 1));
+        textFieldForUsername.setMaximumSize(new Dimension(300, 1));
+        passwordFieldForPassword.setMaximumSize(new Dimension(300, 1));
     }
 
     private void configLanguagePanel(){
@@ -82,45 +135,12 @@ public class RegistrationFrame extends JFrame{
         forSeparateMainAndLanguagePanels.add(languagePanel,BorderLayout.NORTH);
     }
 
-    private void configMainPanel(){
-        GroupLayout layoutForMainPanel = new GroupLayout(mainPanel);
-
-        layoutForMainPanel.setAutoCreateGaps(true);
-        layoutForMainPanel.setAutoCreateContainerGaps(true);
-        layoutForMainPanel.linkSize(SwingConstants.HORIZONTAL, passLabel, loginLabel);
-        layoutForMainPanel.linkSize(SwingConstants.VERTICAL, textFieldForUsername, passwordFieldForPassword, logButton, registerButton);
-
-        mainPanel.setLayout(layoutForMainPanel);
-        layoutForMainPanel.setHorizontalGroup(layoutForMainPanel.createSequentialGroup()
-                .addGroup(layoutForMainPanel.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addComponent(loginLabel)
-                        .addComponent(passLabel))
-                .addGroup(layoutForMainPanel.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addComponent(textFieldForUsername)
-                        .addComponent(passwordFieldForPassword)
-                        .addGroup(layoutForMainPanel.createSequentialGroup()
-                                .addComponent(registerButton)
-                                .addComponent(logButton))));
-        layoutForMainPanel.setVerticalGroup(layoutForMainPanel.createSequentialGroup()
-                .addGroup(layoutForMainPanel.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(loginLabel)
-                        .addComponent(textFieldForUsername))
-                .addGroup(layoutForMainPanel.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(passLabel)
-                        .addComponent(passwordFieldForPassword))
-                .addGroup(layoutForMainPanel.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(registerButton)
-                        .addComponent(logButton)));
-
-    }
-
-    public void setPanel(){
-        configLanguagePanel();
-        configMainPanel();
-        configCenteringPanel(mainPanel);
-        configSeparatedPanel();
-
-        add(forSeparateMainAndLanguagePanels);
+    public void repaint(){
+        super.repaint();
+        languageBox.setSelectedItem(languageManager.getLocaleName());
+        setTitle(languageManager.getString(nameFrame));
+        setTextForButtonSAndLabels();
+        repaintChildrenComponent();
         pack();
         revalidate();
     }

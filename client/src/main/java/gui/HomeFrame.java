@@ -1,16 +1,23 @@
 package gui;
 
+import actionClient.CommandHandler;
+import authentication.CurrentAccount;
 import lombok.Getter;
 import lombok.Setter;
 import utilites.LanguageManager;
 import utilites.UpdatablePanel;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class HomeFrame extends JFrame {
 
     private final LanguageManager languageManager;
+    private final CommandHandler commandHandler;
 
     private final JPanel mainPanel = new JPanel();
     private final JPanel titlePanel = new JPanel();
@@ -27,9 +34,10 @@ public class HomeFrame extends JFrame {
     @Getter @Setter private UpdatablePanel bodyPanel = new UpdatablePanel();
     @Setter private JLabel username = new JLabel("");
 
-    public HomeFrame(LanguageManager languageManager){
+    public HomeFrame(LanguageManager languageManager, CommandHandler commandHandler){
         super(languageManager.getString("home"));
         this.languageManager = languageManager;
+        this.commandHandler = commandHandler;
         table = new Table(new Reflector(languageManager), languageManager);
         coordinatePane = new CoordinatePane(languageManager);
         Dimension sizeScreen = Toolkit.getDefaultToolkit().getScreenSize();
@@ -55,12 +63,16 @@ public class HomeFrame extends JFrame {
         coordinate.setText(languageManager.getString("coordinate"));
     }
 
+    public void setTable(){
+        table.updateTable();
+        setBodyPanel(table);
+        setHomePanel();
+    }
+
     private void setMenu(){
         setNameItems();
         tableItem.addActionListener(e -> {
-                table.updateTable();
-                setBodyPanel(table);
-                setHomePanel();
+                setTable();
         });
         coordinate.addActionListener(e -> {
                 setBodyPanel(coordinatePane);
@@ -74,6 +86,13 @@ public class HomeFrame extends JFrame {
 
         JMenu changeAccount = new JMenu(languageManager.getString("change_account"));
         changeAccount.setMnemonic('1');
+
+        changeAccount.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED){
+                ChangeAccountFrame frame = new ChangeAccountFrame("change_account", languageManager, commandHandler);
+                frame.setVisible(true);
+            }
+        });
 
         JMenu exit = new JMenu(languageManager.getString("exit"));
         exit.setMnemonic('3');
@@ -113,12 +132,23 @@ public class HomeFrame extends JFrame {
 
     private void setUsernameLabel(){
         titlePanel.removeAll();
-        JLabel user = new JLabel(languageManager.getString("username") + ": ");
+        String account_name = CurrentAccount.getAccount() == null ? "" : CurrentAccount.getAccount().getName();
+        JLabel user = new JLabel(languageManager.getString("username") + ": " + account_name);
         BoxLayout titleLayout = new BoxLayout(titlePanel, BoxLayout.LINE_AXIS);
         titlePanel.setLayout(titleLayout);
         titlePanel.add(languageBox);
         titlePanel.add(Box.createHorizontalGlue());
         titlePanel.add(user);
         titlePanel.add(username);
+    }
+
+    public void repaint(){
+        super.repaint();
+        bodyPanel.update();
+        languageBox.setSelectedItem(languageManager.getLocaleName());
+        setTitle(languageManager.getString("home"));
+        setMenu();
+        setUsernameLabel();
+        setHomePanel();
     }
 }

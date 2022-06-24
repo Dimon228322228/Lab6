@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class CommandHandler {
     private final ExchangeController exchangeController;
     private final Reader reader;
-    private final CommandController controller;
+    @Getter private final CommandController controller;
     private final HandlerMesClient handlerMesClient;
     private final Session session;
     private boolean flag = true;

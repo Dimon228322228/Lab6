@@ -1,5 +1,6 @@
 package gui;
 
+import actionClient.CommandHandler;
 import utilites.LanguageManager;
 
 import javax.swing.*;
@@ -7,7 +8,8 @@ import java.awt.*;
 
 public class ProductFrame extends JFrame {
 
-    LanguageManager languageManager;
+    private final LanguageManager languageManager;
+    private final CommandHandler commandHandler;
 
     private final JButton add = new JButton();
     private final JButton cancel = new JButton();
@@ -18,10 +20,12 @@ public class ProductFrame extends JFrame {
     private final OwnerPanel ownerPanel;
     private final CoordinatesPanel coordinatesPanel;
 
+    private final Dimension sizeScreen = Toolkit.getDefaultToolkit().getScreenSize();
+
     private final GridBagConstraints constraintsLanguage = new GridBagConstraints(
             0, 0, 1, 1, 0, 0,
             GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
+            new Insets(6,12,2,2), 0, 0);
 
     private final GridBagConstraints constraintsMainInfoPanel = new GridBagConstraints(
             1, 1, 1, 2, 0, 0,
@@ -31,27 +35,29 @@ public class ProductFrame extends JFrame {
     private final GridBagConstraints constraintsCoordinatePanel = new GridBagConstraints(
             2, 1, 3, 1, 0, 0,
             GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
+            new Insets(2,2,2,12), 0, 0);
 
     private final GridBagConstraints constraintsOwnerPanel = new GridBagConstraints(
             2, 2, 3, 1, 0, 0,
             GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
+            new Insets(2,2,2,12), 0, 0);
 
     private final GridBagConstraints constraintsButton = new GridBagConstraints(
             4, 3, 1, 1, 0, 0,
             GridBagConstraints.EAST, 0,
-            new Insets(2,2,2,2), 0, 0);
+            new Insets(2,2,6,12), 0, 0);
 
-    public ProductFrame(LanguageManager languageManager){
+    public ProductFrame(LanguageManager languageManager, CommandHandler commandHandler){
         super();
         this.languageManager = languageManager;
+        this.commandHandler = commandHandler;
         initLanguageCheckBox();
         mainInfoProductPanel = new MainInfoProductPanel(languageManager);
         ownerPanel = new OwnerPanel(languageManager);
         coordinatesPanel = new CoordinatesPanel(languageManager);
         setNameButton();
         setTitle(languageManager.getString("productFrame"));
+        createAddFrame();
     }
 
     private void initLanguageCheckBox(){
@@ -96,6 +102,7 @@ public class ProductFrame extends JFrame {
         add(main);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
+        setBounds(sizeScreen.width/2 - getSize().width/2, sizeScreen.height/2 - getSize().height/2, getSize().width,getSize().height);
         revalidate();
     }
 }

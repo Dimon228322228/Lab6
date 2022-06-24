@@ -4,7 +4,6 @@ import action.ResultAction;
 import action.State;
 import action.TypeCommand;
 import authentication.CurrentAccount;
-import authentication.ReaderLoginData;
 import authentication.TypeAuthentication;
 import connection.Session;
 import exceptions.InvalidRecievedException;
@@ -29,7 +28,6 @@ public class Login extends AbstractCommandClient{
 
     @Override
     public ResultAction execute() {
-        CurrentAccount.setAccount(ReaderLoginData.logIn());
         if(!waitConnection(clientSession)) {
             return new ResultAction(State.FAILED, "Failed connect to the server. Try again later. ");
         } else {
