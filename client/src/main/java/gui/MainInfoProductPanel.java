@@ -87,6 +87,7 @@ public class MainInfoProductPanel extends UpdatablePanel {
         super();
         this.languageManager = languageManager;
         setNameButton();
+        addActionButton();
         initComboBox();
         setBox();
         configPanel();
@@ -101,14 +102,66 @@ public class MainInfoProductPanel extends UpdatablePanel {
         checkbox.setText(languageManager.getString("question"));
     }
 
+    private void addActionButton(){
+        checkbox.addActionListener(e -> {
+            if (checkbox.isSelected()) setAccessOwnerPanel();
+            else  resetAccessOwnerPanel();
+        });
+    }
+    public void setAccessOwnerPanel(){}
+    public void resetAccessOwnerPanel(){}
+
+    public boolean getStateCheckBox(){
+        return checkbox.isSelected();
+    }
+
+    public String getNameProduct(){
+        return nameTextField.getText();
+    }
+
+    public String getPriceProduct(){
+        return priceTextField.getText();
+    }
+
+    public String getPartNumberProduct(){
+        return partNumberTextField.getText();
+    }
+
+    public String getCostProduct(){
+        return costTextField.getText();
+    }
+
+    public UnitOfMeasure getUnitProduct(){
+        switch (unitOfMeasure.getSelectedIndex()){
+            case 1 -> {return UnitOfMeasure.KILOGRAMS;}
+            case 2 -> {return UnitOfMeasure.CENTIMETERS;}
+            case 3 -> {return UnitOfMeasure.PCS;}
+            case 4 -> {return UnitOfMeasure.MILLILITERS;}
+            case 5 -> {return UnitOfMeasure.GRAMS;}
+            default -> {return null;}
+        }
+    }
+
     private void initComboBox(){
         Vector<String> titleUnit = new Vector<>();
+        titleUnit.add(languageManager.getString("None"));
         Arrays.stream(UnitOfMeasure.getArrayNames()).map(languageManager::getString).forEachOrdered(titleUnit::add);
         unitOfMeasure = new JComboBox<>(titleUnit);
     }
 
     private void setBox(){
         setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY), languageManager.getString("main_data"), TitledBorder.CENTER, TitledBorder.CENTER, new Font("Italic", Font.ITALIC, 12)));
+    }
+
+    public void setProductInformation(int row, Table.MyTableModel tableModel){
+        nameTextField.setText(String.valueOf(tableModel.getValueAt(row, 1)));
+        priceTextField.setText(String.valueOf(tableModel.getValueAt(row, 5)));
+        if (String.valueOf(tableModel.getValueAt(row, 6)).equals("-")) {
+            partNumberTextField.setText("");
+        } else partNumberTextField.setText(String.valueOf(tableModel.getValueAt(row, 6)));
+        costTextField.setText(String.valueOf(tableModel.getValueAt(row, 7)));
+        unitOfMeasure.setSelectedItem(languageManager.getString(String.valueOf(tableModel.getValueAt(row, 8))));
+        checkbox.setSelected(!String.valueOf(tableModel.getValueAt(row, 9)).equals("-"));
     }
 
     private void configPanel(){

@@ -100,6 +100,10 @@ public class CommandHandler {
         return controller.executeCommand("login");
     }
 
+    public List<Product> getCollectionFromServer() throws InvalidRecievedException, IOException {
+        return handlerMesClient.getCollection(session.getSocketChannel());
+    }
+
     private List<String> parseCommand(String input){return Arrays.stream(input.trim().split("[ ]+")).collect(Collectors.toList());}
 
     private <T> Optional<T> read(Supplier<T> supplier){
@@ -114,13 +118,13 @@ public class CommandHandler {
         }
     }
 
-    private Optional<ResultAction> handleUserCommand(String command, String arg) {
+    public Optional<ResultAction> handleUserCommand(String command, String arg) {
         controller.addCommandInHistory(command);
         controller.setArgCommand(arg);
         return Optional.of(controller.executeCommand(command));
     }
 
-    private Optional<ResultAction> handleServerCommand(String command, String arg, Product product) {
+    public Optional<ResultAction> handleServerCommand(String command, String arg, Product product) {
         Request request = new Request(product, arg, command, Target.EXECUTECOMMAND, CurrentAccount.getAccount());
         try {
             handlerMesClient.sendRequest(session.getSocketChannel(), request);
@@ -156,5 +160,12 @@ public class CommandHandler {
             }
         }
         return resultAction.getState() != State.EXIT;
+    }
+
+    public boolean handleResultActionForGUI(Optional<ResultAction> resultActionOptional) {
+        ResultAction resultAction = resultActionOptional.orElseGet(() -> new ResultAction(State.FAILED, ""));
+        if (resultAction.getState() == State.SUCCESS) {
+            return true;
+        }else return false;
     }
 }

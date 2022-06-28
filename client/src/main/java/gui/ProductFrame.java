@@ -1,24 +1,32 @@
 package gui;
 
 import actionClient.CommandHandler;
+import authentication.CurrentAccount;
+import content.BuilderProduct;
+import content.Product;
+import exceptions.InvalidProductFieldException;
+import lombok.Getter;
 import utilites.LanguageManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.DateTimeException;
 
-public class ProductFrame extends JFrame {
+public abstract class ProductFrame extends JFrame {
 
-    private final LanguageManager languageManager;
-    private final CommandHandler commandHandler;
+    protected final LanguageManager languageManager;
+    protected final CommandHandler commandHandler;
 
-    private final JButton add = new JButton();
-    private final JButton cancel = new JButton();
+    protected final JButton someActionButton = new JButton();
+    protected final JButton cancel = new JButton();
 
-    private JComboBoxLanguage language;
+    protected JComboBoxLanguage language;
 
-    private final MainInfoProductPanel mainInfoProductPanel;
-    private final OwnerPanel ownerPanel;
-    private final CoordinatesPanel coordinatesPanel;
+    @Getter protected Product product;
+
+    protected final MainInfoProductPanel mainInfoProductPanel;
+    protected final OwnerPanel ownerPanel;
+    protected final CoordinatesPanel coordinatesPanel;
 
     private final Dimension sizeScreen = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -47,17 +55,27 @@ public class ProductFrame extends JFrame {
             GridBagConstraints.EAST, 0,
             new Insets(2,2,6,12), 0, 0);
 
-    public ProductFrame(LanguageManager languageManager, CommandHandler commandHandler){
+    public ProductFrame(LanguageManager languageManager, CommandHandler commandHandler, String commandName){
         super();
         this.languageManager = languageManager;
         this.commandHandler = commandHandler;
-        initLanguageCheckBox();
-        mainInfoProductPanel = new MainInfoProductPanel(languageManager);
         ownerPanel = new OwnerPanel(languageManager);
         coordinatesPanel = new CoordinatesPanel(languageManager);
+        mainInfoProductPanel = new MainInfoProductPanel(languageManager){
+            @Override
+            public void resetAccessOwnerPanel() {
+                ownerPanel.setEnabled(false);
+            }
+            @Override
+            public void setAccessOwnerPanel() {
+                ownerPanel.setEnabled(true);
+            }
+        };
+        mainInfoProductPanel.resetAccessOwnerPanel();
         setNameButton();
+        setActionButton(commandName);
+        initLanguageCheckBox();
         setTitle(languageManager.getString("productFrame"));
-        createAddFrame();
     }
 
     private void initLanguageCheckBox(){
@@ -74,12 +92,36 @@ public class ProductFrame extends JFrame {
         };
     }
 
-    private void setNameButton(){
-        add.setText(languageManager.getString("add"));
-        cancel.setText(languageManager.getString("cancel"));
+    protected abstract void setNameButton();
+
+    protected abstract void setActionButton(String commandName);
+
+    protected boolean createProduct(){
+        BuilderProduct builderProduct = new BuilderProduct();
+        try{
+        builderProduct.setName(mainInfoProductPanel.getNameProduct())
+                .setXCoordinate(coordinatesPanel.getXCoordinate())
+                .setYCoordinate(coordinatesPanel.getYCoordinate())
+                .setPrice(mainInfoProductPanel.getPriceProduct())
+                .setPartNumber(mainInfoProductPanel.getPartNumberProduct())
+                .setManufactureCost(mainInfoProductPanel.getCostProduct())
+                .setUnitOfMeasure(mainInfoProductPanel.getUnitProduct())
+                .setUsername(CurrentAccount.getAccount().getName());
+        if (mainInfoProductPanel.getStateCheckBox()){
+            builderProduct.setPersonName(ownerPanel.getNameOwner())
+                    .setPersonBirthday(ownerPanel.getBirthdayOwner())
+                    .setPersonHeight(ownerPanel.getHeightOwner())
+                    .setPersonWeight(ownerPanel.getWeightOwner())
+                    .setPersonPassportId(ownerPanel.getPassportOwner());
+        }
+        product = builderProduct.getProduct();
+        } catch (InvalidProductFieldException | NumberFormatException | DateTimeException e){
+            return false;
+        }
+        return true;
     }
 
-    public void createAddFrame(){
+    public void createFrame(){
         JPanel main = new JPanel();
         GridBagLayout layout = new GridBagLayout();
         main.setLayout(layout);
@@ -88,7 +130,7 @@ public class ProductFrame extends JFrame {
         BoxLayout layout1 = new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS);
         buttonPanel.setLayout(layout1);
         buttonPanel.add(Box.createHorizontalGlue());
-        buttonPanel.add(add);
+        buttonPanel.add(someActionButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(12,0)));
         buttonPanel.add(cancel);
 
@@ -100,7 +142,6 @@ public class ProductFrame extends JFrame {
 
 
         add(main);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setBounds(sizeScreen.width/2 - getSize().width/2, sizeScreen.height/2 - getSize().height/2, getSize().width,getSize().height);
         revalidate();

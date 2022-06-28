@@ -3,10 +3,19 @@ package content.caster;
 import content.validator.ValidatorPerson;
 import exceptions.InvalidProductFieldException;
 
+import javax.swing.*;
+import javax.swing.text.DateFormatter;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * A class which creates field of person from different classes
@@ -41,6 +50,16 @@ public class CasterPersonFromString {
             }
         } else {
             throw new InvalidProductFieldException("Invalid birthday date has been entered. Value isn't being null!");
+        }
+    }
+
+    public LocalDateTime castBirthday(Date date){
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        try{
+            return LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).atStartOfDay();
+        } catch (DateTimeParseException e){
+            throw new InvalidProductFieldException("Invalid birthday date has been entered. ");
         }
     }
 

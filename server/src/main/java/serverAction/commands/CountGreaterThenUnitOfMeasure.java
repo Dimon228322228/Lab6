@@ -3,11 +3,13 @@ package serverAction.commands;
 import action.ResultAction;
 import action.State;
 import action.TypeCommand;
+import content.Product;
 import content.UnitOfMeasure;
 import exceptions.InvalidProductFieldException;
 import serverAction.AbstractCommandServer;
 import serverAction.ExecutionResources;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -31,8 +33,11 @@ public class CountGreaterThenUnitOfMeasure extends AbstractCommandServer {
             return new ResultAction(State.ERROR, "No such this enum. Unit of measure must be one of: " +
                     UnitOfMeasure.getTitleInString().toLowerCase());
         }
-        return new ResultAction(State.SUCCESS, "Has been found " +
-                executionResources.get().getCollectionManager().countGreaterThenUnitOfMeashure(unitOfMeasure)
+        List<Product> products = executionResources.get().getCollectionManager().countGreaterThenUnitOfMeashure(unitOfMeasure);
+        ResultAction resultAction =  new ResultAction(State.SUCCESS, "Has been found " +
+                products.size()
                 + " elements of the collection. \n");
+        resultAction.setCollection(products);
+        return resultAction;
     }
 }

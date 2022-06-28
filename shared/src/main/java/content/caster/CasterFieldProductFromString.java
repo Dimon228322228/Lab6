@@ -75,4 +75,12 @@ public class CasterFieldProductFromString {
                throw new InvalidProductFieldException("Invalid value has been entered. Choose unit of measurement include list!");
           }
      }
+
+     public UnitOfMeasure castUnitOfMeasure(UnitOfMeasure unitOfMeasure){
+          if (valProd.unitOfMeasureValid(unitOfMeasure)){
+               return unitOfMeasure;
+          } else {
+               throw new InvalidProductFieldException("Invalid value has been entered. Choose unit of measurement include list!");
+          }
+     }
 }

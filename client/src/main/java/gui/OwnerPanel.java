@@ -7,6 +7,9 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.DateFormatter;
 import java.awt.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class OwnerPanel extends UpdatablePanel {
 
@@ -108,6 +111,53 @@ public class OwnerPanel extends UpdatablePanel {
 
     private void setBox(){
         setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.yellow), languageManager.getString("owner"), TitledBorder.CENTER, TitledBorder.CENTER, new Font("Italic", Font.ITALIC, 12)));
+    }
+
+    public String getNameOwner(){
+        if (isEnabled()) return nameTextField.getText();
+        else return null;
+    }
+    public Date getBirthdayOwner(){
+        if (isEnabled()) return (Date) dateSpinner.getValue();
+        else return null;
+
+    }
+    public String getHeightOwner(){
+        if (isEnabled()) return String.valueOf(heightSpinner.getValue());
+        else return null;
+    }
+    public String getWeightOwner(){
+        if (isEnabled()) return String.valueOf(weightSpinner.getValue());
+        else return null;
+    }
+    public String getPassportOwner(){
+        if (isEnabled()) return passportTextField.getText();
+        else return null;
+    }
+
+    public void setEnabled(boolean b){
+        super.setEnabled(b);
+        heightSpinner.setEnabled(b);
+        weightSpinner.setEnabled(b);
+        dateSpinner.setEnabled(b);
+        nameTextField.setEnabled(b);
+        passportTextField.setEnabled(b);
+        name.setEnabled(b);
+        birthday.setEnabled(b);
+        height.setEnabled(b);
+        weight.setEnabled(b);
+        passportId.setEnabled(b);
+    }
+
+    public void setProductInformation(int row, Table.MyTableModel tableModel){
+        heightSpinner.setValue(tableModel.getValueAt(row, 11));
+        weightSpinner.setValue(tableModel.getValueAt(row, 12));
+        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy HH:mm:ss", languageManager.getCurrentLocale());
+        try {
+            dateSpinner.setValue(format.parse(String.valueOf(tableModel.getValueAt(row, 10))));
+        } catch (ParseException ignore) {}
+        nameTextField.setText(String.valueOf(tableModel.getValueAt(row, 9)));
+        passportTextField.setText(String.valueOf(tableModel.getValueAt(row, 13)));
     }
 
     private void configPanel(){

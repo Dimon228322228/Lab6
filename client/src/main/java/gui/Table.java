@@ -1,36 +1,46 @@
 package gui;
 
+import actionClient.CommandHandler;
 import content.Product;
-import utilites.LanguageManager;
-import utilites.UpdatablePanel;
+import exceptions.InvalidRecievedException;
+import lombok.Getter;
+import utilites.*;
 
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
+import java.io.IOException;
+import java.io.InvalidObjectException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Table extends UpdatablePanel {
 
     private final Reflector reflector;
     private final LanguageManager languageManager;
-    private MyTableModel tableModel;
+    private final CommandHandler commandHandler;
+    @Getter private MyTableModel tableModel;
 
     private JScrollPane pane;
-    private JTable table;
+    @Getter private JTable table;
     private final JPanel buttonsPanel = new JPanel();
     private final JButton add = new JButton();
     private final JButton remove = new JButton();
     private final JButton updateById = new JButton();
 
-    public Table(Reflector reflector, LanguageManager languageManager){
+    public Table(Reflector reflector, LanguageManager languageManager, CommandHandler commandHandler){
         this.languageManager = languageManager;
         this.reflector = reflector;
+        this.commandHandler = commandHandler;
+        tableModel = new MyTableModel(reflector);
         setName(languageManager.getString("table"));
         setLayout(new BorderLayout());
         setButtonName();
-        setButtonAction();
         setButton();
     }
 
@@ -41,17 +51,18 @@ public class Table extends UpdatablePanel {
     }
 
     private void setButtonAction(){
-
+        add.addActionListener(new AddListener(this, languageManager, commandHandler));
+        remove.addActionListener(new RemoveByIdListener(this, tableModel, languageManager, commandHandler));
+        updateById.addActionListener(new UpdateByIdListener(this, tableModel, languageManager, commandHandler));
     }
-
 
     private JScrollPane repaintTable(){
         tableModel = new MyTableModel(reflector);
+        setButtonAction();
         table = new JTable(tableModel){
             public boolean getScrollableTracksViewportWidth(){
                 return getPreferredSize().width < getParent().getWidth();
             }
-
             @Override
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component component = super.prepareRenderer(renderer, row, column);
@@ -61,6 +72,9 @@ public class Table extends UpdatablePanel {
                 return component;
             }
         };
+        table.setDefaultRenderer(Date.class, new MyTableCellRenderer());
+        table.setDefaultRenderer(LocalDateTime.class, new MyTableCellRenderer());
+        addProductInTable();
         resizeColumnWight(table);
         JTableHeader header = table.getTableHeader();
         header.setReorderingAllowed(false);
@@ -75,6 +89,14 @@ public class Table extends UpdatablePanel {
         });
         revalidate();
         return pane;
+    }
+
+    private void addProductInTable(){
+        try {
+            tableModel.setData(new ArrayList<>(commandHandler.getCollectionFromServer()));
+        } catch (InvalidRecievedException | IOException | NullPointerException e) {
+            JOptionPane.showMessageDialog(this, languageManager.getString("Wherever occurred an error. "), languageManager.getString("error"), JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void setButton(){
@@ -94,12 +116,11 @@ public class Table extends UpdatablePanel {
     private void resizeColumnWight(JTable table){
         TableColumnModel model = table.getColumnModel();
         for (int col = 0; col < tableModel.getColumnCount(); col++){
-            TableColumn column = model.getColumn(col);
             int width = 50;
             String name = tableModel.getColumnName(col);
             width = Math.max(name.length() * 10 + 1 + getInsets().left + getInsets().right, width);
             for (int row = 0; row < tableModel.getRowCount(); row++){
-                TableCellRenderer renderer = column.getCellRenderer();
+                TableCellRenderer renderer = table.getCellRenderer(row, col);
                 Component cells = table.prepareRenderer(renderer, row, col);
                 width = Math.max(cells.getPreferredSize().width + 1 + getInsets().left + getInsets().right, width);
             }
@@ -123,7 +144,34 @@ public class Table extends UpdatablePanel {
         updateTable();
     }
 
-    class MyTableModel extends AbstractTableModel {
+    class MyTableCellRenderer extends DefaultTableCellRenderer{
+        final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy HH:mm:ss", languageManager.getCurrentLocale());
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            format.applyPattern(format.toLocalizedPattern());
+            if (value instanceof Date) {
+                try {
+                    JLabel label = (JLabel) super.getTableCellRendererComponent(table, format.format(value), isSelected,hasFocus,row, column);
+                    label.setToolTipText("date in format: day/month/year hours:minutes:seconds");
+                    value =format.parse(format.format(value));
+                    return label;
+                } catch (ParseException ignored) {}
+            }
+            if (value instanceof LocalDateTime dateTime){
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth(), dateTime.getHour(), dateTime.getMinute(), dateTime.getSecond());
+                try {
+                    JLabel label = (JLabel) super.getTableCellRendererComponent(table, format.format(calendar.getTime()), isSelected,hasFocus,row, column);
+                    label.setToolTipText("date in format: day/month/year hours:minutes:seconds");
+                    value = format.parse(format.format(calendar.getTime()));
+                    return label;
+                } catch (ParseException ignored) {}
+            }
+            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
+    }
+
+    public class MyTableModel extends AbstractTableModel {
         private final ArrayList<String> columnNames;
         private final ArrayList<Class<?>> columnTypes;
 
@@ -167,6 +215,18 @@ public class Table extends UpdatablePanel {
         @Override
         public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
             (data.get(rowIndex)).set(columnIndex, aValue);
+        }
+
+        public int getIdColumn() throws InvalidObjectException {
+            int column = -1;
+            for (int i = 0; i < getColumnCount(); i++){
+                if (getColumnName(i).equals(languageManager.getString("id"))){
+                    column = i;
+                }
+            }
+            if (column != -1){
+                return column;
+            } else throw new InvalidObjectException("Nu such column id in table");
         }
 
         public void setData(ArrayList<Product> products) {

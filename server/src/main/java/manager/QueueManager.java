@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 /**
  * This class stores the collection and works with it
@@ -56,7 +57,7 @@ public class QueueManager implements CollectionManager{
      * @return all elements of the collection as a list in ascending order
      */
     @Override
-    public List<Product> showElements(){return collection.stream().sorted().toList();}
+    public List<Product> showElements(){return collection.stream().sorted().collect(Collectors.toList());}
 
     /**
      * add product in the collection
@@ -150,7 +151,7 @@ public class QueueManager implements CollectionManager{
      * @param product is hair of class {@link Product}
      */
     @Override
-    public synchronized int removeLower(Product product, String username) {
+    public synchronized List<Product> removeLower(Product product, String username) {
         List<Product> products = new ArrayList<>(collection.stream()
                 .sorted()
                 .filter(x -> x.getUsername().equals(username))
@@ -158,15 +159,17 @@ public class QueueManager implements CollectionManager{
                 .peek(collection::remove)
                 .toList());
         int count = products.size();
+        List<Product> productList = new ArrayList<>();
         for (Product product1: products){
             try {
                 databaseManager.executeDeletedById(product1.getId());
+                productList.add(product1);
             } catch (SQLException e) {
                 collection.add(product1);
                 count--;
             }
         }
-        return count;
+        return productList;
     }
 
     /**
@@ -174,10 +177,10 @@ public class QueueManager implements CollectionManager{
      * @return amount of elements
      */
     @Override
-    public long countByManufactureCost(Double manufactureCost) {
+    public List<Product> countByManufactureCost(Double manufactureCost) {
         return collection.stream()
                 .filter(x -> x.getManufactureCost() == manufactureCost)
-                .count();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -195,11 +198,11 @@ public class QueueManager implements CollectionManager{
      * @return amount of elements
      */
     @Override
-    public long countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure) {
+    public List<Product> countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure) {
         return collection.stream()
                 .filter(x -> x.getUnitOfMeasure() != null)
                 .filter(x -> x.getUnitOfMeasure().compareTo(unitOfMeasure) > 0)
-                .count();
+                .collect(Collectors.toList());
     }
 
 }

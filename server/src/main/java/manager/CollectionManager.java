@@ -44,17 +44,17 @@ public interface CollectionManager {
     /**
      * Remove all element lower then given
      */
-    int removeLower(Product product, String username);
+    List<Product> removeLower(Product product, String username);
 
     /**
      * Count all element then manufactureCost equals given
      */
-    long countByManufactureCost(Double manufactureCost);
+    List<Product> countByManufactureCost(Double manufactureCost);
 
     Product getById(long id);
 
     /**
      * Count amount element then greater given
      */
-    long countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure);
+    List<Product> countGreaterThenUnitOfMeashure(UnitOfMeasure unitOfMeasure);
 }

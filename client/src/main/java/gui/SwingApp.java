@@ -18,18 +18,14 @@ public class SwingApp {
 
     public SwingApp(CommandHandler commandHandler) {
         SwingApp.commandHandler = commandHandler;
-        setFrames();
+        initRegistrationFrame();
         jFrame = registrationFrame;
         jFrame.setVisible(true);
     }
 
-    private void setFrames(){
+    private void initRegistrationFrame(){
         registrationFrame = new WelcomeFrame("hello", languageManager, commandHandler);
         registrationFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        homeFrame = new HomeFrame(languageManager, commandHandler);
-        homeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//        productFrame = new ProductFrame(languageManager, commandHandler, );
-//        productFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     public static void setRegistrationFrame(){
@@ -38,7 +34,15 @@ public class SwingApp {
         jFrame.setVisible(true);
     }
 
+    private static void initHomeFrame(){
+        if (homeFrame == null){
+            homeFrame = new HomeFrame(languageManager, commandHandler);
+            homeFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        }
+    }
+
     public static void setHomeFrame(){
+        initHomeFrame();
         jFrame.setVisible(false);
         jFrame = homeFrame;
         jFrame.setVisible(true);

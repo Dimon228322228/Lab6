@@ -109,8 +109,8 @@ public class RegistrationFrame extends JFrame{
     }
 
     private void setDimensionTextField(){
-        textFieldForUsername.setMaximumSize(new Dimension(300, 1));
-        passwordFieldForPassword.setMaximumSize(new Dimension(300, 1));
+        textFieldForUsername.setMaximumSize(new Dimension(350, 1));
+        passwordFieldForPassword.setMaximumSize(new Dimension(350, 1));
     }
 
     private void configLanguagePanel(){

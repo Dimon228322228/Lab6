@@ -55,11 +55,23 @@ public class CoordinatesPanel extends UpdatablePanel {
         y.setText(languageManager.getString("y") + ": ");
     }
 
+    public String getXCoordinate(){
+        return xTextField.getText();
+    }
+    public String getYCoordinate(){
+        return yTextField.getText();
+    }
+
     private void setTextSize(){
         xTextField.setMinimumSize(new Dimension(50, 20));
         xTextField.setPreferredSize(new Dimension(100, 20));
         yTextField.setMinimumSize(new Dimension(50, 20));
         yTextField.setPreferredSize(new Dimension(100, 20));
+    }
+
+    public void setProductInformation(int row, Table.MyTableModel tableModel){
+        xTextField.setText(String.valueOf(tableModel.getValueAt(row, 2)));
+        yTextField.setText(String.valueOf(tableModel.getValueAt(row, 3)));
     }
 
     private void configPanel(){

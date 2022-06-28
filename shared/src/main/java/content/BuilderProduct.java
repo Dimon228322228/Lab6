@@ -7,7 +7,9 @@ import exceptions.InvalidProductFieldException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class BuilderProduct {
@@ -58,6 +60,7 @@ public class BuilderProduct {
      * set unit product from string
      */
     public BuilderProduct setUnitOfMeasure(String unit){product.setUnitOfMeasure(casterFieldProductFromString.castUnitOfMeasure(unit));return this;}
+    public BuilderProduct setUnitOfMeasure(UnitOfMeasure unit){product.setUnitOfMeasure(casterFieldProductFromString.castUnitOfMeasure(unit));return this;}
     /**
      * set manufacture cost product from string
      */
@@ -70,6 +73,7 @@ public class BuilderProduct {
      * set birthday owner from string
      */
     public BuilderProduct setPersonBirthday(String time){getOwner().setBirthday(casterPersonFromString.castBirthday(time));return this;}
+    public BuilderProduct setPersonBirthday(Date time){getOwner().setBirthday(casterPersonFromString.castBirthday(time));return this;}
     /**
      * set height owner from string
      */

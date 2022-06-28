@@ -7,6 +7,7 @@ import content.Product;
 import serverAction.AbstractCommandServer;
 import serverAction.ExecutionResources;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,7 +27,9 @@ public class RemoveLower extends AbstractCommandServer {
     public ResultAction execute() {
         Product product = executionResources.get().getProduct();
         if (product == null) return new ResultAction(State.ERROR, "Haven't got any product. Nothing compare. \n");
-        int count = executionResources.get().getCollectionManager().removeLower(product, getExecutionResources().get().getAccount().getName());
-        return new ResultAction(State.SUCCESS, "Removing " + count + " element of the collection. \n");
+        List<Product> products = executionResources.get().getCollectionManager().removeLower(product, getExecutionResources().get().getAccount().getName());
+        ResultAction resultAction = new ResultAction(State.SUCCESS, "Removing " + products.size() + " element of the collection. \n");
+        resultAction.setCollection(products);
+        return resultAction;
     }
 }

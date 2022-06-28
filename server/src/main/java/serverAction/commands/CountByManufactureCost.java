@@ -3,10 +3,12 @@ package serverAction.commands;
 import action.ResultAction;
 import action.State;
 import action.TypeCommand;
+import content.Product;
 import exceptions.InvalidProductFieldException;
 import serverAction.AbstractCommandServer;
 import serverAction.ExecutionResources;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,8 +34,11 @@ public class CountByManufactureCost extends AbstractCommandServer {
         } catch (NumberFormatException | NullPointerException e){
             return new ResultAction(State.ERROR, "Manufacture cost must be convert to double. \n");
         }
-        return new ResultAction(State.SUCCESS, "Has been found "
-                + executionResources.get().getCollectionManager().countByManufactureCost(cost) +
+        List<Product> products = executionResources.get().getCollectionManager().countByManufactureCost(cost);
+        ResultAction resultAction = new ResultAction(State.SUCCESS, "Has been found "
+                + products.size() +
                 " elements of the collection. \n");
+        resultAction.setCollection(products);
+        return resultAction;
     }
 }
