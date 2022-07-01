@@ -6,13 +6,17 @@ import content.BuilderProduct;
 import content.Product;
 import exceptions.InvalidProductFieldException;
 import lombok.Getter;
+import lombok.Setter;
 import utilites.LanguageManager;
+import utilites.MyConstraints;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.DateTimeException;
 
 public abstract class ProductFrame extends JFrame {
+    @Setter
+    protected long id;
 
     protected final LanguageManager languageManager;
     protected final CommandHandler commandHandler;
@@ -20,45 +24,32 @@ public abstract class ProductFrame extends JFrame {
     protected final JButton someActionButton = new JButton();
     protected final JButton cancel = new JButton();
 
+    @Setter private String nameSomeActionButton = "add";
+
     protected JComboBoxLanguage language;
 
     @Getter protected Product product;
 
-    protected final MainInfoProductPanel mainInfoProductPanel;
-    protected final OwnerPanel ownerPanel;
-    protected final CoordinatesPanel coordinatesPanel;
+    protected MainInfoProductPanel mainInfoProductPanel;
+    protected OwnerPanel ownerPanel;
+    protected CoordinatesPanel coordinatesPanel;
+    protected JPanel main;
 
     private final Dimension sizeScreen = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private final GridBagConstraints constraintsLanguage = new GridBagConstraints(
-            0, 0, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(6,12,2,2), 0, 0);
+    private final GridBagConstraints constraintsLanguage = (new MyConstraints()).setGridX(0).setGridY(0).setTopInsets(6).setLeftInsets(12);
+    private final GridBagConstraints constraintsMainInfoPanel = (new MyConstraints()).setGridX(1).setGridY(1).setGridHeight(2).setFill(GridBagConstraints.BOTH);
+    private final GridBagConstraints constraintsCoordinatePanel = (new MyConstraints()).setGridX(2).setGridY(1).setGridWidth(3).setRightInsets(12);
+    private final GridBagConstraints constraintsOwnerPanel = (new MyConstraints()).setGridX(2).setGridY(2).setGridWidth(3).setRightInsets(12);
+    private final GridBagConstraints constraintsButton = (new MyConstraints()).setGridX(4).setGridY(3).setFill(0).setBottomInsets(6).setRightInsets(12);
 
-    private final GridBagConstraints constraintsMainInfoPanel = new GridBagConstraints(
-            1, 1, 1, 2, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.BOTH,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsCoordinatePanel = new GridBagConstraints(
-            2, 1, 3, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,12), 0, 0);
-
-    private final GridBagConstraints constraintsOwnerPanel = new GridBagConstraints(
-            2, 2, 3, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,12), 0, 0);
-
-    private final GridBagConstraints constraintsButton = new GridBagConstraints(
-            4, 3, 1, 1, 0, 0,
-            GridBagConstraints.EAST, 0,
-            new Insets(2,2,6,12), 0, 0);
-
-    public ProductFrame(LanguageManager languageManager, CommandHandler commandHandler, String commandName){
-        super();
+    public ProductFrame(LanguageManager languageManager, CommandHandler commandHandler){
         this.languageManager = languageManager;
         this.commandHandler = commandHandler;
+        initFrame();
+    }
+
+    public void initFrame(){
         ownerPanel = new OwnerPanel(languageManager);
         coordinatesPanel = new CoordinatesPanel(languageManager);
         mainInfoProductPanel = new MainInfoProductPanel(languageManager){
@@ -72,29 +63,33 @@ public abstract class ProductFrame extends JFrame {
             }
         };
         mainInfoProductPanel.resetAccessOwnerPanel();
-        setNameButton();
-        setActionButton(commandName);
-        initLanguageCheckBox();
-        setTitle(languageManager.getString("productFrame"));
-    }
 
-    private void initLanguageCheckBox(){
+        someActionButton.setText(languageManager.getString(nameSomeActionButton));
+        cancel.setText(languageManager.getString("cancel"));
+
+        cancel.addActionListener(e -> {
+            dispose();
+        });
+
+        setActionButton();
+
         language = new JComboBoxLanguage(languageManager){
             public void abstractDoing(){
                 setTitle(languageManager.getString("productFrame"));
                 mainInfoProductPanel.update();
                 ownerPanel.update();
                 coordinatesPanel.update();
-                setNameButton();
+                cancel.setText(languageManager.getString("cancel"));
+                someActionButton.setText(languageManager.getString(nameSomeActionButton));
                 pack();
                 revalidate();
             }
         };
+
+        setTitle(languageManager.getString("productFrame"));
     }
 
-    protected abstract void setNameButton();
-
-    protected abstract void setActionButton(String commandName);
+    protected abstract void setActionButton();
 
     protected boolean createProduct(){
         BuilderProduct builderProduct = new BuilderProduct();
@@ -122,7 +117,8 @@ public abstract class ProductFrame extends JFrame {
     }
 
     public void createFrame(){
-        JPanel main = new JPanel();
+        if (main != null) remove(main);
+        main = new JPanel();
         GridBagLayout layout = new GridBagLayout();
         main.setLayout(layout);
 
@@ -146,4 +142,14 @@ public abstract class ProductFrame extends JFrame {
         setBounds(sizeScreen.width/2 - getSize().width/2, sizeScreen.height/2 - getSize().height/2, getSize().width,getSize().height);
         revalidate();
     }
+
+    public void setProductInformation(int row, Table.MyTableModel tableModel){
+        mainInfoProductPanel.setProductInformation(row, tableModel);
+        coordinatesPanel.setProductInformation(row, tableModel);
+        if (mainInfoProductPanel.getStateCheckBox()){
+            ownerPanel.setProductInformation(row, tableModel);
+            ownerPanel.setEnabled(true);
+        }
+    }
+
 }

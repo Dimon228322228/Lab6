@@ -2,6 +2,7 @@ package utilites;
 
 import javax.swing.*;
 
-public class UpdatablePanel extends JPanel {
-    public void update(){};
+public class UpdatablePanel extends JPanel implements UpdatableElement{
+    public void update(){}
+    public void updateLanguage(){};
 }

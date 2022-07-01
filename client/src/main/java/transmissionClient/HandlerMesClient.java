@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class HandlerMesClient extends HandlerMessage {
-    public void sendRequest(SocketChannel channel, Request request) throws IOException {
+    public synchronized void sendRequest(SocketChannel channel, Request request) throws IOException {
         sendMessage(channel, request);
     }
 
@@ -34,7 +34,7 @@ public class HandlerMesClient extends HandlerMessage {
         }
     }
 
-    public Response getResponse(SocketChannel channel) throws IOException, InvalidRecievedException {
+    public synchronized Response getResponse(SocketChannel channel) throws IOException, InvalidRecievedException {
         try {
             return (Response) Objects.requireNonNull(getMessage(channel)).readObject();
         } catch (ClassNotFoundException | ClassCastException | NullPointerException e) {

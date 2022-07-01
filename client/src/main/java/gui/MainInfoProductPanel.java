@@ -2,6 +2,7 @@ package gui;
 
 import content.UnitOfMeasure;
 import utilites.LanguageManager;
+import utilites.MyConstraints;
 import utilites.UpdatablePanel;
 
 import javax.swing.*;
@@ -28,60 +29,17 @@ public class MainInfoProductPanel extends UpdatablePanel {
     private JComboBox<String> unitOfMeasure;
     private final JCheckBox checkbox = new JCheckBox();
 
-    private final GridBagConstraints constraintsName = new GridBagConstraints(
-            0, 0, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsNameText = new GridBagConstraints(
-            1, 0, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsPrice = new GridBagConstraints(
-            0, 1, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsPriceText = new GridBagConstraints(
-            1, 1, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsPartNumber = new GridBagConstraints(
-            0, 2, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsPartNumberText = new GridBagConstraints(
-            1, 2, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsCost = new GridBagConstraints(
-            0, 3, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsCostText = new GridBagConstraints(
-            1, 3, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsUnitOfMeasure = new GridBagConstraints(
-            0, 4, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsUnitOfMeasureTextField = new GridBagConstraints(
-            1, 4, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsQuestion = new GridBagConstraints(
-            0, 5, 2, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
+    private final GridBagConstraints constraintsName = (new MyConstraints()).setGridX(0).setGridY(0);
+    private final GridBagConstraints constraintsNameText = (new MyConstraints()).setGridX(1).setGridY(0);
+    private final GridBagConstraints constraintsPrice = (new MyConstraints()).setGridX(0).setGridY(1);
+    private final GridBagConstraints constraintsPriceText = (new MyConstraints()).setGridX(1).setGridY(1);
+    private final GridBagConstraints constraintsPartNumber = (new MyConstraints()).setGridX(0).setGridY(2);
+    private final GridBagConstraints constraintsPartNumberText = (new MyConstraints()).setGridX(1).setGridY(2);
+    private final GridBagConstraints constraintsCost = (new MyConstraints()).setGridX(0).setGridY(3);
+    private final GridBagConstraints constraintsCostText = (new MyConstraints()).setGridX(1).setGridY(3);
+    private final GridBagConstraints constraintsUnitOfMeasure = (new MyConstraints()).setGridX(0).setGridY(4);
+    private final GridBagConstraints constraintsUnitOfMeasureTextField = (new MyConstraints()).setGridX(1).setGridY(4);
+    private final GridBagConstraints constraintsQuestion = (new MyConstraints()).setGridX(0).setGridY(5).setGridWidth(2);
 
     public MainInfoProductPanel(LanguageManager languageManager){
         super();

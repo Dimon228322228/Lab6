@@ -1,6 +1,7 @@
 package gui;
 
 import utilites.LanguageManager;
+import utilites.MyConstraints;
 import utilites.UpdatablePanel;
 
 import javax.swing.*;
@@ -28,55 +29,16 @@ public class OwnerPanel extends UpdatablePanel {
     private final JTextField nameTextField = new JTextField();
     private final JTextField passportTextField = new JTextField();
 
-    private final GridBagConstraints constraintsName = new GridBagConstraints(
-            0, 0, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsNameText = new GridBagConstraints(
-            1, 0, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsBirthday = new GridBagConstraints(
-            0, 1, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsBirthdaySpinner = new GridBagConstraints(
-            1, 1, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsHeight = new GridBagConstraints(
-            0, 2, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsHeightSpinner = new GridBagConstraints(
-            1, 2, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsWeight = new GridBagConstraints(
-            0, 3, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsWeightSpinner = new GridBagConstraints(
-            1, 3, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsPassportId = new GridBagConstraints(
-            0, 4, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsPassportIdTextField = new GridBagConstraints(
-            1, 4, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
+    private final GridBagConstraints constraintsName = (new MyConstraints()).setGridX(0).setGridY(0);
+    private final GridBagConstraints constraintsNameText = (new MyConstraints()).setGridX(1).setGridY(0);
+    private final GridBagConstraints constraintsBirthday = (new MyConstraints()).setGridX(0).setGridY(1);
+    private final GridBagConstraints constraintsBirthdaySpinner = (new MyConstraints()).setGridX(1).setGridY(1);
+    private final GridBagConstraints constraintsHeight = (new MyConstraints()).setGridX(0).setGridY(2);
+    private final GridBagConstraints constraintsHeightSpinner = (new MyConstraints()).setGridX(1).setGridY(2);
+    private final GridBagConstraints constraintsWeight = (new MyConstraints()).setGridX(0).setGridY(3);
+    private final GridBagConstraints constraintsWeightSpinner = (new MyConstraints()).setGridX(1).setGridY(3);
+    private final GridBagConstraints constraintsPassportId = (new MyConstraints()).setGridX(0).setGridY(4);
+    private final GridBagConstraints constraintsPassportIdTextField = (new MyConstraints()).setGridX(1).setGridY(4);
 
     public OwnerPanel(LanguageManager languageManager){
         this.languageManager = languageManager;

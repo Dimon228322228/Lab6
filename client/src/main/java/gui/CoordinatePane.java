@@ -1,22 +1,30 @@
 package gui;
 
+import content.Product;
+import utilites.BottleOfMilk;
+import utilites.CollectionManagerClient;
 import utilites.LanguageManager;
 import utilites.UpdatablePanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import static java.lang.Math.abs;
 
 public class CoordinatePane extends UpdatablePanel {
 
     private final LanguageManager languageManager;
+    private final CollectionManagerClient collectionManagerClient;
     //Расстояние между линиями параллельными оси у
     private int xGrid = 50;
 
     //Расстояние между линиями параллельными оси х
     private int yGrid = 50;
+
+    private Timer timer;
+    private int mouseWheelNumber = 0;
 
     private int minValue = 5;
     private final int xGridLetterDistant = 5;
@@ -28,8 +36,9 @@ public class CoordinatePane extends UpdatablePanel {
     private Integer movX = 0;
     private Integer movY = 0;
 
-    public CoordinatePane(LanguageManager languageManager){
+    public CoordinatePane(LanguageManager languageManager, CollectionManagerClient collectionManagerClient){
         this.languageManager = languageManager;
+        this.collectionManagerClient = collectionManagerClient;
         setPreferredSize(new Dimension(550, 500));
         setName(languageManager.getString("coordinate"));
 
@@ -54,9 +63,12 @@ public class CoordinatePane extends UpdatablePanel {
             }
         });
 
+        timer = new Timer(50, e -> change());
+
         addMouseWheelListener(e -> {
             changeMinValue(e.getUnitsToScroll());
             repaint();
+            timer.start();
         });
     }
 
@@ -93,12 +105,15 @@ public class CoordinatePane extends UpdatablePanel {
 
         drawHelpLines(g2d, halW + movX, halH + movY);
 
+        setProduct(new ArrayList<>(collectionManagerClient.getProducts()), g2d);
+
 //        Перерисовка компонента
         repaint();
     }
 
     private synchronized void changeMinValue(int change){
         minValue += change;
+        mouseWheelNumber = change;
         if (minValue < 0) minValue -= change;
     }
 
@@ -149,8 +164,38 @@ public class CoordinatePane extends UpdatablePanel {
         g2d.drawString(String.valueOf(-value), getWidth()/2 + movX - new JLabel(String.valueOf(-value)).getPreferredSize().width, currentY + 6);
     }
 
+    private void setProduct(ArrayList<Product> products, Graphics2D g2d){
+        int halW = getWidth()/2;
+        int halH = getHeight()/2;
+        products.stream().forEach(x -> {
+            BottleOfMilk bottleOfMilk = new BottleOfMilk(new Point(halW + movX + x.getCoordinates().getX()*minValue, halH + movY - x.getCoordinates().getY() * minValue), x.getUsername(), g2d);
+            bottleOfMilk.paintBottle();
+            repaint();
+        });
+    }
+
+    private void change(){
+        while (mouseWheelNumber != 0){
+            if (mouseWheelNumber > 0){
+                xGrid--;
+                yGrid--;
+                mouseWheelNumber--;
+            } else {
+                xGrid++;
+                yGrid++;
+                mouseWheelNumber++;
+            }
+            repaint();
+        }
+    }
+
     @Override
-    public void update() {
+    public void updateLanguage() {
         setName(languageManager.getString("coordinate"));
+    }
+
+    @Override
+    public void update(){
+        repaint();
     }
 }

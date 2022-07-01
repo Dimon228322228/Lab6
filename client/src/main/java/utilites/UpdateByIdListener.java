@@ -1,8 +1,8 @@
 package utilites;
 
 import actionClient.CommandHandler;
+import gui.ProductFrame;
 import gui.Table;
-import gui.UpdateByIdFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -34,7 +34,21 @@ public class UpdateByIdListener implements ActionListener {
             JOptionPane.showMessageDialog(table, languageManager.getString("Please, choose one row. "), languageManager.getString("error"), JOptionPane.INFORMATION_MESSAGE);
         } else {
             table.setEnabled(false);
-            UpdateByIdFrame productFrame = new UpdateByIdFrame(languageManager, commandHandler, "updateById");
+            ProductFrame productFrame = new ProductFrame(languageManager, commandHandler) {
+                @Override
+                protected void setActionButton() {
+                    someActionButton.addActionListener(e -> {
+                        if (createProduct()) {
+                            if (commandHandler.handleResultActionForGUI(commandHandler.handleServerCommand("updateById", String.valueOf(id), product))){
+                                JOptionPane.showMessageDialog(this, languageManager.getString("Update success. "), languageManager.getString("info"), JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            setVisible(false);
+                        }
+                        else JOptionPane.showMessageDialog(this, languageManager.getString("Something error is occurred. "), languageManager.getString("error"), JOptionPane.ERROR_MESSAGE);
+                    });
+                }
+            };
+            productFrame.setNameSomeActionButton("updateById");
             productFrame.setProductInformation(rows[0], tableModel);
             try {
                 productFrame.setId((Long) tableModel.getValueAt(rows[0], tableModel.getIdColumn()));
@@ -43,7 +57,6 @@ public class UpdateByIdListener implements ActionListener {
                 @Override
                 public void componentHidden(ComponentEvent e) {
                     table.setEnabled(true);
-                    table.updateTable();
                 }
             });
             productFrame.createFrame();

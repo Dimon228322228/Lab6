@@ -41,6 +41,5 @@ public class RemoveByIdListener implements ActionListener {
                 JOptionPane.showMessageDialog(table, languageManager.getString("Remove failed, error is occurred"), languageManager.getString("error"), JOptionPane.ERROR_MESSAGE);
             }
         }
-        table.update();
     }
 }

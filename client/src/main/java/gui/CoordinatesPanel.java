@@ -1,6 +1,7 @@
 package gui;
 
 import utilites.LanguageManager;
+import utilites.MyConstraints;
 import utilites.UpdatablePanel;
 
 import javax.swing.*;
@@ -17,25 +18,10 @@ public class CoordinatesPanel extends UpdatablePanel {
     private final JTextField xTextField = new JTextField();
     private final JTextField yTextField = new JTextField();
 
-    private final GridBagConstraints constraintsX = new GridBagConstraints(
-            0, 0, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsXTextField = new GridBagConstraints(
-            1, 0, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.BOTH,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsY = new GridBagConstraints(
-            0, 1, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL,
-            new Insets(2,2,2,2), 0, 0);
-
-    private final GridBagConstraints constraintsYTextField = new GridBagConstraints(
-            1, 1, 1, 1, 0, 0,
-            GridBagConstraints.EAST, GridBagConstraints.BOTH,
-            new Insets(2,2,2,2), 0, 0);
+    private final GridBagConstraints constraintsX = new MyConstraints();
+    private final GridBagConstraints constraintsXTextField = (new MyConstraints()).setGridX(1).setGridY(0).setFill(GridBagConstraints.BOTH);
+    private final GridBagConstraints constraintsY = (new MyConstraints()).setGridX(0).setGridY(1);
+    private final GridBagConstraints constraintsYTextField = (new MyConstraints()).setGridX(1).setGridY(1).setFill(GridBagConstraints.BOTH);
 
     public CoordinatesPanel(LanguageManager languageManager){
         super();

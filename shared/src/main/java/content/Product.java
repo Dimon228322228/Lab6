@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * a class of product
@@ -27,7 +28,16 @@ public class Product implements Serializable, Comparable<Product> {
     public boolean equals(Object o){
         if (!(o instanceof Product product)) return false;
         if (this == o) return true;
-        return product.getId() == this.getId();
+        if (product.hashCode() != this.hashCode()) return false;
+        return  Objects.equals(name, product.getName()) &&
+                Objects.equals(coordinates, product.getCoordinates()) &&
+                Objects.equals(creationDate, product.getCreationDate()) &&
+                Objects.equals(price, product.getPrice()) &&
+                Objects.equals(partNumber, product.getPartNumber()) &&
+                Objects.equals(manufactureCost, product.getManufactureCost()) &&
+                Objects.equals(unitOfMeasure, product.getUnitOfMeasure()) &&
+                Objects.equals(owner, product.getOwner()) &&
+                Objects.equals(username, product.getUsername());
     }
 
     @Override

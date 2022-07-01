@@ -21,10 +21,9 @@ import java.util.Date;
 
 public class Table extends UpdatablePanel {
 
-    private final Reflector reflector;
     private final LanguageManager languageManager;
-    private final CommandHandler commandHandler;
-    @Getter private MyTableModel tableModel;
+    private final Reflector reflector;
+    @Getter private final MyTableModel tableModel;
 
     private JScrollPane pane;
     @Getter private JTable table;
@@ -32,33 +31,65 @@ public class Table extends UpdatablePanel {
     private final JButton add = new JButton();
     private final JButton remove = new JButton();
     private final JButton updateById = new JButton();
+    private final CollectionManagerClient collectionManagerClient;
 
-    public Table(Reflector reflector, LanguageManager languageManager, CommandHandler commandHandler){
+    public Table(LanguageManager languageManager, CommandHandler commandHandler, CollectionManagerClient collectionManagerClient){
         this.languageManager = languageManager;
-        this.reflector = reflector;
-        this.commandHandler = commandHandler;
+        reflector = new Reflector(languageManager);
+        this.collectionManagerClient = collectionManagerClient;
         tableModel = new MyTableModel(reflector);
-        setName(languageManager.getString("table"));
-        setLayout(new BorderLayout());
-        setButtonName();
-        setButton();
-    }
+        setPreferredSize(new Dimension(480, 300));
 
-    private void setButtonName(){
+        add.addActionListener(e -> {
+            setEnabled(false);
+            ProductFrame productFrame = new ProductFrame(languageManager, commandHandler) {
+                @Override
+                protected void setActionButton() {
+                    someActionButton.addActionListener(e -> {
+                        if (createProduct()) {
+                            if (commandHandler.handleResultActionForGUI(commandHandler.handleServerCommand("add", null, product))){
+                                JOptionPane.showMessageDialog(this, languageManager.getString("Added success. "), languageManager.getString("info"), JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            dispose();
+                        }
+                        else JOptionPane.showMessageDialog(this, languageManager.getString("Something error is occurred. "), languageManager.getString("error"), JOptionPane.ERROR_MESSAGE);
+                    });
+                }
+            };
+            productFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    setEnabled(true);
+                }
+            });
+            productFrame.createFrame();
+            productFrame.setVisible(true);
+        });
+        remove.addActionListener(new RemoveByIdListener(this, tableModel, languageManager, commandHandler));
+        updateById.addActionListener(new UpdateByIdListener(this, tableModel, languageManager, commandHandler));
+
+        setName(languageManager.getString("table"));
+
         add.setText(languageManager.getString("add"));
         remove.setText(languageManager.getString("remove"));
         updateById.setText(languageManager.getString("update"));
-    }
 
-    private void setButtonAction(){
-        add.addActionListener(new AddListener(this, languageManager, commandHandler));
-        remove.addActionListener(new RemoveByIdListener(this, tableModel, languageManager, commandHandler));
-        updateById.addActionListener(new UpdateByIdListener(this, tableModel, languageManager, commandHandler));
+        setLayout(new BorderLayout());
+
+        BoxLayout layout = new BoxLayout(buttonsPanel, BoxLayout.X_AXIS);
+        buttonsPanel.setLayout(layout);
+        buttonsPanel.add(Box.createHorizontalGlue());
+        buttonsPanel.add(add);
+        buttonsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+        buttonsPanel.add(updateById);
+        buttonsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+        buttonsPanel.add(remove);
+        add(buttonsPanel, BorderLayout.SOUTH);
+        revalidate();
     }
 
     private JScrollPane repaintTable(){
-        tableModel = new MyTableModel(reflector);
-        setButtonAction();
+        tableModel.setData(new ArrayList<>(collectionManagerClient.getProducts()));
         table = new JTable(tableModel){
             public boolean getScrollableTracksViewportWidth(){
                 return getPreferredSize().width < getParent().getWidth();
@@ -72,13 +103,16 @@ public class Table extends UpdatablePanel {
                 return component;
             }
         };
-        table.setDefaultRenderer(Date.class, new MyTableCellRenderer());
-        table.setDefaultRenderer(LocalDateTime.class, new MyTableCellRenderer());
-        addProductInTable();
+        table.setAutoCreateRowSorter(true);
+        table.setDefaultRenderer(Date.class, new DateTableCellRenderer());
+        table.setDefaultRenderer(LocalDateTime.class, new DateTableCellRenderer());
+
         resizeColumnWight(table);
+
         JTableHeader header = table.getTableHeader();
         header.setReorderingAllowed(false);
         header.setResizingAllowed(false);
+
         JScrollPane pane = new JScrollPane(table);
         pane.addComponentListener(new ComponentAdapter() {
             @Override
@@ -87,31 +121,10 @@ public class Table extends UpdatablePanel {
                 repaint();
             }
         });
+
         revalidate();
         return pane;
     }
-
-    private void addProductInTable(){
-        try {
-            tableModel.setData(new ArrayList<>(commandHandler.getCollectionFromServer()));
-        } catch (InvalidRecievedException | IOException | NullPointerException e) {
-            JOptionPane.showMessageDialog(this, languageManager.getString("Wherever occurred an error. "), languageManager.getString("error"), JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    public void setButton(){
-        BoxLayout layout = new BoxLayout(buttonsPanel, BoxLayout.X_AXIS);
-        buttonsPanel.setLayout(layout);
-        buttonsPanel.add(Box.createHorizontalGlue());
-        buttonsPanel.add(add);
-        buttonsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-        buttonsPanel.add(updateById);
-        buttonsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-        buttonsPanel.add(remove);
-        add(buttonsPanel, BorderLayout.SOUTH);
-        revalidate();
-    }
-
 
     private void resizeColumnWight(JTable table){
         TableColumnModel model = table.getColumnModel();
@@ -128,51 +141,44 @@ public class Table extends UpdatablePanel {
         }
     }
 
-    public void updateTable() {
+    @Override
+    public void update() {
+        setVisible(false);
         if (pane != null) remove(pane);
         pane = repaintTable();
-
-        setVisible(false);
         add(pane, BorderLayout.CENTER);
         setVisible(true);
     }
 
     @Override
-    public void update() {
+    public void updateLanguage() {
         setName(languageManager.getString("table"));
-        setButtonName();
-        updateTable();
+        add.setText(languageManager.getString("add"));
+        remove.setText(languageManager.getString("remove"));
+        updateById.setText(languageManager.getString("update"));
+        tableModel.updateNameColumn(reflector);
+        repaint();
     }
 
-    class MyTableCellRenderer extends DefaultTableCellRenderer{
+    class DateTableCellRenderer extends DefaultTableCellRenderer {
         final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy HH:mm:ss", languageManager.getCurrentLocale());
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             format.applyPattern(format.toLocalizedPattern());
             if (value instanceof Date) {
-                try {
-                    JLabel label = (JLabel) super.getTableCellRendererComponent(table, format.format(value), isSelected,hasFocus,row, column);
-                    label.setToolTipText("date in format: day/month/year hours:minutes:seconds");
-                    value =format.parse(format.format(value));
-                    return label;
-                } catch (ParseException ignored) {}
+                value = format.format(value);
             }
             if (value instanceof LocalDateTime dateTime){
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(dateTime.getYear(), dateTime.getMonthValue(), dateTime.getDayOfMonth(), dateTime.getHour(), dateTime.getMinute(), dateTime.getSecond());
-                try {
-                    JLabel label = (JLabel) super.getTableCellRendererComponent(table, format.format(calendar.getTime()), isSelected,hasFocus,row, column);
-                    label.setToolTipText("date in format: day/month/year hours:minutes:seconds");
-                    value = format.parse(format.format(calendar.getTime()));
-                    return label;
-                } catch (ParseException ignored) {}
+                value = format.format(calendar.getTime());
             }
             return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         }
     }
 
     public class MyTableModel extends AbstractTableModel {
-        private final ArrayList<String> columnNames;
+        private ArrayList<String> columnNames;
         private final ArrayList<Class<?>> columnTypes;
 
         public MyTableModel(Reflector reflector){
@@ -180,7 +186,11 @@ public class Table extends UpdatablePanel {
             columnTypes = reflector.getColumnTypesForProduct();
         }
 
-        private final ArrayList<ArrayList<Object>> data = new ArrayList<>();
+        public void updateNameColumn(Reflector reflector){
+            columnNames = reflector.getColumnNamesForProduct();
+        }
+
+        private ArrayList<ArrayList<Object>> data = new ArrayList<>();
 
         @Override
         public int getRowCount() {
@@ -229,7 +239,8 @@ public class Table extends UpdatablePanel {
             } else throw new InvalidObjectException("Nu such column id in table");
         }
 
-        public void setData(ArrayList<Product> products) {
+        public synchronized void setData(ArrayList<Product> products) {
+            data = new ArrayList<>();
             for (Product product : products) setProduct(product);
             fireTableStructureChanged();
         }
