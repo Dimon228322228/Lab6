@@ -2,7 +2,6 @@ package gui;
 
 import actionClient.CommandHandler;
 import content.Product;
-import exceptions.InvalidRecievedException;
 import lombok.Getter;
 import utilites.*;
 
@@ -10,9 +9,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.io.InvalidObjectException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,7 +36,6 @@ public class Table extends UpdatablePanel {
         this.collectionManagerClient = collectionManagerClient;
         tableModel = new MyTableModel(reflector);
         setPreferredSize(new Dimension(480, 300));
-
         add.addActionListener(e -> {
             setEnabled(false);
             ProductFrame productFrame = new ProductFrame(languageManager, commandHandler) {
@@ -85,11 +81,9 @@ public class Table extends UpdatablePanel {
         buttonsPanel.add(Box.createRigidArea(new Dimension(10, 10)));
         buttonsPanel.add(remove);
         add(buttonsPanel, BorderLayout.SOUTH);
-        revalidate();
     }
 
     private JScrollPane repaintTable(){
-        tableModel.setData(new ArrayList<>(collectionManagerClient.getProducts()));
         table = new JTable(tableModel){
             public boolean getScrollableTracksViewportWidth(){
                 return getPreferredSize().width < getParent().getWidth();
@@ -103,9 +97,16 @@ public class Table extends UpdatablePanel {
                 return component;
             }
         };
-        table.setAutoCreateRowSorter(true);
         table.setDefaultRenderer(Date.class, new DateTableCellRenderer());
         table.setDefaultRenderer(LocalDateTime.class, new DateTableCellRenderer());
+        TableRowSorter<MyTableModel> sorter = new TableRowSorter<>(tableModel);
+        table.setRowSorter(sorter);
+        ArrayList<RowSorter.SortKey> sortKeyList = new ArrayList<>();
+        sortKeyList.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sorter.setSortKeys(sortKeyList);
+        sorter.setSortsOnUpdates(true);
+        tableModel.setData(new ArrayList<>(collectionManagerClient.getProducts()));
+
 
         resizeColumnWight(table);
 

@@ -48,16 +48,25 @@ public class Reflector {
 
     public ArrayList<Class<?>> getColumnTypesForProduct(){
         ArrayList<Class<?>> allClasses = new ArrayList<>();
+        ArrayList<Class<?>> helped = new ArrayList<>();
         ArrayList<Class<?>> productColumnTypes = columnClasses(Product.class);
         for (Class<?> clas: productColumnTypes){
             if (Coordinates.class.equals(clas)) {
-                allClasses.addAll(columnClasses(Coordinates.class));
+                helped.addAll(columnClasses(Coordinates.class));
             } else if (Person.class.equals(clas)) {
-                allClasses.addAll(columnClasses(Person.class));
+                helped.addAll(columnClasses(Person.class));
             } else {
-                allClasses.add(clas);
+                helped.add(clas);
             }
         }
+        for (Class<?> clas: helped){
+            if (clas.equals(int.class)) allClasses.add(Integer.class);
+            else if (clas.equals(float.class)) allClasses.add(Float.class);
+            else if (clas.equals(long.class)) allClasses.add(Long.class);
+            else if (clas.equals(double.class)) allClasses.add(Double.class);
+            else allClasses.add(clas);
+        }
+        allClasses.stream().forEach(System.out::println);
         return allClasses;
     }
 }
